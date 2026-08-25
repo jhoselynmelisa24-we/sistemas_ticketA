@@ -1,0 +1,865 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>{% block title %}Sistema de Planillas{% endblock %}</title>
+
+    <!-- Bootstrap -->
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+        rel="stylesheet"
+    >
+
+    <!-- Bootstrap Icons -->
+    <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css"
+    >
+
+    <!-- Font Awesome -->
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    >
+
+    <style>
+
+        :root {
+            --primary-color: #1a73e8;
+            --primary-dark: #1557b0;
+            --success-color: #34a853;
+            --warning-color: #fbbc04;
+            --danger-color: #ea4335;
+            --bg-light: #f0f4f9;
+        }
+
+        body {
+            background: var(--bg-light);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            min-height: 100vh;
+        }
+
+        /* =====================================================
+           NAVBAR
+        ===================================================== */
+
+        .navbar-custom {
+            background: linear-gradient(
+                135deg,
+                #1a2332 0%,
+                #2d3a4a 100%
+            );
+
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+            padding: 12px 0;
+        }
+
+        .navbar-custom .navbar-brand {
+            color: #fff;
+            font-weight: 700;
+            font-size: 1.4rem;
+        }
+
+        .navbar-custom .navbar-brand i {
+            color: #fbbc04;
+            margin-right: 10px;
+        }
+
+        .navbar-custom .nav-link {
+            color: rgba(255,255,255,0.7) !important;
+            font-weight: 500;
+            font-size: 0.85rem;
+            padding: 8px 12px !important;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .navbar-custom .nav-link:hover {
+            color: #fff !important;
+            background: rgba(255,255,255,0.1);
+        }
+
+        .navbar-custom .nav-link.active {
+            color: #fff !important;
+            background: rgba(255,255,255,0.15);
+        }
+
+        .navbar-custom .nav-link i {
+            margin-right: 5px;
+        }
+
+        .badge-step {
+            background: var(--warning-color);
+            color: #1a2332;
+            font-weight: 700;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+        }
+
+        /* =====================================================
+           PROGRESO
+        ===================================================== */
+
+        .progress-steps {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0;
+            padding: 12px 20px;
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .step-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            color: #9aa0a6;
+        }
+
+        .step-item .step-num {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+
+            width: 24px;
+            height: 24px;
+
+            border-radius: 50%;
+
+            background: #e8eaed;
+            color: #5f6368;
+
+            font-size: 0.7rem;
+            font-weight: 700;
+        }
+
+        .step-item.active {
+            color: #1a73e8;
+        }
+
+        .step-item.active .step-num {
+            background: #1a73e8;
+            color: #fff;
+        }
+
+        .step-item.completed {
+            color: #34a853;
+        }
+
+        .step-item.completed .step-num {
+            background: #34a853;
+            color: #fff;
+        }
+
+        .step-line {
+            width: 15px;
+            height: 2px;
+            background: #e8eaed;
+            margin: 0 2px;
+        }
+
+        .step-line.completed {
+            background: #34a853;
+        }
+
+        /* =====================================================
+           TARJETAS
+        ===================================================== */
+
+        .card-custom {
+            background: #fff;
+            border: none;
+            border-radius: 16px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+            padding: 20px 24px;
+            margin-bottom: 20px;
+        }
+
+        /* =====================================================
+           BOTONES
+        ===================================================== */
+
+        .btn-primary-custom {
+            background: var(--primary-color);
+            color: #fff;
+            border: none;
+            padding: 10px 28px;
+            border-radius: 10px;
+            font-weight: 600;
+        }
+
+        .btn-primary-custom:hover {
+            background: var(--primary-dark);
+            color: #fff;
+        }
+
+        .btn-success-custom {
+            background: var(--success-color);
+            color: #fff;
+            border: none;
+            padding: 10px 28px;
+            border-radius: 10px;
+            font-weight: 600;
+        }
+
+        .btn-success-custom:hover {
+            background: #2d9248;
+            color: #fff;
+        }
+
+        .btn-warning-custom {
+            background: var(--warning-color);
+            color: #1a2332;
+            border: none;
+            padding: 10px 28px;
+            border-radius: 10px;
+            font-weight: 600;
+        }
+
+        .btn-warning-custom:hover {
+            background: #e5a800;
+            color: #1a2332;
+        }
+
+        /* =====================================================
+           CARGA EXCEL
+        ===================================================== */
+
+        .upload-area {
+            border: 2px dashed #d0d5dd;
+            border-radius: 16px;
+            padding: 40px 20px;
+            text-align: center;
+            cursor: pointer;
+            background: #fafbfc;
+            transition: all 0.3s ease;
+        }
+
+        .upload-area:hover {
+            border-color: var(--primary-color);
+            background: #f0f7ff;
+        }
+
+        .upload-area.dragover {
+            border-color: var(--primary-color);
+            background: #e8f0fe;
+        }
+
+        .upload-area .upload-icon {
+            font-size: 56px;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        /* =====================================================
+           SCRIPT
+        ===================================================== */
+
+        .script-box {
+            background: #1a2332;
+            color: #d4d4d4;
+            padding: 16px 20px;
+            border-radius: 10px;
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+            max-height: 350px;
+            overflow-y: auto;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            line-height: 1.5;
+        }
+
+        /* =====================================================
+           TABLAS
+        ===================================================== */
+
+        .table-custom thead {
+            background: #f8f9fa;
+        }
+
+        .table-custom th {
+            font-weight: 600;
+            color: #1a2332;
+            border-bottom: 2px solid #e8eaed;
+            padding: 10px 12px;
+            font-size: 0.8rem;
+            white-space: nowrap;
+        }
+
+        .table-custom td {
+            padding: 8px 12px;
+            vertical-align: middle;
+            font-size: 0.8rem;
+        }
+
+        /* =====================================================
+           LOADING
+        ===================================================== */
+
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+
+            width: 100%;
+            height: 100%;
+
+            background: rgba(0,0,0,0.5);
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            z-index: 10000;
+            backdrop-filter: blur(4px);
+        }
+
+        .loading-box {
+            background: #fff;
+            padding: 35px;
+            border-radius: 20px;
+            text-align: center;
+            max-width: 400px;
+            width: 90%;
+        }
+
+        .spinner-custom {
+            width: 50px;
+            height: 50px;
+
+            border: 4px solid #e8eaed;
+            border-radius: 50%;
+
+            border-top-color: var(--primary-color);
+
+            animation: spin 0.8s linear infinite;
+
+            margin: 0 auto 16px;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .progress-bar-custom {
+            width: 100%;
+            height: 6px;
+            background: #e8eaed;
+            border-radius: 4px;
+            margin: 12px 0 6px;
+            overflow: hidden;
+        }
+
+        .progress-fill-custom {
+            height: 100%;
+            background: linear-gradient(
+                90deg,
+                var(--primary-color),
+                var(--success-color)
+            );
+
+            transition: width 0.5s ease;
+        }
+
+        /* =====================================================
+           NOTIFICACIONES
+        ===================================================== */
+
+        .notification-container {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 9999;
+            max-width: 400px;
+        }
+
+        .notification {
+            padding: 14px 20px;
+            border-radius: 10px;
+            font-weight: 500;
+            box-shadow: 0 6px 24px rgba(0,0,0,0.15);
+            margin-bottom: 10px;
+            color: #fff;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        /* =====================================================
+           RESPONSIVE
+        ===================================================== */
+
+        @media (max-width: 768px) {
+
+            .progress-steps {
+                padding: 8px 5px;
+            }
+
+            .step-item {
+                font-size: 0.55rem;
+                padding: 2px 4px;
+            }
+
+            .step-item .step-num {
+                width: 20px;
+                height: 20px;
+                font-size: 0.55rem;
+            }
+
+            .step-line {
+                width: 8px;
+            }
+
+            .card-custom {
+                padding: 14px;
+            }
+
+            .upload-area {
+                padding: 25px 15px;
+            }
+
+            .upload-area .upload-icon {
+                font-size: 40px;
+            }
+
+            .navbar-custom .navbar-brand {
+                font-size: 1rem;
+            }
+        }
+
+    </style>
+
+    {% block extra_css %}{% endblock %}
+</head>
+
+<body>
+
+<!-- =========================================================
+     NAVBAR
+========================================================= -->
+
+<nav class="navbar navbar-expand-lg navbar-custom">
+
+    <div class="container">
+
+        <a class="navbar-brand" href="/">
+            <i class="fas fa-file-invoice"></i>
+            SISTEMA DE PLANILLAS
+        </a>
+
+        <button
+            class="navbar-toggler border-0"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarNav"
+        >
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarNav">
+
+            <ul class="navbar-nav ms-auto align-items-lg-center">
+
+                <!-- PASO 1 -->
+                <li class="nav-item">
+                    <a
+                        class="nav-link {% if step == 1 %}active{% endif %}"
+                        href="/"
+                    >
+                        <i class="fas fa-upload"></i>
+                        Excel
+                    </a>
+                </li>
+
+                <!-- PASO 2 -->
+                <li class="nav-item">
+                    <a
+                        class="nav-link {% if step == 2 %}active{% endif %}"
+                        href="/tipo"
+                    >
+                        <i class="fas fa-layer-group"></i>
+                        Tipo
+                    </a>
+                </li>
+
+                <!-- PASO 3 -->
+                <li class="nav-item">
+                    <a
+                        class="nav-link {% if step == 3 %}active{% endif %}"
+                        href="/continuar"
+                    >
+                        <i class="fas fa-arrow-right"></i>
+                        Continuar
+                    </a>
+                </li>
+
+                <!-- PASO 4 -->
+                <li class="nav-item">
+                    <a
+                        class="nav-link {% if step == 4 %}active{% endif %}"
+                        href="/ticket"
+                    >
+                        <i class="fas fa-ticket-alt"></i>
+                        Ticket
+                    </a>
+                </li>
+
+                <!-- PASO 5 -->
+                <li class="nav-item">
+                    <a
+                        class="nav-link {% if step == 5 %}active{% endif %}"
+                        href="/persona"
+                    >
+                        <i class="fas fa-user"></i>
+                        Persona
+                    </a>
+                </li>
+
+                <!-- PASO 6 -->
+                <li class="nav-item">
+                    <a
+                        class="nav-link {% if step == 6 %}active{% endif %}"
+                        href="/codigo"
+                    >
+                        <i class="fas fa-code"></i>
+                        Código
+                    </a>
+                </li>
+
+                <!-- PASO 7 -->
+                <li class="nav-item">
+                    <a
+                        class="nav-link {% if step == 7 %}active{% endif %}"
+                        href="/idtramite"
+                    >
+                        <i class="fas fa-id-card"></i>
+                        ID Trámite
+                    </a>
+                </li>
+
+                <!-- PASO 8 -->
+                <li class="nav-item">
+                    <a
+                        class="nav-link {% if step == 8 %}active{% endif %}"
+                        href="/script"
+                    >
+                        <i class="fas fa-file-code"></i>
+                        Script
+                    </a>
+                </li>
+
+                {% if session.get('trabajadores') %}
+                <li class="nav-item ms-lg-2">
+                    <span class="badge-step">
+                        <i class="fas fa-users"></i>
+                        {{ session.get('total_trabajadores', 0) }}
+                    </span>
+                </li>
+                {% endif %}
+
+            </ul>
+
+        </div>
+
+    </div>
+
+</nav>
+
+
+<!-- =========================================================
+     PROGRESO 1 - 8
+========================================================= -->
+
+<div class="container mt-3">
+
+    <div class="progress-steps">
+
+        <div class="step-item
+            {% if step > 1 %}completed{% elif step == 1 %}active{% endif %}">
+            <span class="step-num">1</span>
+            Excel
+        </div>
+
+        <div class="step-line {% if step > 1 %}completed{% endif %}"></div>
+
+
+        <div class="step-item
+            {% if step > 2 %}completed{% elif step == 2 %}active{% endif %}">
+            <span class="step-num">2</span>
+            Tipo
+        </div>
+
+        <div class="step-line {% if step > 2 %}completed{% endif %}"></div>
+
+
+        <div class="step-item
+            {% if step > 3 %}completed{% elif step == 3 %}active{% endif %}">
+            <span class="step-num">3</span>
+            Continuar
+        </div>
+
+        <div class="step-line {% if step > 3 %}completed{% endif %}"></div>
+
+
+        <div class="step-item
+            {% if step > 4 %}completed{% elif step == 4 %}active{% endif %}">
+            <span class="step-num">4</span>
+            Ticket
+        </div>
+
+        <div class="step-line {% if step > 4 %}completed{% endif %}"></div>
+
+
+        <div class="step-item
+            {% if step > 5 %}completed{% elif step == 5 %}active{% endif %}">
+            <span class="step-num">5</span>
+            Persona
+        </div>
+
+        <div class="step-line {% if step > 5 %}completed{% endif %}"></div>
+
+
+        <div class="step-item
+            {% if step > 6 %}completed{% elif step == 6 %}active{% endif %}">
+            <span class="step-num">6</span>
+            Código
+        </div>
+
+        <div class="step-line {% if step > 6 %}completed{% endif %}"></div>
+
+
+        <div class="step-item
+            {% if step > 7 %}completed{% elif step == 7 %}active{% endif %}">
+            <span class="step-num">7</span>
+            ID Trámite
+        </div>
+
+        <div class="step-line {% if step > 7 %}completed{% endif %}"></div>
+
+
+        <div class="step-item
+            {% if step == 8 %}active{% endif %}">
+            <span class="step-num">8</span>
+            Script
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- =========================================================
+     CONTENIDO
+========================================================= -->
+
+<div class="container py-3">
+
+    {% block content %}{% endblock %}
+
+</div>
+
+
+<!-- =========================================================
+     LOADING
+========================================================= -->
+
+<div class="loading-overlay hidden" id="loadingOverlay">
+
+    <div class="loading-box">
+
+        <div class="spinner-custom"></div>
+
+        <h5 id="loadingTitle">
+            Procesando...
+        </h5>
+
+        <p
+            id="loadingText"
+            class="text-muted"
+        >
+            Por favor espere
+        </p>
+
+        <div class="progress-bar-custom">
+
+            <div
+                class="progress-fill-custom"
+                id="progressFill"
+                style="width: 0%"
+            ></div>
+
+        </div>
+
+        <p id="progressText">
+            0%
+        </p>
+
+    </div>
+
+</div>
+
+
+<!-- =========================================================
+     NOTIFICACIONES
+========================================================= -->
+
+<div
+    class="notification-container"
+    id="notificationContainer"
+></div>
+
+
+<!-- =========================================================
+     BOOTSTRAP
+========================================================= -->
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+
+<script>
+
+/* ============================================================
+   FUNCIONES GLOBALES
+============================================================ */
+
+function mostrarLoading(titulo, texto) {
+
+    const overlay =
+        document.getElementById('loadingOverlay');
+
+    if (!overlay) return;
+
+    document.getElementById('loadingTitle').textContent =
+        titulo || 'Procesando...';
+
+    document.getElementById('loadingText').textContent =
+        texto || 'Por favor espere';
+
+    overlay.classList.remove('hidden');
+
+    actualizarProgress(0);
+}
+
+
+function ocultarLoading() {
+
+    const overlay =
+        document.getElementById('loadingOverlay');
+
+    if (overlay) {
+        overlay.classList.add('hidden');
+    }
+}
+
+
+function actualizarProgress(progress) {
+
+    const fill =
+        document.getElementById('progressFill');
+
+    const text =
+        document.getElementById('progressText');
+
+    if (fill) {
+        fill.style.width = progress + '%';
+    }
+
+    if (text) {
+        text.textContent = progress + '%';
+    }
+}
+
+
+function mostrarNotificacion(mensaje, tipo) {
+
+    const container =
+        document.getElementById('notificationContainer');
+
+    if (!container) return;
+
+    const colors = {
+
+        success: '#34a853',
+        error: '#ea4335',
+        warning: '#fbbc04',
+        info: '#1a73e8'
+
+    };
+
+    const iconos = {
+
+        success: 'fa-check-circle',
+        error: 'fa-exclamation-circle',
+        warning: 'fa-exclamation-triangle',
+        info: 'fa-info-circle'
+
+    };
+
+    const notification =
+        document.createElement('div');
+
+    notification.className =
+        'notification';
+
+    notification.style.background =
+        colors[tipo] || '#333';
+
+    notification.innerHTML =
+        '<i class="fas ' +
+        (iconos[tipo] || 'fa-info-circle') +
+        ' me-2"></i>' +
+        mensaje;
+
+    container.appendChild(notification);
+
+    setTimeout(function() {
+
+        notification.style.opacity = '0';
+
+        notification.style.transition =
+            'opacity 0.3s ease';
+
+        setTimeout(function() {
+
+            notification.remove();
+
+        }, 300);
+
+    }, 4000);
+}
+
+
+function irA(url) {
+
+    window.location.href = url;
+
+}
+
+
+function volver() {
+
+    window.history.back();
+
+}
+
+</script>
+
+
+{% block extra_js %}{% endblock %}
+
+</body>
+</html>

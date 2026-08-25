@@ -1,0 +1,964 @@
+{% extends "base.html" %}
+
+{% block title %}Paso 7 - ID Trámite{% endblock %}
+
+{% block content %}
+
+<div class="row justify-content-center">
+    <div class="col-lg-11">
+
+        <!-- =====================================================
+             ENCABEZADO
+        ====================================================== -->
+        <div class="d-flex align-items-center mb-4">
+
+            <i class="fas fa-file-signature fa-2x text-primary me-3"></i>
+
+            <div>
+                <h4 class="fw-bold mb-0">
+                    PASO 7: ID_TRAMITE
+                </h4>
+
+                <p class="text-muted small mb-0">
+                    Generación y asignación del ID_TRAMITE para los trabajadores procesados
+                </p>
+            </div>
+
+        </div>
+
+
+        <!-- =====================================================
+             INFORMACIÓN DEL PROCESO
+        ====================================================== -->
+        <div class="card-custom mb-4">
+
+            <div class="row g-3">
+
+                <div class="col-md-3">
+                    <label class="form-label fw-bold">
+                        Trabajadores procesados
+                    </label>
+
+                    <div class="form-control bg-light"
+                         id="cantidadTrabajadores">
+                        0
+                    </div>
+                </div>
+
+
+                <div class="col-md-3">
+                    <label class="form-label fw-bold">
+                        Desde
+                    </label>
+
+                    <div class="form-control bg-light"
+                         id="desdeTrabajador">
+                        -
+                    </div>
+                </div>
+
+
+                <div class="col-md-3">
+                    <label class="form-label fw-bold">
+                        Hasta
+                    </label>
+
+                    <div class="form-control bg-light"
+                         id="hastaTrabajador">
+                        -
+                    </div>
+                </div>
+
+
+                <div class="col-md-3">
+                    <label class="form-label fw-bold">
+                        Estado
+                    </label>
+
+                    <div class="form-control bg-light"
+                         id="estadoProceso">
+                        Pendiente
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- =====================================================
+             PREVISUALIZACIÓN DE LA PLANILLA
+        ====================================================== -->
+        <div class="card-custom mb-4">
+
+            <div class="d-flex justify-content-between align-items-center mb-3">
+
+                <div>
+                    <h6 class="fw-bold mb-0">
+                        <i class="fas fa-table me-2 text-primary"></i>
+                        PREVISUALIZACIÓN - ID_TRAMITE
+                    </h6>
+
+                    <small class="text-muted">
+                        Información acumulada de los pasos anteriores
+                    </small>
+                </div>
+
+                <span class="badge bg-primary"
+                      id="totalPreview">
+                    0 trabajadores
+                </span>
+
+            </div>
+
+
+            <div class="table-responsive">
+
+                <table class="table table-bordered table-hover table-custom">
+
+                    <thead>
+
+                        <tr>
+
+                            <th>N°</th>
+
+                            <th>C.I.</th>
+
+                            <th>EXP.</th>
+
+                            <th>CODEXP</th>
+
+                            <th>CODIGO PERSONA</th>
+
+                            <th>COD_TRAM</th>
+
+                            <th>ID_TRAMITE</th>
+
+                            <th>HORA INICIO</th>
+
+                            <th>HORA FIN</th>
+
+                            <th>
+                                DOCENTES PENDIENTES
+                                DE VISADO DE FINIQUITO
+                            </th>
+
+                            <th>TELEFONO</th>
+
+                            <th>RELACIÓN CON LA EMPRESA</th>
+
+                            <th>DIRECCIÓN</th>
+
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody id="previewBody">
+
+                        <tr>
+
+                            <td colspan="13"
+                                class="text-center text-muted py-4">
+
+                                <i class="fas fa-info-circle me-2"></i>
+
+                                Presione
+                                <strong>GENERAR ID_TRAMITE</strong>
+                                para mostrar los datos.
+
+                            </td>
+
+                        </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+
+        <!-- =====================================================
+             SCRIPT DEL PASO
+        ====================================================== -->
+        <div class="card-custom mb-4">
+
+            <div class="d-flex justify-content-between align-items-center mb-3">
+
+                <div>
+
+                    <h6 class="fw-bold mb-0">
+
+                        <i class="fas fa-code me-2 text-primary"></i>
+
+                        SCRIPT ID_TRAMITE
+
+                    </h6>
+
+                    <small class="text-muted">
+                        Script generado para los trabajadores procesados
+                    </small>
+
+                </div>
+
+
+                <button
+                    type="button"
+                    class="btn btn-sm btn-outline-secondary"
+                    onclick="copiarScript()">
+
+                    <i class="fas fa-copy me-1"></i>
+                    COPIAR
+
+                </button>
+
+            </div>
+
+
+            <div class="bg-dark rounded p-3">
+
+                <pre id="scriptPreview"
+                     class="text-light mb-0"
+                     style="
+                        max-height:500px;
+                        overflow:auto;
+                        white-space:pre-wrap;
+                        font-size:13px;
+                     ">El script aparecerá aquí...</pre>
+
+            </div>
+
+        </div>
+
+
+        <!-- =====================================================
+             ACCIONES
+        ====================================================== -->
+        <div class="d-flex justify-content-between mt-4">
+
+            <button
+                type="button"
+                class="btn btn-secondary"
+                onclick="volver()">
+
+                <i class="fas fa-arrow-left me-2"></i>
+                ANTERIOR
+
+            </button>
+
+
+            <div class="d-flex gap-2">
+
+                <button
+                    type="button"
+                    class="btn btn-primary-custom"
+                    id="btnGenerar"
+                    onclick="generarIDTramite()">
+
+                    <i class="fas fa-cogs me-2"></i>
+                    GENERAR ID_TRAMITE
+
+                </button>
+
+
+                <button
+                    type="button"
+                    class="btn btn-success-custom"
+                    id="btnContinuar"
+                    onclick="continuar()"
+                    disabled>
+
+                    <i class="fas fa-arrow-right me-2"></i>
+                    CONTINUAR
+
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+
+{% endblock %}
+
+
+{% block extra_js %}
+
+<script>
+
+/* ============================================================
+   ESTADO
+============================================================ */
+
+let trabajadoresData = [];
+let scriptIDTramite = "";
+
+
+/* ============================================================
+   INICIO
+============================================================ */
+
+document.addEventListener("DOMContentLoaded", function () {
+
+    cargarDatos();
+
+});
+
+
+/* ============================================================
+   CARGAR DATOS EXISTENTES
+============================================================ */
+
+function cargarDatos() {
+
+    /*
+     * El app.py mantiene los trabajadores
+     * dentro de session.
+     *
+     * Aquí consultamos el endpoint que genera
+     * el ID_TRAMITE.
+     */
+
+    fetch("/api/generar_idtramite", {
+
+        method: "POST",
+
+        headers: {
+            "Content-Type": "application/json"
+        },
+
+        body: JSON.stringify({})
+
+    })
+
+    .then(response => {
+
+        if (!response.ok) {
+
+            throw new Error(
+                "No se pudo generar el ID_TRAMITE"
+            );
+
+        }
+
+        return response.json();
+
+    })
+
+    .then(data => {
+
+        if (!data.success) {
+
+            throw new Error(
+                data.error ||
+                "Error al generar ID_TRAMITE"
+            );
+
+        }
+
+
+        trabajadoresData =
+            data.trabajadores || [];
+
+
+        scriptIDTramite =
+            data.script || "";
+
+
+        mostrarInformacion();
+
+        mostrarPrevisualizacion();
+
+        mostrarScript();
+
+
+        const btnContinuar =
+            document.getElementById(
+                "btnContinuar"
+            );
+
+        if (btnContinuar) {
+
+            btnContinuar.disabled = false;
+
+        }
+
+
+        const estado =
+            document.getElementById(
+                "estadoProceso"
+            );
+
+        if (estado) {
+
+            estado.textContent =
+                "ID_TRAMITE generado";
+
+        }
+
+    })
+
+    .catch(error => {
+
+        console.error(error);
+
+        mostrarNotificacion(
+            "❌ " + error.message,
+            "error"
+        );
+
+    });
+
+}
+
+
+/* ============================================================
+   INFORMACIÓN DEL PROCESO
+============================================================ */
+
+function mostrarInformacion() {
+
+    const procesados =
+        trabajadoresData.filter(
+            t => t.procesar === true ||
+                 t.id_tramite !== undefined
+        );
+
+
+    const cantidad =
+        document.getElementById(
+            "cantidadTrabajadores"
+        );
+
+    if (cantidad) {
+
+        cantidad.textContent =
+            procesados.length;
+
+    }
+
+
+    const desde =
+        document.getElementById(
+            "desdeTrabajador"
+        );
+
+    if (desde) {
+
+        const valores =
+            procesados.map(t => t.nro);
+
+        desde.textContent =
+            valores.length
+                ? Math.min(...valores)
+                : "-";
+
+    }
+
+
+    const hasta =
+        document.getElementById(
+            "hastaTrabajador"
+        );
+
+    if (hasta) {
+
+        const valores =
+            procesados.map(t => t.nro);
+
+        hasta.textContent =
+            valores.length
+                ? Math.max(...valores)
+                : "-";
+
+    }
+
+
+    const totalPreview =
+        document.getElementById(
+            "totalPreview"
+        );
+
+    if (totalPreview) {
+
+        totalPreview.textContent =
+            procesados.length +
+            " trabajadores";
+
+    }
+
+}
+
+
+/* ============================================================
+   PREVISUALIZACIÓN
+============================================================ */
+
+function mostrarPrevisualizacion() {
+
+    const tbody =
+        document.getElementById(
+            "previewBody"
+        );
+
+
+    if (!tbody) return;
+
+
+    tbody.innerHTML = "";
+
+
+    const procesados =
+        trabajadoresData.filter(
+            t =>
+                t.procesar === true ||
+                t.id_tramite !== undefined
+        );
+
+
+    if (procesados.length === 0) {
+
+        tbody.innerHTML = `
+
+            <tr>
+
+                <td colspan="13"
+                    class="text-center text-muted py-4">
+
+                    No existen trabajadores procesados.
+
+                </td>
+
+            </tr>
+
+        `;
+
+        return;
+
+    }
+
+
+    /*
+     * Mostrar TODOS los trabajadores procesados.
+     *
+     * No solamente cinco.
+     */
+
+    procesados.forEach(function (t) {
+
+        const tr =
+            document.createElement("tr");
+
+
+        tr.innerHTML = `
+
+            <td>
+                ${escapeHTML(t.nro)}
+            </td>
+
+            <td>
+                ${escapeHTML(t.ci)}
+            </td>
+
+            <td>
+                ${escapeHTML(t.expedicion)}
+            </td>
+
+            <td>
+                ${escapeHTML(t.codexp)}
+            </td>
+
+            <td>
+                ${escapeHTML(
+                    t.id_persona ||
+                    t.id_persona_excel ||
+                    "-"
+                )}
+            </td>
+
+            <td>
+                ${escapeHTML(
+                    t.codigo_tramite ||
+                    t.cod_tram ||
+                    "-"
+                )}
+            </td>
+
+            <td>
+                <strong>
+                    ${escapeHTML(
+                        t.id_tramite ||
+                        "-"
+                    )}
+                </strong>
+            </td>
+
+            <td>
+                ${escapeHTML(
+                    t.hora_inicio ||
+                    t.hora_inicio_excel ||
+                    "-"
+                )}
+            </td>
+
+            <td>
+                ${escapeHTML(
+                    t.hora_fin ||
+                    t.hora_fin_excel ||
+                    "-"
+                )}
+            </td>
+
+            <td>
+                ${escapeHTML(
+                    t.nombre ||
+                    "-"
+                )}
+            </td>
+
+            <td>
+                ${escapeHTML(
+                    t.telefono ||
+                    "N/A"
+                )}
+            </td>
+
+            <td>
+                ${escapeHTML(
+                    t.cargo ||
+                    t.relacion ||
+                    "N/A"
+                )}
+            </td>
+
+            <td>
+                ${escapeHTML(
+                    t.direccion ||
+                    "N/A"
+                )}
+            </td>
+
+        `;
+
+
+        tbody.appendChild(tr);
+
+    });
+
+}
+
+
+/* ============================================================
+   SCRIPT
+============================================================ */
+
+function mostrarScript() {
+
+    const elemento =
+        document.getElementById(
+            "scriptPreview"
+        );
+
+
+    if (!elemento) return;
+
+
+    elemento.textContent =
+        scriptIDTramite ||
+        "-- No se generó script.";
+
+}
+
+
+/* ============================================================
+   COPIAR SCRIPT
+============================================================ */
+
+function copiarScript() {
+
+    const texto =
+        document.getElementById(
+            "scriptPreview"
+        ).textContent;
+
+
+    if (!texto) {
+
+        mostrarNotificacion(
+            "⚠️ No existe script para copiar",
+            "warning"
+        );
+
+        return;
+
+    }
+
+
+    navigator.clipboard.writeText(texto)
+
+        .then(function () {
+
+            mostrarNotificacion(
+                "✅ Script copiado correctamente",
+                "success"
+            );
+
+        })
+
+        .catch(function () {
+
+            mostrarNotificacion(
+                "❌ No se pudo copiar el script",
+                "error"
+            );
+
+        });
+
+}
+
+
+/* ============================================================
+   GENERAR ID_TRAMITE
+============================================================ */
+
+function generarIDTramite() {
+
+    const boton =
+        document.getElementById(
+            "btnGenerar"
+        );
+
+
+    if (boton) {
+
+        boton.disabled = true;
+
+        boton.innerHTML = `
+
+            <span class="spinner-border
+                         spinner-border-sm
+                         me-2"></span>
+
+            GENERANDO...
+
+        `;
+
+    }
+
+
+    fetch("/api/generar_idtramite", {
+
+        method: "POST",
+
+        headers: {
+
+            "Content-Type":
+                "application/json"
+
+        },
+
+        body: JSON.stringify({})
+
+    })
+
+    .then(response => {
+
+        if (!response.ok) {
+
+            throw new Error(
+                "Error HTTP " +
+                response.status
+            );
+
+        }
+
+        return response.json();
+
+    })
+
+    .then(data => {
+
+        if (!data.success) {
+
+            throw new Error(
+                data.error ||
+                "No se pudo generar ID_TRAMITE"
+            );
+
+        }
+
+
+        trabajadoresData =
+            data.trabajadores || [];
+
+
+        scriptIDTramite =
+            data.script || "";
+
+
+        mostrarInformacion();
+
+        mostrarPrevisualizacion();
+
+        mostrarScript();
+
+
+        const btnContinuar =
+            document.getElementById(
+                "btnContinuar"
+            );
+
+        if (btnContinuar) {
+
+            btnContinuar.disabled = false;
+
+        }
+
+
+        const estado =
+            document.getElementById(
+                "estadoProceso"
+            );
+
+        if (estado) {
+
+            estado.textContent =
+                "ID_TRAMITE generado correctamente";
+
+        }
+
+
+        if (boton) {
+
+            boton.disabled = false;
+
+            boton.innerHTML = `
+
+                <i class="fas fa-check me-2"></i>
+
+                ID_TRAMITE GENERADO
+
+            `;
+
+        }
+
+
+        mostrarNotificacion(
+            "✅ ID_TRAMITE generado correctamente",
+            "success"
+        );
+
+    })
+
+    .catch(error => {
+
+        console.error(error);
+
+
+        if (boton) {
+
+            boton.disabled = false;
+
+            boton.innerHTML = `
+
+                <i class="fas fa-cogs me-2"></i>
+
+                GENERAR ID_TRAMITE
+
+            `;
+
+        }
+
+
+        mostrarNotificacion(
+            "❌ " + error.message,
+            "error"
+        );
+
+    });
+
+}
+
+
+/* ============================================================
+   CONTINUAR
+============================================================ */
+
+function continuar() {
+
+    if (
+        !trabajadoresData ||
+        trabajadoresData.length === 0
+    ) {
+
+        mostrarNotificacion(
+            "⚠️ No hay datos procesados",
+            "warning"
+        );
+
+        return;
+
+    }
+
+
+    /*
+     * El app.py ya mantiene los datos
+     * en session['trabajadores'].
+     *
+     * Avanzamos al Paso 8.
+     */
+
+    window.location.href =
+        "/script";
+
+}
+
+
+/* ============================================================
+   VOLVER
+============================================================ */
+
+function volver() {
+
+    window.location.href =
+        "/codigo";
+
+}
+
+
+/* ============================================================
+   ESCAPAR HTML
+============================================================ */
+
+function escapeHTML(valor) {
+
+    if (
+        valor === null ||
+        valor === undefined ||
+        valor === ""
+    ) {
+
+        return "-";
+
+    }
+
+
+    const div =
+        document.createElement("div");
+
+
+    div.textContent =
+        String(valor);
+
+
+    return div.innerHTML;
+
+}
+
+</script>
+
+{% endblock %}

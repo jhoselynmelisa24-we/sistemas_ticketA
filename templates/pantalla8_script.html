@@ -1,0 +1,1299 @@
+{% extends "base.html" %}
+
+{% block title %}Paso 8 - Scripts{% endblock %}
+
+{% block content %}
+
+<div class="row justify-content-center">
+    <div class="col-lg-12">
+
+        <!-- =====================================================
+             ENCABEZADO
+        ====================================================== -->
+
+        <div class="d-flex align-items-center mb-4">
+
+            <i class="fas fa-code fa-2x text-primary me-3"></i>
+
+            <div>
+
+                <h4 class="fw-bold mb-0">
+                    PASO 8: GENERACIÓN DE SCRIPTS
+                </h4>
+
+                <p class="text-muted small mb-0">
+                    Previsualización final de la planilla y scripts SQL completos
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <!-- =====================================================
+             RESUMEN
+        ====================================================== -->
+
+        <div class="card-custom mb-4">
+
+            <div class="row g-3">
+
+                <div class="col-md-3">
+
+                    <label class="form-label fw-bold">
+                        Total Excel
+                    </label>
+
+                    <div
+                        class="form-control bg-light"
+                        id="totalExcel">
+                        0
+                    </div>
+
+                </div>
+
+
+                <div class="col-md-3">
+
+                    <label class="form-label fw-bold">
+                        Trabajadores procesados
+                    </label>
+
+                    <div
+                        class="form-control bg-light"
+                        id="totalProcesados">
+                        0
+                    </div>
+
+                </div>
+
+
+                <div class="col-md-3">
+
+                    <label class="form-label fw-bold">
+                        Desde
+                    </label>
+
+                    <div
+                        class="form-control bg-light"
+                        id="desdeTrabajador">
+                        -
+                    </div>
+
+                </div>
+
+
+                <div class="col-md-3">
+
+                    <label class="form-label fw-bold">
+                        Hasta
+                    </label>
+
+                    <div
+                        class="form-control bg-light"
+                        id="hastaTrabajador">
+                        -
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- =====================================================
+             INFORMACIÓN GENERAL
+        ====================================================== -->
+
+        <div class="card-custom mb-4">
+
+            <h6 class="fw-bold mb-3">
+
+                <i class="fas fa-info-circle text-primary me-2"></i>
+
+                INFORMACIÓN DEL PROCESO
+
+            </h6>
+
+
+            <div class="row g-3">
+
+                <div class="col-md-3">
+
+                    <label class="form-label">
+                        RF / ID_TICKET
+                    </label>
+
+                    <div
+                        class="form-control bg-light"
+                        id="idTicket">
+                        -
+                    </div>
+
+                </div>
+
+
+                <div class="col-md-3">
+
+                    <label class="form-label">
+                        Fecha
+                    </label>
+
+                    <div
+                        class="form-control bg-light"
+                        id="fechaProceso">
+                        -
+                    </div>
+
+                </div>
+
+
+                <div class="col-md-3">
+
+                    <label class="form-label">
+                        Empresa
+                    </label>
+
+                    <div
+                        class="form-control bg-light"
+                        id="empresaProceso">
+                        -
+                    </div>
+
+                </div>
+
+
+                <div class="col-md-3">
+
+                    <label class="form-label">
+                        NIT
+                    </label>
+
+                    <div
+                        class="form-control bg-light"
+                        id="nitProceso">
+                        -
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- =====================================================
+             PREVISUALIZACIÓN FINAL DE PLANILLA
+        ====================================================== -->
+
+        <div class="card-custom mb-4">
+
+            <div class="d-flex justify-content-between align-items-center mb-3">
+
+                <div>
+
+                    <h6 class="fw-bold mb-0">
+
+                        <i class="fas fa-table text-primary me-2"></i>
+
+                        PLANILLA COMPLETA PROCESADA
+
+                    </h6>
+
+                    <small class="text-muted">
+
+                        Información acumulada de todos los pasos
+
+                    </small>
+
+                </div>
+
+
+                <span
+                    class="badge bg-success"
+                    id="badgeProcesados">
+
+                    0 procesados
+
+                </span>
+
+            </div>
+
+
+            <div
+                class="table-responsive"
+                style="max-height:600px; overflow:auto;">
+
+                <table
+                    class="table table-bordered table-hover table-custom">
+
+                    <thead class="table-light">
+
+                        <tr>
+
+                            <th>N°</th>
+
+                            <th>C.I.</th>
+
+                            <th>EXP.</th>
+
+                            <th>CODEXP</th>
+
+                            <th>CODIGO PERSONA</th>
+
+                            <th>COD_TRAM</th>
+
+                            <th>ID_TRAMITE</th>
+
+                            <th>HORA INICIO</th>
+
+                            <th>HORA FIN</th>
+
+                            <th>
+                                DOCENTES PENDIENTES
+                                DE VISADO DE FINIQUITO
+                            </th>
+
+                            <th>TELEFONO</th>
+
+                            <th>RELACIÓN CON LA EMPRESA</th>
+
+                            <th>DIRECCIÓN</th>
+
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody id="previewBody">
+
+                        <tr>
+
+                            <td
+                                colspan="13"
+                                class="text-center text-muted py-4">
+
+                                Cargando información...
+
+                            </td>
+
+                        </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+
+        <!-- =====================================================
+             SCRIPT COMPLETO
+        ====================================================== -->
+
+        <div class="card-custom mb-4">
+
+            <div class="d-flex justify-content-between align-items-center mb-3">
+
+                <div>
+
+                    <h6 class="fw-bold mb-0">
+
+                        <i class="fas fa-terminal text-primary me-2"></i>
+
+                        SCRIPT SQL COMPLETO
+
+                    </h6>
+
+                    <small class="text-muted">
+
+                        Script correspondiente a todos los trabajadores procesados
+
+                    </small>
+
+                </div>
+
+
+                <div class="d-flex gap-2">
+
+                    <button
+                        type="button"
+                        class="btn btn-sm btn-outline-primary"
+                        onclick="copiarScript()">
+
+                        <i class="fas fa-copy me-1"></i>
+                        COPIAR
+
+                    </button>
+
+
+                    <button
+                        type="button"
+                        class="btn btn-sm btn-outline-success"
+                        onclick="descargarScript()">
+
+                        <i class="fas fa-download me-1"></i>
+                        DESCARGAR .SQL
+
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <div class="bg-dark rounded">
+
+                <pre
+                    id="scriptPreview"
+                    class="text-light mb-0 p-3"
+                    style="
+                        max-height:700px;
+                        overflow:auto;
+                        white-space:pre-wrap;
+                        font-family:Consolas,Monaco,monospace;
+                        font-size:13px;
+                        line-height:1.5;
+                    ">Cargando script...</pre>
+
+            </div>
+
+        </div>
+
+
+        <!-- =====================================================
+             ESTADO FINAL
+        ====================================================== -->
+
+        <div
+            class="alert alert-success d-none"
+            id="finalizado">
+
+            <i class="fas fa-check-circle me-2"></i>
+
+            <strong>Proceso completado.</strong>
+
+            Los datos de los trabajadores procesados,
+            los identificadores generados y el script SQL
+            se encuentran disponibles para revisión.
+
+        </div>
+
+
+        <!-- =====================================================
+             BOTONES
+        ====================================================== -->
+
+        <div class="d-flex justify-content-between mt-4 mb-5">
+
+            <button
+                type="button"
+                class="btn btn-secondary"
+                onclick="volver()">
+
+                <i class="fas fa-arrow-left me-2"></i>
+
+                ANTERIOR
+
+            </button>
+
+
+            <div class="d-flex gap-2">
+
+                <button
+                    type="button"
+                    class="btn btn-primary-custom"
+                    id="btnGenerarScript"
+                    onclick="generarScript()">
+
+                    <i class="fas fa-code me-2"></i>
+
+                    GENERAR SCRIPT COMPLETO
+
+                </button>
+
+
+                <button
+                    type="button"
+                    class="btn btn-success-custom"
+                    id="btnGuardar"
+                    onclick="guardarProceso()"
+                    disabled>
+
+                    <i class="fas fa-save me-2"></i>
+
+                    GUARDAR PROCESO
+
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+{% endblock %}
+
+
+{% block extra_js %}
+
+<script>
+
+/* ============================================================
+   ESTADO
+============================================================ */
+
+let trabajadoresData = [];
+let scriptCompleto = "";
+
+
+/* ============================================================
+   INICIO
+============================================================ */
+
+document.addEventListener("DOMContentLoaded", function () {
+
+    cargarScriptFinal();
+
+});
+
+
+/* ============================================================
+   CARGAR SCRIPT FINAL
+============================================================ */
+
+function cargarScriptFinal() {
+
+    fetch("/api/generar_script_final", {
+
+        method: "GET"
+
+    })
+
+    .then(function (response) {
+
+        if (!response.ok) {
+
+            throw new Error(
+                "Error HTTP " + response.status
+            );
+
+        }
+
+        return response.json();
+
+    })
+
+    .then(function (data) {
+
+        if (!data.success) {
+
+            throw new Error(
+                data.error ||
+                "No se pudo obtener el script"
+            );
+
+        }
+
+
+        trabajadoresData =
+            data.trabajadores || [];
+
+
+        scriptCompleto =
+            data.script_completo || "";
+
+
+        mostrarResumen();
+
+        mostrarPlanilla();
+
+        mostrarScript();
+
+
+        const btnGuardar =
+            document.getElementById(
+                "btnGuardar"
+            );
+
+        if (btnGuardar) {
+
+            btnGuardar.disabled = false;
+
+        }
+
+
+        document
+            .getElementById("finalizado")
+            ?.classList.remove("d-none");
+
+    })
+
+    .catch(function (error) {
+
+        console.error(error);
+
+        mostrarNotificacion(
+            "❌ " + error.message,
+            "error"
+        );
+
+        const script =
+            document.getElementById(
+                "scriptPreview"
+            );
+
+        if (script) {
+
+            script.textContent =
+                "-- ERROR AL CARGAR SCRIPT\n" +
+                "-- " +
+                error.message;
+
+        }
+
+    });
+
+}
+
+
+/* ============================================================
+   GENERAR SCRIPT
+============================================================ */
+
+function generarScript() {
+
+    const boton =
+        document.getElementById(
+            "btnGenerarScript"
+        );
+
+
+    if (boton) {
+
+        boton.disabled = true;
+
+        boton.innerHTML = `
+
+            <span class="spinner-border
+                         spinner-border-sm
+                         me-2"></span>
+
+            GENERANDO...
+
+        `;
+
+    }
+
+
+    fetch("/api/generar_script_final", {
+
+        method: "GET"
+
+    })
+
+    .then(function (response) {
+
+        if (!response.ok) {
+
+            throw new Error(
+                "Error HTTP " +
+                response.status
+            );
+
+        }
+
+        return response.json();
+
+    })
+
+    .then(function (data) {
+
+        if (!data.success) {
+
+            throw new Error(
+                data.error ||
+                "No se pudo generar el script"
+            );
+
+        }
+
+
+        trabajadoresData =
+            data.trabajadores || [];
+
+
+        scriptCompleto =
+            data.script_completo || "";
+
+
+        mostrarResumen();
+
+        mostrarPlanilla();
+
+        mostrarScript();
+
+
+        const btnGuardar =
+            document.getElementById(
+                "btnGuardar"
+            );
+
+        if (btnGuardar) {
+
+            btnGuardar.disabled = false;
+
+        }
+
+
+        const finalizado =
+            document.getElementById(
+                "finalizado"
+            );
+
+        if (finalizado) {
+
+            finalizado.classList.remove(
+                "d-none"
+            );
+
+        }
+
+
+        if (boton) {
+
+            boton.disabled = false;
+
+            boton.innerHTML = `
+
+                <i class="fas fa-check me-2"></i>
+
+                SCRIPT GENERADO
+
+            `;
+
+        }
+
+
+        mostrarNotificacion(
+            "✅ Script completo generado correctamente",
+            "success"
+        );
+
+    })
+
+    .catch(function (error) {
+
+        console.error(error);
+
+
+        if (boton) {
+
+            boton.disabled = false;
+
+            boton.innerHTML = `
+
+                <i class="fas fa-code me-2"></i>
+
+                GENERAR SCRIPT COMPLETO
+
+            `;
+
+        }
+
+
+        mostrarNotificacion(
+            "❌ " + error.message,
+            "error"
+        );
+
+    });
+
+}
+
+
+/* ============================================================
+   RESUMEN
+============================================================ */
+
+function mostrarResumen() {
+
+    const procesados =
+        obtenerProcesados();
+
+
+    const total =
+        document.getElementById(
+            "totalProcesados"
+        );
+
+    if (total) {
+
+        total.textContent =
+            procesados.length;
+
+    }
+
+
+    const totalExcel =
+        document.getElementById(
+            "totalExcel"
+        );
+
+    if (totalExcel) {
+
+        totalExcel.textContent =
+            trabajadoresData.length;
+
+    }
+
+
+    const badge =
+        document.getElementById(
+            "badgeProcesados"
+        );
+
+    if (badge) {
+
+        badge.textContent =
+            procesados.length +
+            " procesados";
+
+    }
+
+
+    if (procesados.length > 0) {
+
+        const numeros =
+            procesados.map(
+                t => Number(t.nro)
+            );
+
+
+        document.getElementById(
+            "desdeTrabajador"
+        ).textContent =
+            Math.min(...numeros);
+
+
+        document.getElementById(
+            "hastaTrabajador"
+        ).textContent =
+            Math.max(...numeros);
+
+    }
+
+
+    const idTicket =
+        document.getElementById(
+            "idTicket"
+        );
+
+    if (idTicket) {
+
+        const trabajador =
+            procesados[0];
+
+        idTicket.textContent =
+            trabajador?.id_ticket ||
+            "Generado en Paso 3";
+
+    }
+
+
+    const fecha =
+        document.getElementById(
+            "fechaProceso"
+        );
+
+    if (fecha) {
+
+        fecha.textContent =
+            "{{ session.get('fecha', '-') }}";
+
+    }
+
+
+    const empresa =
+        document.getElementById(
+            "empresaProceso"
+        );
+
+    if (empresa) {
+
+        empresa.textContent =
+            "{{ session.get('empresa', '-') }}";
+
+    }
+
+
+    const nit =
+        document.getElementById(
+            "nitProceso"
+        );
+
+    if (nit) {
+
+        nit.textContent =
+            "{{ session.get('nit', '-') }}";
+
+    }
+
+}
+
+
+/* ============================================================
+   OBTENER TRABAJADORES PROCESADOS
+============================================================ */
+
+function obtenerProcesados() {
+
+    return trabajadoresData.filter(
+        function (t) {
+
+            return (
+                t.procesar === true ||
+                t.id_ticket !== null &&
+                t.id_ticket !== undefined
+            );
+
+        }
+    );
+
+}
+
+
+/* ============================================================
+   PREVISUALIZACIÓN COMPLETA
+============================================================ */
+
+function mostrarPlanilla() {
+
+    const tbody =
+        document.getElementById(
+            "previewBody"
+        );
+
+
+    if (!tbody) return;
+
+
+    tbody.innerHTML = "";
+
+
+    const procesados =
+        obtenerProcesados();
+
+
+    if (procesados.length === 0) {
+
+        tbody.innerHTML = `
+
+            <tr>
+
+                <td colspan="13"
+                    class="text-center text-muted py-4">
+
+                    No hay trabajadores procesados.
+
+                </td>
+
+            </tr>
+
+        `;
+
+        return;
+
+    }
+
+
+    /*
+     * IMPORTANTE:
+     *
+     * Aquí mostramos TODOS los trabajadores
+     * procesados, no solamente los primeros 5.
+     */
+
+    procesados.forEach(function (t) {
+
+        const tr =
+            document.createElement("tr");
+
+
+        tr.innerHTML = `
+
+            <td>
+                ${escapeHTML(t.nro)}
+            </td>
+
+            <td>
+                ${escapeHTML(t.ci)}
+            </td>
+
+            <td>
+                ${escapeHTML(t.expedicion)}
+            </td>
+
+            <td>
+                ${escapeHTML(t.codexp)}
+            </td>
+
+            <td>
+                ${escapeHTML(
+                    t.id_persona ||
+                    t.id_persona_excel ||
+                    "-"
+                )}
+            </td>
+
+            <td>
+                ${escapeHTML(
+                    t.codigo_tramite ||
+                    t.cod_tram ||
+                    "-"
+                )}
+            </td>
+
+            <td>
+                ${escapeHTML(
+                    t.id_tramite ||
+                    t.id_tramite_excel ||
+                    "-"
+                )}
+            </td>
+
+            <td>
+                ${escapeHTML(
+                    t.hora_inicio ||
+                    t.hora_inicio_excel ||
+                    "-"
+                )}
+            </td>
+
+            <td>
+                ${escapeHTML(
+                    t.hora_fin ||
+                    t.hora_fin_excel ||
+                    "-"
+                )}
+            </td>
+
+            <td>
+                ${escapeHTML(
+                    t.nombre ||
+                    "-"
+                )}
+            </td>
+
+            <td>
+                ${escapeHTML(
+                    t.telefono ||
+                    "N/A"
+                )}
+            </td>
+
+            <td>
+                ${escapeHTML(
+                    t.cargo ||
+                    t.relacion ||
+                    "N/A"
+                )}
+            </td>
+
+            <td>
+                ${escapeHTML(
+                    t.direccion ||
+                    "N/A"
+                )}
+            </td>
+
+        `;
+
+
+        tbody.appendChild(tr);
+
+    });
+
+}
+
+
+/* ============================================================
+   MOSTRAR SCRIPT
+============================================================ */
+
+function mostrarScript() {
+
+    const elemento =
+        document.getElementById(
+            "scriptPreview"
+        );
+
+
+    if (!elemento) return;
+
+
+    if (!scriptCompleto) {
+
+        elemento.textContent =
+            "-- No existe script generado.";
+
+        return;
+
+    }
+
+
+    /*
+     * textContent permite mostrar el SQL
+     * completo sin interpretarlo como HTML.
+     */
+
+    elemento.textContent =
+        scriptCompleto;
+
+}
+
+
+/* ============================================================
+   COPIAR SCRIPT
+============================================================ */
+
+function copiarScript() {
+
+    if (!scriptCompleto) {
+
+        mostrarNotificacion(
+            "⚠️ Primero genere el script",
+            "warning"
+        );
+
+        return;
+
+    }
+
+
+    navigator.clipboard
+        .writeText(scriptCompleto)
+
+        .then(function () {
+
+            mostrarNotificacion(
+                "✅ Script completo copiado",
+                "success"
+            );
+
+        })
+
+        .catch(function () {
+
+            mostrarNotificacion(
+                "❌ No se pudo copiar el script",
+                "error"
+            );
+
+        });
+
+}
+
+
+/* ============================================================
+   DESCARGAR SCRIPT SQL
+============================================================ */
+
+function descargarScript() {
+
+    if (!scriptCompleto) {
+
+        mostrarNotificacion(
+            "⚠️ Primero genere el script",
+            "warning"
+        );
+
+        return;
+
+    }
+
+
+    const blob =
+        new Blob(
+            [scriptCompleto],
+            {
+                type: "text/plain;charset=utf-8"
+            }
+        );
+
+
+    const url =
+        URL.createObjectURL(blob);
+
+
+    const enlace =
+        document.createElement("a");
+
+
+    enlace.href = url;
+
+    enlace.download =
+        "script_planilla.sql";
+
+
+    document.body.appendChild(enlace);
+
+    enlace.click();
+
+    document.body.removeChild(enlace);
+
+
+    URL.revokeObjectURL(url);
+
+
+    mostrarNotificacion(
+        "✅ Script SQL descargado",
+        "success"
+    );
+
+}
+
+
+/* ============================================================
+   GUARDAR PROCESO
+============================================================ */
+
+function guardarProceso() {
+
+    const procesados =
+        obtenerProcesados();
+
+
+    if (procesados.length === 0) {
+
+        mostrarNotificacion(
+            "⚠️ No existen trabajadores procesados",
+            "warning"
+        );
+
+        return;
+
+    }
+
+
+    const ultimo =
+        Math.max(
+            ...procesados.map(
+                t => Number(t.nro)
+            )
+        );
+
+
+    fetch("/api/guardar_avance", {
+
+        method: "POST",
+
+        headers: {
+
+            "Content-Type":
+                "application/json"
+
+        },
+
+        body: JSON.stringify({
+
+            ultimo_procesado: ultimo
+
+        })
+
+    })
+
+    .then(function (response) {
+
+        if (!response.ok) {
+
+            throw new Error(
+                "No se pudo guardar el proceso"
+            );
+
+        }
+
+        return response.json();
+
+    })
+
+    .then(function (data) {
+
+        if (!data.success) {
+
+            throw new Error(
+                data.error ||
+                "Error al guardar"
+            );
+
+        }
+
+
+        mostrarNotificacion(
+            "✅ Proceso guardado correctamente",
+            "success"
+        );
+
+    })
+
+    .catch(function (error) {
+
+        console.error(error);
+
+        mostrarNotificacion(
+            "❌ " + error.message,
+            "error"
+        );
+
+    });
+
+}
+
+
+/* ============================================================
+   VOLVER AL PASO 7
+============================================================ */
+
+function volver() {
+
+    window.location.href =
+        "/idtramite";
+
+}
+
+
+/* ============================================================
+   ESCAPAR HTML
+============================================================ */
+
+function escapeHTML(valor) {
+
+    if (
+        valor === null ||
+        valor === undefined ||
+        valor === ""
+    ) {
+
+        return "-";
+
+    }
+
+
+    const div =
+        document.createElement("div");
+
+
+    div.textContent =
+        String(valor);
+
+
+    return div.innerHTML;
+
+}
+
+</script>
+
+{% endblock %}

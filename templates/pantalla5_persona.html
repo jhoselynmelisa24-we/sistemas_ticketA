@@ -1,0 +1,779 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Paso 5 - Registrar ID_PERSONA</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f0f2f5;
+            padding: 20px;
+        }
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #1a3c6e;
+            border-bottom: 3px solid #1a3c6e;
+            padding-bottom: 15px;
+            margin-bottom: 20px;
+        }
+        .info-bar {
+            display: flex;
+            gap: 30px;
+            background: #e8edf4;
+            padding: 15px 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        .info-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .info-item strong {
+            color: #1a3c6e;
+        }
+        .info-item .value {
+            font-weight: bold;
+            color: #2c3e50;
+        }
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            margin: 15px 0;
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            border: 2px solid #e8edf4;
+        }
+        .form-group label {
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 5px;
+            font-size: 16px;
+        }
+        .form-group label .required {
+            color: #e74c3c;
+        }
+        .form-control {
+            padding: 12px 15px;
+            border: 2px solid #d0d7e2;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: all 0.3s;
+            max-width: 300px;
+        }
+        .form-control:focus {
+            border-color: #1a3c6e;
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(26, 60, 110, 0.2);
+        }
+        .text-muted {
+            color: #7f8c8d;
+            font-size: 14px;
+            margin-top: 8px;
+        }
+        .text-muted strong {
+            color: #1a3c6e;
+        }
+        .table-container {
+            overflow-x: auto;
+            margin: 20px 0;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13px;
+        }
+        thead {
+            background: #1a3c6e;
+            color: white;
+        }
+        th {
+            padding: 12px 8px;
+            text-align: left;
+            white-space: nowrap;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+        td {
+            padding: 10px 8px;
+            border-bottom: 1px solid #e0e0e0;
+            vertical-align: middle;
+        }
+        tr:hover {
+            background: #f5f8ff;
+        }
+        .badge-registrado {
+            display: inline-block;
+            background: #27ae60;
+            color: white;
+            padding: 2px 10px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: bold;
+        }
+        .badge-pendiente {
+            display: inline-block;
+            background: #f39c12;
+            color: white;
+            padding: 2px 10px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: bold;
+        }
+        .badge-correlativo {
+            display: inline-block;
+            background: #3498db;
+            color: white;
+            padding: 2px 10px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: bold;
+        }
+        .acciones {
+            display: flex;
+            gap: 15px;
+            margin: 20px 0;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+        .btn {
+            padding: 12px 30px;
+            border: none;
+            border-radius: 8px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
+        }
+        .btn-success {
+            background: #27ae60;
+            color: white;
+        }
+        .btn-success:hover {
+            background: #1e8449;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(39, 174, 96, 0.3);
+        }
+        .btn-primary {
+            background: #1a3c6e;
+            color: white;
+        }
+        .btn-primary:hover {
+            background: #152d52;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(26, 60, 110, 0.3);
+        }
+        .btn-warning {
+            background: #f39c12;
+            color: white;
+        }
+        .btn-warning:hover {
+            background: #d68910;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(243, 156, 18, 0.3);
+        }
+        .btn-secondary {
+            background: #95a5a6;
+            color: white;
+        }
+        .btn-secondary:hover {
+            background: #7f8c8d;
+            transform: translateY(-2px);
+        }
+        .btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none !important;
+        }
+        .script-area {
+            margin-top: 20px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        .script-header {
+            background: #2c3e50;
+            color: white;
+            padding: 12px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .script-header h3 {
+            margin: 0;
+            font-size: 16px;
+        }
+        .script-body {
+            background: #1e1e1e;
+            color: #d4d4d4;
+            padding: 20px;
+            max-height: 400px;
+            overflow: auto;
+            font-family: 'Consolas', 'Monaco', monospace;
+            font-size: 12px;
+            line-height: 1.6;
+            white-space: pre-wrap;
+            word-break: break-all;
+        }
+        .mensaje {
+            padding: 12px 18px;
+            border-radius: 8px;
+            margin: 10px 0;
+            font-weight: 500;
+        }
+        .mensaje-exito {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        .mensaje-error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        .mensaje-info {
+            background: #d1ecf1;
+            color: #0c5460;
+            border: 1px solid #bee5eb;
+        }
+        .progress-bar {
+            height: 6px;
+            background: #e0e0e0;
+            border-radius: 3px;
+            margin: 15px 0;
+            overflow: hidden;
+        }
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #27ae60, #2ecc71);
+            border-radius: 3px;
+            transition: width 0.5s ease;
+        }
+        .stats {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin: 10px 0;
+        }
+        .stat-card {
+            background: #f8f9fa;
+            padding: 10px 18px;
+            border-radius: 8px;
+            border-left: 4px solid #1a3c6e;
+        }
+        .stat-card .label {
+            font-size: 12px;
+            color: #7f8c8d;
+        }
+        .stat-card .number {
+            font-size: 22px;
+            font-weight: bold;
+            color: #2c3e50;
+        }
+        .stat-card.success {
+            border-left-color: #27ae60;
+        }
+        .stat-card.warning {
+            border-left-color: #f39c12;
+        }
+        .id-persona-preview {
+            font-weight: bold;
+            color: #1a3c6e;
+        }
+        @media (max-width: 768px) {
+            .container {
+                padding: 15px;
+            }
+            .info-bar {
+                flex-direction: column;
+                gap: 10px;
+            }
+            .acciones {
+                flex-direction: column;
+            }
+            .btn {
+                width: 100%;
+                text-align: center;
+            }
+            table {
+                font-size: 11px;
+            }
+            th, td {
+                padding: 6px 4px;
+            }
+            .form-control {
+                max-width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📝 PASO 5: REGISTRAR ID_PERSONA</h1>
+        <p style="color: #7f8c8d; margin-bottom: 15px;">
+            Ingrese el <strong>primer ID_PERSONA</strong> y el sistema llenará automáticamente los siguientes de forma <strong>correlativa</strong>.
+        </p>
+
+        <!-- Barra de información -->
+        <div class="info-bar" id="infoBar">
+            <div class="info-item">
+                <strong>TRABAJADORES:</strong>
+                <span class="value" id="totalTrabajadores">0</span>
+            </div>
+            <div class="info-item">
+                <strong>ID_TICKET:</strong>
+                <span class="value" id="idTicket">-</span>
+            </div>
+            <div class="info-item">
+                <strong>TIPO PLANILLA:</strong>
+                <span class="value" id="tipoPlanilla">-</span>
+            </div>
+            <div class="info-item">
+                <strong>ESTADO:</strong>
+                <span class="value" id="estado">Pendiente</span>
+            </div>
+        </div>
+
+        <!-- Campo para el primer ID_PERSONA -->
+        <div class="form-group">
+            <label for="primer_id_persona">Primer ID_PERSONA <span class="required">*</span></label>
+            <input type="number" id="primer_id_persona" class="form-control" placeholder="Ej: 100" min="1">
+            <span class="text-muted">
+                📌 Los demás se llenarán automáticamente: 
+                <strong id="ejemploCorrelativo">100, 101, 102, ...</strong>
+            </span>
+        </div>
+
+        <!-- Estadísticas -->
+        <div class="stats">
+            <div class="stat-card">
+                <div class="label">Total Bloque</div>
+                <div class="number" id="statTotal">0</div>
+            </div>
+            <div class="stat-card success">
+                <div class="label">Registrados</div>
+                <div class="number" id="statRegistrados">0</div>
+            </div>
+            <div class="stat-card warning">
+                <div class="label">Pendientes</div>
+                <div class="number" id="statPendientes">0</div>
+            </div>
+        </div>
+
+        <!-- Barra de progreso -->
+        <div class="progress-bar">
+            <div class="progress-fill" id="progressFill" style="width: 0%"></div>
+        </div>
+
+        <!-- Mensajes -->
+        <div id="mensajeContainer"></div>
+
+        <!-- Tabla de trabajadores -->
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>N°</th>
+                        <th>C.I.</th>
+                        <th>EXP.</th>
+                        <th>CODEXP</th>
+                        <th>DOCENTE</th>
+                        <th>COD_TRAM</th>
+                        <th>ID_TRAMITE</th>
+                        <th>HORA INICIO</th>
+                        <th>HORA FIN</th>
+                        <th>RELACIÓN</th>
+                        <th>DIRECCIÓN</th>
+                        <th>TELEFONO</th>
+                        <th style="min-width:120px;">ID_PERSONA</th>
+                        <th>Estado</th>
+                    </tr>
+                </thead>
+                <tbody id="tablaTrabajadores">
+                    <tr>
+                        <td colspan="14" style="text-align:center; padding: 30px; color: #95a5a6;">
+                            <span style="font-size: 18px;">📂</span><br>
+                            No hay datos generados todavía.<br>
+                            <small>Cargue un Excel y configure la cantidad en los pasos anteriores.</small>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Acciones -->
+        <div class="acciones">
+            <button class="btn btn-success" id="btnRegistrar" onclick="registrarPersonas()">
+                ✅ REGISTRAR ID_PERSONA
+            </button>
+            <button class="btn btn-primary" id="btnSiguiente" onclick="irAlSiguiente()">
+                ▶ SIGUIENTE PASO
+            </button>
+            <button class="btn btn-warning" id="btnPrevisualizar" onclick="previsualizar()">
+                👁 PREVISUALIZAR
+            </button>
+            <button class="btn btn-secondary" id="btnActualizar" onclick="cargarDatos()">
+                🔄 ACTUALIZAR
+            </button>
+        </div>
+
+        <!-- Script generado -->
+        <div class="script-area" id="scriptArea" style="display: none;">
+            <div class="script-header">
+                <h3>📄 SCRIPT GENERADO - ID_PERSONA</h3>
+                <button class="btn btn-secondary" onclick="copiarScript()" style="padding: 5px 15px; font-size: 12px;">
+                    📋 COPIAR
+                </button>
+            </div>
+            <div class="script-body" id="scriptBody">
+                -- Script generado automáticamente
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let trabajadoresData = [];
+
+        // ============================================================
+        // CARGAR DATOS INICIALES
+        // ============================================================
+
+        document.addEventListener('DOMContentLoaded', function() {
+            cargarDatos();
+            
+            // Actualizar ejemplo correlativo al cambiar el valor
+            document.getElementById('primer_id_persona').addEventListener('input', function() {
+                const valor = this.value;
+                if (valor && parseInt(valor) > 0) {
+                    const num = parseInt(valor);
+                    const total = parseInt(document.getElementById('statTotal').textContent) || 0;
+                    if (total > 0) {
+                        document.getElementById('ejemploCorrelativo').textContent = 
+                            `${num}, ${num+1}, ${num+2}, ... ${num+total-1}`;
+                    } else {
+                        document.getElementById('ejemploCorrelativo').textContent = 
+                            `${num}, ${num+1}, ${num+2}, ...`;
+                    }
+                }
+            });
+        });
+
+        function cargarDatos() {
+            fetch('/api/estado')
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        actualizarInfo(data);
+                        actualizarTabla(data);
+                        actualizarStats(data);
+                    } else {
+                        mostrarMensaje('Error al cargar datos: ' + (data.error || 'Error desconocido'), 'error');
+                    }
+                })
+                .catch(error => {
+                    mostrarMensaje('Error de conexión: ' + error, 'error');
+                });
+        }
+
+        // ============================================================
+        // ACTUALIZAR INFORMACIÓN
+        // ============================================================
+
+        function actualizarInfo(data) {
+            document.getElementById('totalTrabajadores').textContent = data.total || 0;
+            document.getElementById('idTicket').textContent = data.id_ticket || '-';
+            document.getElementById('tipoPlanilla').textContent = data.tipo || '-';
+            
+            const estado = data.pendientes > 0 ? 'Pendiente' : 'Completado';
+            document.getElementById('estado').textContent = estado;
+            document.getElementById('estado').style.color = data.pendientes > 0 ? '#f39c12' : '#27ae60';
+        }
+
+        // ============================================================
+        // ACTUALIZAR ESTADÍSTICAS
+        // ============================================================
+
+        function actualizarStats(data) {
+            const procesados = data.procesados || [];
+            const total = procesados.length;
+            
+            let registrados = 0;
+            procesados.forEach(t => {
+                if (t.id_persona && t.id_persona !== 'None' && t.id_persona !== null) {
+                    registrados++;
+                }
+            });
+            
+            document.getElementById('statTotal').textContent = total;
+            document.getElementById('statRegistrados').textContent = registrados;
+            document.getElementById('statPendientes').textContent = total - registrados;
+            
+            const porcentaje = total > 0 ? (registrados / total) * 100 : 0;
+            document.getElementById('progressFill').style.width = porcentaje + '%';
+        }
+
+        // ============================================================
+        // ACTUALIZAR TABLA - Mostrar IDs correlativos en preview
+        // ============================================================
+
+        function actualizarTabla(data) {
+            const procesados = data.procesados || [];
+            
+            if (procesados.length === 0) {
+                document.getElementById('tablaTrabajadores').innerHTML = `
+                    <tr>
+                        <td colspan="14" style="text-align:center; padding: 30px; color: #95a5a6;">
+                            <span style="font-size: 18px;">📂</span><br>
+                            No hay datos generados todavía.<br>
+                            <small>Cargue un Excel y configure la cantidad en los pasos anteriores.</small>
+                        </td>
+                    </tr>
+                `;
+                return;
+            }
+
+            let html = '';
+            trabajadoresData = procesados;
+            
+            // Obtener el primer ID ingresado para mostrar preview
+            const primerIdInput = document.getElementById('primer_id_persona');
+            const primerId = primerIdInput.value ? parseInt(primerIdInput.value) : null;
+            
+            procesados.forEach((t, index) => {
+                const nro = t.nro;
+                const idPersona = t.id_persona && t.id_persona !== 'None' ? t.id_persona : '';
+                const registrado = idPersona !== '';
+                
+                // Calcular ID correlativo para preview
+                let idPreview = '';
+                if (primerId !== null && !isNaN(primerId)) {
+                    idPreview = primerId + index;
+                }
+                
+                html += `
+                    <tr>
+                        <td><strong>${nro}</strong></td>
+                        <td>${t.ci || ''}</td>
+                        <td>${t.expedicion || ''}</td>
+                        <td>${t.codexp || ''}</td>
+                        <td>${t.nombre || ''}</td>
+                        <td>${t.codigo_tramite || 'PENDIENTE'}</td>
+                        <td>${t.id_tramite || 'PENDIENTE'}</td>
+                        <td>${t.hora_inicio || '-'}</td>
+                        <td>${t.hora_fin || '-'}</td>
+                        <td>${t.relacion || ''}</td>
+                        <td>${t.direccion || ''}</td>
+                        <td>${t.telefono || ''}</td>
+                        <td>
+                            ${idPreview ? `<span class="id-persona-preview">${idPreview}</span>` : '—'}
+                            ${registrado ? ` <span class="badge-registrado">✓</span>` : ''}
+                        </td>
+                        <td>
+                            ${registrado 
+                                ? '<span class="badge-registrado">✓ REGISTRADO</span>' 
+                                : (idPreview ? '<span class="badge-correlativo">⏳ CORRELATIVO</span>' : '<span class="badge-pendiente">⏳ PENDIENTE</span>')}
+                        </td>
+                    </tr>
+                `;
+            });
+
+            document.getElementById('tablaTrabajadores').innerHTML = html;
+            
+            // Actualizar ejemplo correlativo
+            const total = procesados.length;
+            if (primerId !== null && !isNaN(primerId) && total > 0) {
+                document.getElementById('ejemploCorrelativo').textContent = 
+                    `${primerId}, ${primerId+1}, ${primerId+2}, ... ${primerId+total-1}`;
+            }
+        }
+
+        // ============================================================
+        // REGISTRAR ID_PERSONA (SOLO EL PRIMERO - CORRELATIVO)
+        // ============================================================
+
+        function registrarPersonas() {
+            const primerId = document.getElementById('primer_id_persona').value.trim();
+            
+            if (!primerId) {
+                mostrarMensaje('⚠️ Debe ingresar el primer ID_PERSONA.', 'error');
+                document.getElementById('primer_id_persona').focus();
+                return;
+            }
+            
+            if (parseInt(primerId) <= 0) {
+                mostrarMensaje('⚠️ El ID_PERSONA debe ser un número mayor que cero.', 'error');
+                document.getElementById('primer_id_persona').focus();
+                return;
+            }
+
+            const btn = document.getElementById('btnRegistrar');
+            btn.disabled = true;
+            btn.textContent = '⏳ REGISTRANDO...';
+
+            fetch('/api/registrar_personas', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    primer_id_persona: parseInt(primerId)
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    mostrarMensaje(`✅ ${data.mensaje || 'ID_PERSONA registrados correctamente.'}`, 'exito');
+                    
+                    // Mostrar script completo acumulado
+                    if (data.script_completo) {
+                        document.getElementById('scriptArea').style.display = 'block';
+                        document.getElementById('scriptBody').textContent = data.script_completo;
+                    }
+                    
+                    // Actualizar estado
+                    cargarDatos();
+                    
+                    // Habilitar botón siguiente
+                    document.getElementById('btnSiguiente').disabled = false;
+                    
+                } else {
+                    mostrarMensaje('❌ Error: ' + (data.error || 'Error desconocido'), 'error');
+                }
+            })
+            .catch(error => {
+                mostrarMensaje('❌ Error de conexión: ' + error, 'error');
+            })
+            .finally(() => {
+                btn.disabled = false;
+                btn.textContent = '✅ REGISTRAR ID_PERSONA';
+            });
+        }
+
+        // ============================================================
+        // PREVISUALIZAR
+        // ============================================================
+
+        function previsualizar() {
+            fetch('/api/previsualizacion')
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        actualizarTabla(data);
+                        actualizarStats(data);
+                        mostrarMensaje('✅ Previsualización actualizada.', 'info');
+                    } else {
+                        mostrarMensaje('❌ Error: ' + (data.error || 'Error desconocido'), 'error');
+                    }
+                })
+                .catch(error => {
+                    mostrarMensaje('❌ Error de conexión: ' + error, 'error');
+                });
+        }
+
+        // ============================================================
+        // IR AL SIGUIENTE PASO
+        // ============================================================
+
+        function irAlSiguiente() {
+            // Verificar que se haya registrado al menos un ID_PERSONA
+            const procesados = trabajadoresData || [];
+            let tieneRegistrados = false;
+            
+            procesados.forEach(t => {
+                if (t.id_persona && t.id_persona !== 'None' && t.id_persona !== null) {
+                    tieneRegistrados = true;
+                }
+            });
+            
+            if (!tieneRegistrados) {
+                mostrarMensaje('⚠️ Debe registrar los ID_PERSONA antes de continuar.', 'error');
+                return;
+            }
+            
+            // Guardar avance antes de ir al siguiente paso
+            fetch('/api/guardar_avance', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({})
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    window.location.href = '/codigo';
+                } else {
+                    mostrarMensaje('⚠️ No se pudo guardar el avance, pero puede continuar.', 'warning');
+                    window.location.href = '/codigo';
+                }
+            })
+            .catch(() => {
+                window.location.href = '/codigo';
+            });
+        }
+
+        // ============================================================
+        // COPIAR SCRIPT
+        // ============================================================
+
+        function copiarScript() {
+            const script = document.getElementById('scriptBody').textContent;
+            navigator.clipboard.writeText(script).then(() => {
+                mostrarMensaje('✅ Script copiado al portapapeles.', 'exito');
+            }).catch(() => {
+                const textarea = document.createElement('textarea');
+                textarea.value = script;
+                document.body.appendChild(textarea);
+                textarea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textarea);
+                mostrarMensaje('✅ Script copiado al portapapeles.', 'exito');
+            });
+        }
+
+        // ============================================================
+        // MOSTRAR MENSAJES
+        // ============================================================
+
+        function mostrarMensaje(texto, tipo) {
+            const container = document.getElementById('mensajeContainer');
+            const clases = {
+                'exito': 'mensaje-exito',
+                'error': 'mensaje-error',
+                'info': 'mensaje-info',
+                'warning': 'mensaje-info'
+            };
+            
+            container.innerHTML = `
+                <div class="mensaje ${clases[tipo] || 'mensaje-info'}">
+                    ${texto}
+                </div>
+            `;
+            
+            setTimeout(() => {
+                container.innerHTML = '';
+            }, 5000);
+        }
+    </script>
+</body>
+</html>

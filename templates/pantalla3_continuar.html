@@ -1,0 +1,869 @@
+{% extends "base.html" %}
+
+{% block title %}Continuar Planilla - Sistema de Planillas{% endblock %}
+
+{% block content %}
+
+<div class="row justify-content-center">
+    <div class="col-lg-11">
+
+        <!-- =====================================================
+             ENCABEZADO
+        ====================================================== -->
+        <div class="d-flex align-items-center mb-4">
+
+            <i class="fas fa-history fa-2x text-primary me-3"></i>
+
+            <div>
+                <h4 class="fw-bold mb-0">
+                    PASO 3: CONTINUAR PLANILLA
+                </h4>
+
+                <p class="text-muted small mb-0">
+                    Selecciona una planilla procesada anteriormente
+                    para consultar o continuar su procesamiento.
+                </p>
+            </div>
+
+        </div>
+
+
+        <!-- =====================================================
+             INFORMACIÓN
+        ====================================================== -->
+        <div class="alert alert-info d-flex align-items-start mb-4">
+
+            <i class="fas fa-info-circle me-2 mt-1"></i>
+
+            <div>
+                <strong>Continuación de planillas</strong>
+
+                <div class="small mt-1">
+                    Aquí se muestran las planillas que fueron guardadas
+                    anteriormente. Selecciona una para continuar con
+                    su información.
+                </div>
+            </div>
+
+        </div>
+
+
+        <!-- =====================================================
+             HISTORIAL
+        ====================================================== -->
+        <div class="card-custom">
+
+            <div class="d-flex justify-content-between align-items-center mb-3">
+
+                <div>
+                    <h6 class="fw-bold mb-1">
+                        <i class="fas fa-folder-open me-2 text-primary"></i>
+                        HISTORIAL DE PLANILLAS
+                    </h6>
+
+                    <span class="text-muted small">
+                        Planillas procesadas anteriormente
+                    </span>
+                </div>
+
+                <span class="badge bg-primary" id="totalHistorial">
+                    0 planillas
+                </span>
+
+            </div>
+
+
+            <!-- =================================================
+                 TABLA HISTORIAL
+            ================================================== -->
+            <div class="table-responsive">
+
+                <table class="table table-custom table-hover align-middle">
+
+                    <thead>
+                        <tr>
+
+                            <th>N°</th>
+
+                            <th>ARCHIVO</th>
+
+                            <th>EMPRESA</th>
+
+                            <th>NIT</th>
+
+                            <th>TRABAJADORES</th>
+
+                            <th>FECHA</th>
+
+                            <th>ESTADO</th>
+
+                            <th>ACCIÓN</th>
+
+                        </tr>
+                    </thead>
+
+
+                    <tbody id="historialBody">
+
+                        <!--
+                            El historial se cargará mediante JavaScript.
+                        -->
+
+                        <tr id="filaSinHistorial">
+
+                            <td colspan="8"
+                                class="text-center text-muted py-5">
+
+                                <i class="fas fa-folder-open fa-2x mb-3 d-block"></i>
+
+                                No hay planillas guardadas.
+
+                            </td>
+
+                        </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+
+        <!-- =====================================================
+             PREVISUALIZACIÓN DE LA PLANILLA SELECCIONADA
+        ====================================================== -->
+        <div class="card-custom mt-4 hidden" id="detallePlanilla">
+
+            <div class="d-flex justify-content-between align-items-center mb-3">
+
+                <div>
+
+                    <h6 class="fw-bold mb-1">
+
+                        <i class="fas fa-file-excel me-2 text-success"></i>
+
+                        PLANILLA SELECCIONADA
+
+                    </h6>
+
+                    <span class="text-muted small" id="nombrePlanillaSeleccionada">
+                        -
+                    </span>
+
+                </div>
+
+                <span class="badge bg-success" id="estadoPlanillaSeleccionada">
+                    -
+                </span>
+
+            </div>
+
+
+            <!-- =================================================
+                 INFORMACIÓN GENERAL
+            ================================================== -->
+
+            <div class="row g-3 mb-4">
+
+                <div class="col-md-3">
+
+                    <div class="p-3 bg-light rounded">
+
+                        <small class="text-muted d-block">
+                            Empresa
+                        </small>
+
+                        <strong id="detalleEmpresa">
+                            -
+                        </strong>
+
+                    </div>
+
+                </div>
+
+
+                <div class="col-md-3">
+
+                    <div class="p-3 bg-light rounded">
+
+                        <small class="text-muted d-block">
+                            NIT
+                        </small>
+
+                        <strong id="detalleNit">
+                            -
+                        </strong>
+
+                    </div>
+
+                </div>
+
+
+                <div class="col-md-3">
+
+                    <div class="p-3 bg-light rounded">
+
+                        <small class="text-muted d-block">
+                            Trabajadores
+                        </small>
+
+                        <strong id="detalleCantidad">
+                            0
+                        </strong>
+
+                    </div>
+
+                </div>
+
+
+                <div class="col-md-3">
+
+                    <div class="p-3 bg-light rounded">
+
+                        <small class="text-muted d-block">
+                            Fecha
+                        </small>
+
+                        <strong id="detalleFecha">
+                            -
+                        </strong>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- =================================================
+                 PREVISUALIZACIÓN
+            ================================================== -->
+
+            <h6 class="fw-bold mb-3">
+
+                <i class="fas fa-table me-2 text-primary"></i>
+
+                PREVISUALIZACIÓN DE TRABAJADORES
+
+            </h6>
+
+
+            <div class="table-responsive">
+
+                <table class="table table-custom table-hover">
+
+                    <thead>
+
+                        <tr>
+
+                            <th>N°</th>
+                            <th>C.I.</th>
+                            <th>EXP.</th>
+                            <th>CODEXP</th>
+                            <th>CÓDIGO PERSONA</th>
+                            <th>COD_TRAM</th>
+                            <th>ID_TRÁMITE</th>
+                            <th>HORA INICIO</th>
+                            <th>HORA FIN</th>
+                            <th>NOMBRE</th>
+                            <th>TELÉFONO</th>
+                            <th>RELACIÓN</th>
+                            <th>DIRECCIÓN</th>
+
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody id="detalleTrabajadoresBody">
+
+                        <tr>
+
+                            <td colspan="13"
+                                class="text-center text-muted py-4">
+
+                                Selecciona una planilla.
+
+                            </td>
+
+                        </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+
+        <!-- =====================================================
+             BOTONES
+        ====================================================== -->
+
+        <div class="d-flex justify-content-between mt-4">
+
+            <button
+                type="button"
+                class="btn btn-secondary"
+                onclick="volverPaso1()">
+
+                <i class="fas fa-arrow-left me-2"></i>
+
+                VOLVER
+
+            </button>
+
+
+            <button
+                type="button"
+                class="btn btn-primary-custom"
+                id="btnContinuarPlanilla"
+                onclick="continuarPlanillaSeleccionada()"
+                disabled>
+
+                <i class="fas fa-arrow-right me-2"></i>
+
+                CONTINUAR PLANILLA
+
+            </button>
+
+        </div>
+
+    </div>
+</div>
+
+
+{% endblock %}
+
+
+{% block extra_js %}
+
+<script>
+
+    /* ============================================================
+       VARIABLES
+    ============================================================ */
+
+    let historialPlanillas = [];
+
+    let planillaSeleccionada = null;
+
+
+    /* ============================================================
+       INICIO
+    ============================================================ */
+
+    document.addEventListener('DOMContentLoaded', function () {
+
+        cargarHistorial();
+
+    });
+
+
+    /* ============================================================
+       CARGAR HISTORIAL
+    ============================================================ */
+
+    function cargarHistorial() {
+
+        const tbody =
+            document.getElementById('historialBody');
+
+        if (!tbody) {
+            return;
+        }
+
+
+        /*
+         * IMPORTANTE:
+         *
+         * En este momento tu app.py no tiene todavía
+         * un endpoint /api/historial.
+         *
+         * Por eso no hacemos una petición que pueda
+         * provocar un error.
+         *
+         * Cuando agreguemos el endpoint del historial,
+         * esta función será conectada directamente
+         * con app.py.
+         */
+
+
+        historialPlanillas = [];
+
+
+        mostrarHistorial();
+
+    }
+
+
+    /* ============================================================
+       MOSTRAR HISTORIAL
+    ============================================================ */
+
+    function mostrarHistorial() {
+
+        const tbody =
+            document.getElementById('historialBody');
+
+        const total =
+            document.getElementById('totalHistorial');
+
+
+        if (!tbody) {
+            return;
+        }
+
+
+        tbody.innerHTML = '';
+
+
+        if (total) {
+
+            total.textContent =
+                historialPlanillas.length +
+                (
+                    historialPlanillas.length === 1
+                        ? ' planilla'
+                        : ' planillas'
+                );
+
+        }
+
+
+        if (historialPlanillas.length === 0) {
+
+            tbody.innerHTML = `
+
+                <tr>
+
+                    <td colspan="8"
+                        class="text-center text-muted py-5">
+
+                        <i class="fas fa-folder-open fa-2x mb-3 d-block"></i>
+
+                        No hay planillas guardadas.
+
+                        <div class="small mt-2">
+                            Las planillas aparecerán aquí
+                            cuando sean guardadas.
+                        </div>
+
+                    </td>
+
+                </tr>
+
+            `;
+
+            return;
+        }
+
+
+        historialPlanillas.forEach(function (planilla, index) {
+
+            const tr =
+                document.createElement('tr');
+
+
+            tr.innerHTML = `
+
+                <td>
+                    ${index + 1}
+                </td>
+
+                <td>
+                    ${escapeHTML(planilla.archivo || '-')}
+                </td>
+
+                <td>
+                    ${escapeHTML(planilla.empresa || '-')}
+                </td>
+
+                <td>
+                    ${escapeHTML(planilla.nit || '-')}
+                </td>
+
+                <td>
+                    ${escapeHTML(
+                        planilla.cantidad || 0
+                    )}
+                </td>
+
+                <td>
+                    ${escapeHTML(planilla.fecha || '-')}
+                </td>
+
+                <td>
+
+                    <span class="badge bg-success">
+                        ${escapeHTML(
+                            planilla.estado || 'GUARDADA'
+                        )}
+                    </span>
+
+                </td>
+
+                <td>
+
+                    <button
+                        type="button"
+                        class="btn btn-sm btn-primary"
+                        onclick="seleccionarPlanilla(${index})">
+
+                        <i class="fas fa-eye me-1"></i>
+
+                        VER
+
+                    </button>
+
+                </td>
+
+            `;
+
+
+            tbody.appendChild(tr);
+
+        });
+
+    }
+
+
+    /* ============================================================
+       SELECCIONAR PLANILLA
+    ============================================================ */
+
+    function seleccionarPlanilla(index) {
+
+        if (
+            index < 0 ||
+            index >= historialPlanillas.length
+        ) {
+            return;
+        }
+
+
+        planillaSeleccionada =
+            historialPlanillas[index];
+
+
+        mostrarDetallePlanilla(
+            planillaSeleccionada
+        );
+
+
+        const btn =
+            document.getElementById(
+                'btnContinuarPlanilla'
+            );
+
+
+        if (btn) {
+
+            btn.disabled = false;
+
+        }
+
+    }
+
+
+    /* ============================================================
+       MOSTRAR DETALLE
+    ============================================================ */
+
+    function mostrarDetallePlanilla(planilla) {
+
+        const detalle =
+            document.getElementById(
+                'detallePlanilla'
+            );
+
+
+        if (!detalle) {
+            return;
+        }
+
+
+        detalle.classList.remove('hidden');
+
+
+        ponerTexto(
+            'nombrePlanillaSeleccionada',
+            planilla.archivo || '-'
+        );
+
+
+        ponerTexto(
+            'estadoPlanillaSeleccionada',
+            planilla.estado || 'GUARDADA'
+        );
+
+
+        ponerTexto(
+            'detalleEmpresa',
+            planilla.empresa || '-'
+        );
+
+
+        ponerTexto(
+            'detalleNit',
+            planilla.nit || '-'
+        );
+
+
+        ponerTexto(
+            'detalleCantidad',
+            planilla.cantidad || 0
+        );
+
+
+        ponerTexto(
+            'detalleFecha',
+            planilla.fecha || '-'
+        );
+
+
+        mostrarTrabajadoresPlanilla(
+            planilla.trabajadores || []
+        );
+
+    }
+
+
+    /* ============================================================
+       MOSTRAR TRABAJADORES DE LA PLANILLA
+    ============================================================ */
+
+    function mostrarTrabajadoresPlanilla(trabajadores) {
+
+        const tbody =
+            document.getElementById(
+                'detalleTrabajadoresBody'
+            );
+
+
+        if (!tbody) {
+            return;
+        }
+
+
+        tbody.innerHTML = '';
+
+
+        if (
+            !trabajadores ||
+            trabajadores.length === 0
+        ) {
+
+            tbody.innerHTML = `
+
+                <tr>
+
+                    <td colspan="13"
+                        class="text-center text-muted py-4">
+
+                        No existen trabajadores
+                        registrados en esta planilla.
+
+                    </td>
+
+                </tr>
+
+            `;
+
+            return;
+        }
+
+
+        trabajadores.forEach(function (t) {
+
+            const tr =
+                document.createElement('tr');
+
+
+            tr.innerHTML = `
+
+                <td>
+                    ${escapeHTML(t.nro)}
+                </td>
+
+                <td>
+                    ${escapeHTML(t.ci)}
+                </td>
+
+                <td>
+                    ${escapeHTML(t.expedicion)}
+                </td>
+
+                <td>
+                    ${escapeHTML(t.codexp)}
+                </td>
+
+                <td>
+                    ${escapeHTML(
+                        t.id_persona ||
+                        t.id_persona_excel ||
+                        '-'
+                    )}
+                </td>
+
+                <td>
+                    ${escapeHTML(
+                        t.codigo_tramite ||
+                        t.cod_tram ||
+                        '-'
+                    )}
+                </td>
+
+                <td>
+                    ${escapeHTML(
+                        t.id_tramite ||
+                        t.id_tramite_excel ||
+                        '-'
+                    )}
+                </td>
+
+                <td>
+                    ${escapeHTML(
+                        t.hora_inicio ||
+                        t.hora_inicio_excel ||
+                        '-'
+                    )}
+                </td>
+
+                <td>
+                    ${escapeHTML(
+                        t.hora_fin ||
+                        t.hora_fin_excel ||
+                        '-'
+                    )}
+                </td>
+
+                <td>
+                    ${escapeHTML(t.nombre)}
+                </td>
+
+                <td>
+                    ${escapeHTML(
+                        t.telefono
+                    )}
+                </td>
+
+                <td>
+                    ${escapeHTML(
+                        t.cargo ||
+                        t.relacion ||
+                        '-'
+                    )}
+                </td>
+
+                <td>
+                    ${escapeHTML(
+                        t.direccion
+                    )}
+                </td>
+
+            `;
+
+
+            tbody.appendChild(tr);
+
+        });
+
+    }
+
+
+    /* ============================================================
+       CONTINUAR PLANILLA
+    ============================================================ */
+
+    function continuarPlanillaSeleccionada() {
+
+        if (!planillaSeleccionada) {
+
+            mostrarNotificacion(
+                '⚠️ Selecciona primero una planilla.',
+                'warning'
+            );
+
+            return;
+        }
+
+
+        /*
+         * La continuación real se conectará
+         * con el endpoint correspondiente de app.py.
+         *
+         * Por ahora se conserva la navegación
+         * existente del sistema.
+         */
+
+        window.location.href =
+            '/ticket';
+
+    }
+
+
+    /* ============================================================
+       VOLVER AL PASO 1
+    ============================================================ */
+
+    function volverPaso1() {
+
+        window.location.href = '/';
+
+    }
+
+
+    /* ============================================================
+       UTILIDADES
+    ============================================================ */
+
+    function ponerTexto(id, valor) {
+
+        const elemento =
+            document.getElementById(id);
+
+
+        if (!elemento) {
+            return;
+        }
+
+
+        elemento.textContent =
+            valor === null ||
+            valor === undefined ||
+            valor === ''
+                ? '-'
+                : valor;
+
+    }
+
+
+    function escapeHTML(valor) {
+
+        if (
+            valor === null ||
+            valor === undefined
+        ) {
+            return '-';
+        }
+
+
+        const div =
+            document.createElement('div');
+
+
+        div.textContent =
+            String(valor);
+
+
+        return div.innerHTML;
+
+    }
+
+</script>
+
+{% endblock %}

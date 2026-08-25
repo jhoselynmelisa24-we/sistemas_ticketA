@@ -1,0 +1,1429 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Paso 1 - Cargar Planilla</title>
+
+    <!-- Bootstrap -->
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+        rel="stylesheet"
+    >
+
+    <!-- Font Awesome -->
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    >
+
+    <style>
+
+        body {
+            background: #f4f6f9;
+            font-family: Arial, sans-serif;
+        }
+
+        .contenedor {
+            max-width: 1400px;
+            margin: 30px auto;
+        }
+
+        .card-principal {
+            border: none;
+            border-radius: 15px;
+            box-shadow: 0 4px 18px rgba(0,0,0,.10);
+        }
+
+        .titulo {
+            font-weight: 700;
+            color: #212529;
+        }
+
+        .subtitulo {
+            color: #6c757d;
+        }
+
+        .zona-carga {
+            border: 2px dashed #adb5bd;
+            border-radius: 12px;
+            padding: 35px;
+            text-align: center;
+            background: #fff;
+            transition: .3s;
+        }
+
+        .zona-carga:hover {
+            border-color: #0d6efd;
+            background: #f8fbff;
+        }
+
+        .icono-excel {
+            font-size: 55px;
+            color: #198754;
+            margin-bottom: 15px;
+        }
+
+        #inputExcel {
+            display: none;
+        }
+
+        .btn-seleccionar {
+            cursor: pointer;
+        }
+
+        .info-archivo {
+            display: none;
+            margin-top: 20px;
+        }
+
+        .resumen {
+            display: none;
+            margin-top: 25px;
+        }
+
+        .tabla-contenedor {
+            display: none;
+            margin-top: 25px;
+        }
+
+        .tabla-scroll {
+            max-height: 500px;
+            overflow: auto;
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+            background: white;
+        }
+
+        table {
+            margin-bottom: 0 !important;
+            white-space: nowrap;
+        }
+
+        thead th {
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            background: #212529 !important;
+            color: white !important;
+            text-align: center;
+            vertical-align: middle;
+        }
+
+        tbody td {
+            vertical-align: middle;
+        }
+
+        .numero-fila {
+            background: #f1f3f5;
+            font-weight: bold;
+            text-align: center;
+            position: sticky;
+            left: 0;
+            z-index: 5;
+        }
+
+        .cabecera-numero {
+            position: sticky;
+            left: 0;
+            z-index: 15;
+            background: #212529 !important;
+        }
+
+        .mensaje-cargando {
+            display: none;
+        }
+
+        .mensaje-error {
+            display: none;
+        }
+
+        .botones {
+            display: none;
+            margin-top: 25px;
+        }
+
+        .badge-total {
+            font-size: 15px;
+        }
+
+        .texto-vacio {
+            color: #adb5bd;
+            font-style: italic;
+        }
+
+        .estado-excel {
+            display: none;
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<div class="container-fluid contenedor">
+
+    <div class="card card-principal">
+
+        <!-- =====================================================
+             ENCABEZADO
+        ====================================================== -->
+
+        <div class="card-header bg-white border-0 p-4">
+
+            <div class="d-flex justify-content-between align-items-center">
+
+                <div>
+
+                    <h2 class="titulo mb-1">
+
+                        <i class="fa-solid fa-file-excel text-success"></i>
+
+                        Paso 1 - Cargar Planilla
+
+                    </h2>
+
+                    <p class="subtitulo mb-0">
+
+                        Seleccione el archivo Excel que contiene
+                        la información de los trabajadores.
+
+                    </p>
+
+                </div>
+
+
+                <span class="badge bg-primary fs-6">
+
+                    PASO 1 DE 8
+
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <div class="card-body p-4">
+
+
+            <!-- =================================================
+                 ZONA DE CARGA
+            ================================================== -->
+
+            <div class="zona-carga" id="zonaCarga">
+
+                <div class="icono-excel">
+
+                    <i class="fa-solid fa-file-excel"></i>
+
+                </div>
+
+
+                <h4>
+
+                    Seleccionar archivo Excel
+
+                </h4>
+
+
+                <p class="text-muted">
+
+                    Formatos permitidos: .xlsx y .xls
+
+                </p>
+
+
+                <label
+                    for="inputExcel"
+                    class="btn btn-success btn-lg btn-seleccionar"
+                >
+
+                    <i class="fa-solid fa-folder-open"></i>
+
+                    Seleccionar Excel
+
+                </label>
+
+
+                <input
+                    type="file"
+                    id="inputExcel"
+                    accept=".xlsx,.xls"
+                >
+
+
+                <div
+                    id="nombreSeleccionado"
+                    class="mt-3 text-muted"
+                >
+
+                    Ningún archivo seleccionado
+
+                </div>
+
+            </div>
+
+
+            <!-- =================================================
+                 CARGANDO
+            ================================================== -->
+
+            <div
+                id="mensajeCargando"
+                class="alert alert-info mensaje-cargando mt-4"
+            >
+
+                <div class="d-flex align-items-center">
+
+                    <div
+                        class="spinner-border spinner-border-sm me-2"
+                        role="status"
+                    ></div>
+
+                    <span>
+
+                        Leyendo Excel y extrayendo los datos...
+
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <!-- =================================================
+                 ERROR
+            ================================================== -->
+
+            <div
+                id="mensajeError"
+                class="alert alert-danger mensaje-error mt-4"
+            >
+
+                <i class="fa-solid fa-circle-exclamation"></i>
+
+                <span id="textoError"></span>
+
+            </div>
+
+
+            <!-- =================================================
+                 INFORMACIÓN DEL ARCHIVO
+            ================================================== -->
+
+            <div
+                id="infoArchivo"
+                class="info-archivo"
+            >
+
+                <div class="row g-3">
+
+
+                    <div class="col-md-4">
+
+                        <div class="card bg-light border-0">
+
+                            <div class="card-body">
+
+                                <small class="text-muted">
+
+                                    ARCHIVO
+
+                                </small>
+
+                                <h6
+                                    id="archivoNombre"
+                                    class="mb-0 mt-1"
+                                ></h6>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="col-md-4">
+
+                        <div class="card bg-light border-0">
+
+                            <div class="card-body">
+
+                                <small class="text-muted">
+
+                                    TOTAL DE REGISTROS
+
+                                </small>
+
+                                <h5 class="mb-0 mt-1">
+
+                                    <span
+                                        id="totalTrabajadores"
+                                        class="badge bg-primary badge-total"
+                                    >
+                                        0
+                                    </span>
+
+                                </h5>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="col-md-4">
+
+                        <div class="card bg-light border-0">
+
+                            <div class="card-body">
+
+                                <small class="text-muted">
+
+                                    COLUMNAS DETECTADAS
+
+                                </small>
+
+                                <h5 class="mb-0 mt-1">
+
+                                    <span
+                                        id="totalColumnas"
+                                        class="badge bg-secondary badge-total"
+                                    >
+                                        0
+                                    </span>
+
+                                </h5>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- =================================================
+                 RESUMEN
+            ================================================== -->
+
+            <div
+                id="resumen"
+                class="resumen"
+            >
+
+                <div class="alert alert-success mb-0">
+
+                    <i class="fa-solid fa-circle-check"></i>
+
+                    <strong>Excel cargado correctamente.</strong>
+
+                    Los datos que aparecen a continuación son
+                    los datos extraídos directamente del archivo.
+
+                </div>
+
+            </div>
+
+
+            <!-- =================================================
+                 PREVISUALIZACIÓN
+            ================================================== -->
+
+            <div
+                id="tablaContenedor"
+                class="tabla-contenedor"
+            >
+
+                <div class="d-flex justify-content-between
+                            align-items-center mb-3">
+
+                    <div>
+
+                        <h4 class="mb-1">
+
+                            <i class="fa-solid fa-table"></i>
+
+                            Previsualización de la Planilla
+
+                        </h4>
+
+                        <small class="text-muted">
+
+                            Se muestran todas las columnas y
+                            todos los registros encontrados.
+
+                        </small>
+
+                    </div>
+
+
+                    <span
+                        id="estadoExcel"
+                        class="badge bg-success estado-excel"
+                    >
+
+                        <i class="fa-solid fa-check"></i>
+
+                        Datos extraídos
+
+                    </span>
+
+                </div>
+
+
+                <div class="tabla-scroll">
+
+                    <table
+                        id="tablaExcel"
+                        class="table table-bordered table-hover table-sm"
+                    >
+
+                        <thead id="cabeceraExcel">
+
+                        </thead>
+
+
+                        <tbody id="cuerpoExcel">
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+
+            <!-- =================================================
+                 CANTIDAD A PROCESAR
+            ================================================== -->
+
+            <div
+                id="seccionCantidad"
+                class="card bg-light border-0 mt-4"
+                style="display:none;"
+            >
+
+                <div class="card-body">
+
+                    <h5>
+
+                        <i class="fa-solid fa-users"></i>
+
+                        Cantidad de trabajadores a procesar
+
+                    </h5>
+
+                    <p class="text-muted">
+
+                        Indique cuántos trabajadores desea procesar
+                        en este bloque.
+
+                    </p>
+
+
+                    <div class="row align-items-end">
+
+                        <div class="col-md-4">
+
+                            <label
+                                for="cantidadProcesar"
+                                class="form-label fw-bold"
+                            >
+
+                                Cantidad
+
+                            </label>
+
+                            <input
+                                type="number"
+                                id="cantidadProcesar"
+                                class="form-control form-control-lg"
+                                min="1"
+                                value="1"
+                            >
+
+                        </div>
+
+
+                        <div class="col-md-4">
+
+                            <div class="alert alert-info mb-0">
+
+                                Total disponible:
+
+                                <strong
+                                    id="totalDisponible"
+                                >
+                                    0
+                                </strong>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="col-md-4">
+
+                            <button
+                                type="button"
+                                id="btnConfigurar"
+                                class="btn btn-primary btn-lg w-100"
+                            >
+
+                                <i class="fa-solid fa-arrow-right"></i>
+
+                                Continuar
+
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- =================================================
+                 BOTONES
+            ================================================== -->
+
+            <div
+                id="botones"
+                class="botones text-end"
+            >
+
+                <button
+                    type="button"
+                    id="btnRecargar"
+                    class="btn btn-outline-secondary"
+                >
+
+                    <i class="fa-solid fa-rotate"></i>
+
+                    Cambiar Excel
+
+                </button>
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<script>
+
+/* ============================================================
+   ESTADO DE PANTALLA 1
+============================================================ */
+
+let datosExcel = {
+
+    archivo: null,
+
+    columnas: [],
+
+    filas: [],
+
+    trabajadores: [],
+
+    total: 0
+
+};
+
+
+/* ============================================================
+   ELEMENTOS
+============================================================ */
+
+const inputExcel =
+    document.getElementById("inputExcel");
+
+const nombreSeleccionado =
+    document.getElementById("nombreSeleccionado");
+
+const mensajeCargando =
+    document.getElementById("mensajeCargando");
+
+const mensajeError =
+    document.getElementById("mensajeError");
+
+const textoError =
+    document.getElementById("textoError");
+
+const infoArchivo =
+    document.getElementById("infoArchivo");
+
+const archivoNombre =
+    document.getElementById("archivoNombre");
+
+const totalTrabajadores =
+    document.getElementById("totalTrabajadores");
+
+const totalColumnas =
+    document.getElementById("totalColumnas");
+
+const resumen =
+    document.getElementById("resumen");
+
+const tablaContenedor =
+    document.getElementById("tablaContenedor");
+
+const cabeceraExcel =
+    document.getElementById("cabeceraExcel");
+
+const cuerpoExcel =
+    document.getElementById("cuerpoExcel");
+
+const estadoExcel =
+    document.getElementById("estadoExcel");
+
+const botones =
+    document.getElementById("botones");
+
+const seccionCantidad =
+    document.getElementById("seccionCantidad");
+
+const cantidadProcesar =
+    document.getElementById("cantidadProcesar");
+
+const totalDisponible =
+    document.getElementById("totalDisponible");
+
+const btnConfigurar =
+    document.getElementById("btnConfigurar");
+
+const btnRecargar =
+    document.getElementById("btnRecargar");
+
+
+/* ============================================================
+   SELECCIONAR ARCHIVO
+============================================================ */
+
+inputExcel.addEventListener(
+    "change",
+    function () {
+
+        const archivo = this.files[0];
+
+        if (!archivo) {
+
+            nombreSeleccionado.textContent =
+                "Ningún archivo seleccionado";
+
+            return;
+
+        }
+
+
+        nombreSeleccionado.innerHTML =
+            `<i class="fa-solid fa-file-excel text-success"></i>
+             <strong>${escapeHtml(archivo.name)}</strong>`;
+
+
+        cargarExcel(archivo);
+
+    }
+);
+
+
+/* ============================================================
+   CARGAR EXCEL
+============================================================ */
+
+async function cargarExcel(archivo) {
+
+    ocultarError();
+
+    mostrarCargando();
+
+
+    const formData =
+        new FormData();
+
+    formData.append(
+        "file",
+        archivo
+    );
+
+
+    try {
+
+        const respuesta =
+            await fetch(
+                "/api/upload",
+                {
+                    method: "POST",
+                    body: formData
+                }
+            );
+
+
+        const datos =
+            await respuesta.json();
+
+
+        if (!respuesta.ok || !datos.success) {
+
+            throw new Error(
+                datos.error ||
+                "No se pudo cargar el Excel."
+            );
+
+        }
+
+
+        /* ====================================================
+           GUARDAR RESPUESTA
+        ==================================================== */
+
+        datosExcel.archivo =
+            datos.archivo || archivo.name;
+
+        datosExcel.columnas =
+            Array.isArray(datos.columnas)
+                ? datos.columnas
+                : [];
+
+        datosExcel.filas =
+            Array.isArray(datos.filas)
+                ? datos.filas
+                : [];
+
+        datosExcel.trabajadores =
+            Array.isArray(datos.trabajadores)
+                ? datos.trabajadores
+                : [];
+
+        datosExcel.total =
+            Number(datos.total || datos.filas.length);
+
+
+        /* ====================================================
+           MOSTRAR INFORMACIÓN
+        ==================================================== */
+
+        archivoNombre.textContent =
+            datosExcel.archivo;
+
+        totalTrabajadores.textContent =
+            datosExcel.total;
+
+        totalColumnas.textContent =
+            datosExcel.columnas.length;
+
+        totalDisponible.textContent =
+            datosExcel.total;
+
+
+        /* ====================================================
+           CARGAR TABLA
+        ==================================================== */
+
+        construirTabla(
+            datosExcel.columnas,
+            datosExcel.filas
+        );
+
+
+        /* ====================================================
+           MOSTRAR INTERFAZ
+        ==================================================== */
+
+        infoArchivo.style.display =
+            "block";
+
+        resumen.style.display =
+            "block";
+
+        tablaContenedor.style.display =
+            "block";
+
+        estadoExcel.style.display =
+            "inline-block";
+
+        botones.style.display =
+            "block";
+
+        seccionCantidad.style.display =
+            "block";
+
+
+        /* ====================================================
+           CANTIDAD POR DEFECTO
+        ==================================================== */
+
+        cantidadProcesar.max =
+            datosExcel.total;
+
+        cantidadProcesar.value =
+            datosExcel.total;
+
+
+        /* ====================================================
+           GUARDAR EN LOCALSTORAGE
+           
+           Solo para mantener la información visual.
+           El almacenamiento real está en Flask.
+        ==================================================== */
+
+        try {
+
+            localStorage.setItem(
+                "archivo_excel",
+                datosExcel.archivo
+            );
+
+            localStorage.setItem(
+                "total_excel",
+                String(datosExcel.total)
+            );
+
+        } catch (e) {
+
+            console.warn(
+                "No se pudo usar localStorage",
+                e
+            );
+
+        }
+
+
+    } catch (error) {
+
+        console.error(error);
+
+        mostrarError(
+            error.message ||
+            "Ocurrió un error al cargar el Excel."
+        );
+
+    } finally {
+
+        ocultarCargando();
+
+    }
+
+}
+
+
+/* ============================================================
+   CONSTRUIR TABLA DINÁMICAMENTE
+============================================================ */
+
+function construirTabla(columnas, filas) {
+
+    cabeceraExcel.innerHTML = "";
+
+    cuerpoExcel.innerHTML = "";
+
+
+    /* ========================================================
+       SI NO HAY COLUMNAS
+    ======================================================== */
+
+    if (!columnas || columnas.length === 0) {
+
+        cabeceraExcel.innerHTML = `
+            <tr>
+                <th>Información</th>
+            </tr>
+        `;
+
+        cuerpoExcel.innerHTML = `
+            <tr>
+                <td class="text-center text-muted">
+                    No se encontraron columnas.
+                </td>
+            </tr>
+        `;
+
+        return;
+
+    }
+
+
+    /* ========================================================
+       CABECERA
+    ======================================================== */
+
+    const filaCabecera =
+        document.createElement("tr");
+
+
+    /* Número de fila */
+
+    const thNumero =
+        document.createElement("th");
+
+    thNumero.textContent =
+        "#";
+
+    thNumero.className =
+        "cabecera-numero";
+
+    filaCabecera.appendChild(
+        thNumero
+    );
+
+
+    /* Columnas reales del Excel */
+
+    columnas.forEach(
+        function (columna) {
+
+            const th =
+                document.createElement("th");
+
+            th.textContent =
+                columna;
+
+            filaCabecera.appendChild(
+                th
+            );
+
+        }
+    );
+
+
+    cabeceraExcel.appendChild(
+        filaCabecera
+    );
+
+
+    /* ========================================================
+       FILAS
+    ======================================================== */
+
+    filas.forEach(
+        function (fila, indice) {
+
+            const tr =
+                document.createElement("tr");
+
+
+            /* Número de fila */
+
+            const tdNumero =
+                document.createElement("td");
+
+            tdNumero.className =
+                "numero-fila";
+
+            tdNumero.textContent =
+                indice + 1;
+
+            tr.appendChild(
+                tdNumero
+            );
+
+
+            /* Datos */
+
+            columnas.forEach(
+                function (columna) {
+
+                    const td =
+                        document.createElement("td");
+
+                    const valor =
+                        fila &&
+                        Object.prototype.hasOwnProperty.call(
+                            fila,
+                            columna
+                        )
+                            ? fila[columna]
+                            : "";
+
+
+                    if (
+                        valor === null ||
+                        valor === undefined ||
+                        String(valor).trim() === ""
+                    ) {
+
+                        td.innerHTML =
+                            `<span class="texto-vacio">
+                                vacío
+                             </span>`;
+
+                    } else {
+
+                        td.textContent =
+                            valor;
+
+                    }
+
+
+                    tr.appendChild(
+                        td
+                    );
+
+                }
+            );
+
+
+            cuerpoExcel.appendChild(
+                tr
+            );
+
+        }
+    );
+
+
+    /* ========================================================
+       SI NO HAY FILAS
+    ======================================================== */
+
+    if (filas.length === 0) {
+
+        const tr =
+            document.createElement("tr");
+
+        const td =
+            document.createElement("td");
+
+        td.colSpan =
+            columnas.length + 1;
+
+        td.className =
+            "text-center text-muted p-4";
+
+        td.textContent =
+            "No existen registros en el Excel.";
+
+        tr.appendChild(td);
+
+        cuerpoExcel.appendChild(tr);
+
+    }
+
+}
+
+
+/* ============================================================
+   CONFIGURAR CANTIDAD
+============================================================ */
+
+btnConfigurar.addEventListener(
+    "click",
+    async function () {
+
+        const cantidad =
+            parseInt(
+                cantidadProcesar.value,
+                10
+            );
+
+
+        if (
+            isNaN(cantidad) ||
+            cantidad <= 0
+        ) {
+
+            mostrarError(
+                "La cantidad debe ser mayor que cero."
+            );
+
+            return;
+
+        }
+
+
+        if (
+            cantidad >
+            datosExcel.total
+        ) {
+
+            mostrarError(
+                `No puede procesar ${cantidad} trabajadores. ` +
+                `El Excel contiene solamente ${datosExcel.total}.`
+            );
+
+            return;
+
+        }
+
+
+        try {
+
+            btnConfigurar.disabled =
+                true;
+
+            btnConfigurar.innerHTML =
+                `<span class="spinner-border spinner-border-sm"></span>
+                 Guardando...`;
+
+
+            const respuesta =
+                await fetch(
+                    "/api/configurar_cantidad",
+                    {
+                        method: "POST",
+
+                        headers: {
+                            "Content-Type":
+                                "application/json"
+                        },
+
+                        body: JSON.stringify({
+
+                            cantidad_procesar:
+                                cantidad
+
+                        })
+
+                    }
+                );
+
+
+            const datos =
+                await respuesta.json();
+
+
+            if (
+                !respuesta.ok ||
+                !datos.success
+            ) {
+
+                throw new Error(
+                    datos.error ||
+                    "No se pudo configurar la cantidad."
+                );
+
+            }
+
+
+            /* =================================================
+               CONTINUAR AL PASO 2
+            ================================================= */
+
+            window.location.href =
+                "/tipo";
+
+
+        } catch (error) {
+
+            console.error(error);
+
+            mostrarError(
+                error.message
+            );
+
+        } finally {
+
+            btnConfigurar.disabled =
+                false;
+
+            btnConfigurar.innerHTML =
+                `<i class="fa-solid fa-arrow-right"></i>
+                 Continuar`;
+
+        }
+
+    }
+);
+
+
+/* ============================================================
+   CAMBIAR EXCEL
+============================================================ */
+
+btnRecargar.addEventListener(
+    "click",
+    function () {
+
+        location.reload();
+
+    }
+);
+
+
+/* ============================================================
+   MOSTRAR CARGANDO
+============================================================ */
+
+function mostrarCargando() {
+
+    mensajeCargando.style.display =
+        "block";
+
+}
+
+
+/* ============================================================
+   OCULTAR CARGANDO
+============================================================ */
+
+function ocultarCargando() {
+
+    mensajeCargando.style.display =
+        "none";
+
+}
+
+
+/* ============================================================
+   MOSTRAR ERROR
+============================================================ */
+
+function mostrarError(mensaje) {
+
+    textoError.textContent =
+        mensaje;
+
+    mensajeError.style.display =
+        "block";
+
+}
+
+
+/* ============================================================
+   OCULTAR ERROR
+============================================================ */
+
+function ocultarError() {
+
+    mensajeError.style.display =
+        "none";
+
+}
+
+
+/* ============================================================
+   ESCAPAR HTML
+============================================================ */
+
+function escapeHtml(valor) {
+
+    if (
+        valor === null ||
+        valor === undefined
+    ) {
+
+        return "";
+
+    }
+
+
+    return String(valor)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+
+}
+
+
+/* ============================================================
+   DRAG & DROP
+============================================================ */
+
+const zonaCarga =
+    document.getElementById("zonaCarga");
+
+
+zonaCarga.addEventListener(
+    "dragover",
+    function (e) {
+
+        e.preventDefault();
+
+        zonaCarga.style.borderColor =
+            "#0d6efd";
+
+    }
+);
+
+
+zonaCarga.addEventListener(
+    "dragleave",
+    function () {
+
+        zonaCarga.style.borderColor =
+            "#adb5bd";
+
+    }
+);
+
+
+zonaCarga.addEventListener(
+    "drop",
+    function (e) {
+
+        e.preventDefault();
+
+        zonaCarga.style.borderColor =
+            "#adb5bd";
+
+
+        const archivo =
+            e.dataTransfer.files[0];
+
+
+        if (!archivo) {
+
+            return;
+
+        }
+
+
+        const extension =
+            archivo.name
+                .split(".")
+                .pop()
+                .toLowerCase();
+
+
+        if (
+            extension !== "xlsx" &&
+            extension !== "xls"
+        ) {
+
+            mostrarError(
+                "Seleccione un archivo Excel .xlsx o .xls"
+            );
+
+            return;
+
+        }
+
+
+        nombreSeleccionado.innerHTML =
+            `<i class="fa-solid fa-file-excel text-success"></i>
+             <strong>${escapeHtml(archivo.name)}</strong>`;
+
+
+        cargarExcel(archivo);
+
+    }
+);
+
+</script>
+
+
+</body>
+
+</html>

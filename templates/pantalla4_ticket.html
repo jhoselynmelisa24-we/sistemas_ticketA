@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Paso 4 - Configurar Ticket</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f0f2f5;
+            padding: 20px;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #1a3c6e;
+            border-bottom: 3px solid #1a3c6e;
+            padding-bottom: 15px;
+            margin-bottom: 20px;
+        }
+        .info-bar {
+            display: flex;
+            gap: 30px;
+            background: #e8edf4;
+            padding: 15px 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        .info-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .info-item strong {
+            color: #1a3c6e;
+        }
+        .info-item .value {
+            font-weight: bold;
+            color: #2c3e50;
+        }
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin: 20px 0;
+        }
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+        .form-group label {
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 5px;
+        }
+        .form-group label .required {
+            color: #e74c3c;
+        }
+        .form-control {
+            padding: 10px 12px;
+            border: 2px solid #d0d7e2;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: all 0.3s;
+        }
+        .form-control:focus {
+            border-color: #1a3c6e;
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(26, 60, 110, 0.2);
+        }
+        .form-control-sm {
+            padding: 8px 10px;
+            font-size: 13px;
+        }
+        select.form-control {
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23333' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 12px center;
+            padding-right: 35px;
+        }
+        .full-width {
+            grid-column: 1 / -1;
+        }
+        .acciones {
+            display: flex;
+            gap: 15px;
+            margin: 25px 0 15px 0;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+        .btn {
+            padding: 12px 30px;
+            border: none;
+            border-radius: 8px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
+        }
+        .btn-primary {
+            background: #1a3c6e;
+            color: white;
+        }
+        .btn-primary:hover {
+            background: #152d52;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(26, 60, 110, 0.3);
+        }
+        .btn-success {
+            background: #27ae60;
+            color: white;
+        }
+        .btn-success:hover {
+            background: #1e8449;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(39, 174, 96, 0.3);
+        }
+        .btn-warning {
+            background: #f39c12;
+            color: white;
+        }
+        .btn-warning:hover {
+            background: #d68910;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(243, 156, 18, 0.3);
+        }
+        .btn-secondary {
+            background: #95a5a6;
+            color: white;
+        }
+        .btn-secondary:hover {
+            background: #7f8c8d;
+            transform: translateY(-2px);
+        }
+        .btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none !important;
+        }
+        .script-area {
+            margin-top: 20px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        .script-header {
+            background: #2c3e50;
+            color: white;
+            padding: 12px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .script-header h3 {
+            margin: 0;
+            font-size: 16px;
+        }
+        .script-body {
+            background: #1e1e1e;
+            color: #d4d4d4;
+            padding: 20px;
+            max-height: 400px;
+            overflow: auto;
+            font-family: 'Consolas', 'Monaco', monospace;
+            font-size: 12px;
+            line-height: 1.6;
+            white-space: pre-wrap;
+            word-break: break-all;
+        }
+        .mensaje {
+            padding: 12px 18px;
+            border-radius: 8px;
+            margin: 10px 0;
+            font-weight: 500;
+        }
+        .mensaje-exito {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        .mensaje-error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        .mensaje-info {
+            background: #d1ecf1;
+            color: #0c5460;
+            border: 1px solid #bee5eb;
+        }
+        .table-container {
+            overflow-x: auto;
+            margin: 15px 0;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13px;
+        }
+        thead {
+            background: #1a3c6e;
+            color: white;
+        }
+        th {
+            padding: 10px 8px;
+            text-align: left;
+            white-space: nowrap;
+        }
+        td {
+            padding: 8px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        .badge-ticket {
+            display: inline-block;
+            background: #27ae60;
+            color: white;
+            padding: 2px 12px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+        @media (max-width: 768px) {
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+            .container {
+                padding: 15px;
+            }
+            .info-bar {
+                flex-direction: column;
+                gap: 10px;
+            }
+            .acciones {
+                flex-direction: column;
+            }
+            .btn {
+                width: 100%;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎫 PASO 4: CONFIGURAR TICKET</h1>
+        <p style="color: #7f8c8d; margin-bottom: 15px;">
+            Configure los datos del ticket y el sistema generará automáticamente el <strong>ID_TICKET</strong>.
+        </p>
+
+        <!-- Barra de información -->
+        <div class="info-bar" id="infoBar">
+            <div class="info-item">
+                <strong>PLANILLA:</strong>
+                <span class="value" id="planillaId">-</span>
+            </div>
+            <div class="info-item">
+                <strong>TRABAJADORES:</strong>
+                <span class="value" id="totalTrabajadores">0</span>
+            </div>
+            <div class="info-item">
+                <strong>ID_TICKET:</strong>
+                <span class="value" id="idTicket">-</span>
+            </div>
+            <div class="info-item">
+                <strong>ESTADO:</strong>
+                <span class="value" id="estado">Pendiente</span>
+            </div>
+        </div>
+
+        <!-- Mensajes -->
+        <div id="mensajeContainer"></div>
+
+        <!-- Formulario -->
+        <form id="formTicket" onsubmit="return false;">
+            <div class="form-grid">
+                <!-- Código Ticket -->
+                <div class="form-group">
+                    <label for="codigo">Código Ticket <span class="required">*</span></label>
+                    <input type="text" id="codigo" class="form-control" value="RF-001" placeholder="Ej: RF-001">
+                </div>
+
+                <!-- Fecha -->
+                <div class="form-group">
+                    <label for="fecha">Fecha <span class="required">*</span></label>
+                    <input type="date" id="fecha" class="form-control">
+                </div>
+
+                <!-- Hora Inicio -->
+                <div class="form-group">
+                    <label for="hora_inicio">Hora Inicio <span class="required">*</span></label>
+                    <input type="time" id="hora_inicio" class="form-control" value="08:30">
+                </div>
+
+                <!-- Hora Fin -->
+                <div class="form-group">
+                    <label for="hora_fin">Hora Fin <span class="required">*</span></label>
+                    <input type="time" id="hora_fin" class="form-control" value="13:21">
+                </div>
+
+                <!-- RAZON SOCIAL - NUEVO -->
+                <div class="form-group">
+                    <label for="razon_social">Razón Social <span class="required">*</span></label>
+                    <input type="text" id="razon_social" class="form-control" placeholder="Ingrese la razón social">
+                </div>
+
+                <!-- NIT - NUEVO -->
+                <div class="form-group">
+                    <label for="nit">NIT <span class="required">*</span></label>
+                    <input type="text" id="nit" class="form-control" placeholder="Ingrese el NIT">
+                </div>
+
+                <!-- Tipo Trámite -->
+                <div class="form-group">
+                    <label for="tipo_tramite">Tipo Trámite <span class="required">*</span></label>
+                    <select id="tipo_tramite" class="form-control">
+                        <option value="173">CONTRATOS</option>
+                        <option value="174" selected>FINIQUITO</option>
+                        <option value="175">TRÁMITES</option>
+                    </select>
+                </div>
+
+                <!-- Departamento -->
+                <div class="form-group">
+                    <label for="departamento">Departamento <span class="required">*</span></label>
+                    <select id="departamento" class="form-control">
+                        <option value="30">LA PAZ</option>
+                        <option value="31">COCHABAMBA</option>
+                        <option value="32" selected>SANTA CRUZ</option>
+                    </select>
+                </div>
+
+                <!-- Cantidad de Trabajadores -->
+                <div class="form-group full-width">
+                    <label for="cantidad">Cantidad de Trabajadores a Procesar <span class="required">*</span></label>
+                    <input type="number" id="cantidad" class="form-control" placeholder="Ej: 5" min="1">
+                    <small class="text-muted" style="margin-top: 5px; color: #7f8c8d;">
+                        Total disponibles: <span id="totalDisponibles">0</span> trabajadores
+                    </small>
+                </div>
+            </div>
+
+            <!-- Botones -->
+            <div class="acciones">
+                <button type="button" class="btn btn-primary" onclick="configurarTicket()">
+                    ⚙️ CONFIGURAR TICKET
+                </button>
+                <button type="button" class="btn btn-success" id="btnGenerarTicket" onclick="generarTicket()">
+                    🎫 GENERAR ID_TICKET
+                </button>
+                <button type="button" class="btn btn-warning" onclick="previsualizar()">
+                    👁 PREVISUALIZAR
+                </button>
+                <button type="button" class="btn btn-secondary" onclick="cargarDatos()">
+                    🔄 ACTUALIZAR
+                </button>
+                <a href="/persona" class="btn btn-primary" id="linkSiguiente" style="display: none;">
+                    ▶ SIGUIENTE PASO
+                </a>
+            </div>
+        </form>
+
+        <!-- Script generado -->
+        <div class="script-area" id="scriptArea" style="display: none;">
+            <div class="script-header">
+                <h3>📄 SCRIPT GENERADO - ID_TICKET</h3>
+                <button class="btn btn-secondary" onclick="copiarScript()" style="padding: 5px 15px; font-size: 12px;">
+                    📋 COPIAR
+                </button>
+            </div>
+            <div class="script-body" id="scriptBody">
+                -- Script generado automáticamente
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let datosPlanilla = {};
+
+        // ============================================================
+        // CARGAR DATOS INICIALES
+        // ============================================================
+
+        document.addEventListener('DOMContentLoaded', function() {
+            // Establecer fecha actual por defecto
+            const hoy = new Date().toISOString().split('T')[0];
+            document.getElementById('fecha').value = hoy;
+            cargarDatos();
+        });
+
+        function cargarDatos() {
+            fetch('/api/estado')
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        datosPlanilla = data;
+                        actualizarInfo(data);
+                        document.getElementById('totalDisponibles').textContent = data.total || 0;
+                        
+                        // Si ya tiene ID_TICKET, mostrar
+                        if (data.id_ticket) {
+                            document.getElementById('idTicket').textContent = data.id_ticket;
+                            document.getElementById('btnGenerarTicket').disabled = true;
+                            document.getElementById('btnGenerarTicket').textContent = '✅ ID_TICKET GENERADO';
+                        }
+                    }
+                })
+                .catch(error => {
+                    mostrarMensaje('Error de conexión: ' + error, 'error');
+                });
+        }
+
+        // ============================================================
+        // ACTUALIZAR INFORMACIÓN
+        // ============================================================
+
+        function actualizarInfo(data) {
+            document.getElementById('planillaId').textContent = data.planilla_id || '-';
+            document.getElementById('totalTrabajadores').textContent = data.total || 0;
+            
+            if (data.id_ticket) {
+                document.getElementById('idTicket').textContent = data.id_ticket;
+                document.getElementById('estado').textContent = '✅ Ticket Generado';
+                document.getElementById('estado').style.color = '#27ae60';
+            } else {
+                document.getElementById('idTicket').textContent = '-';
+                document.getElementById('estado').textContent = 'Pendiente';
+                document.getElementById('estado').style.color = '#f39c12';
+            }
+        }
+
+        // ============================================================
+        // CONFIGURAR TICKET (CON NIT Y RAZON SOCIAL)
+        // ============================================================
+
+        function configurarTicket() {
+            const codigo = document.getElementById('codigo').value.trim();
+            const fecha = document.getElementById('fecha').value;
+            const hora_inicio = document.getElementById('hora_inicio').value;
+            const hora_fin = document.getElementById('hora_fin').value;
+            const razon_social = document.getElementById('razon_social').value.trim();
+            const nit = document.getElementById('nit').value.trim();
+            const tipo_tramite = document.getElementById('tipo_tramite').value;
+            const departamento = document.getElementById('departamento').value;
+            const cantidad = document.getElementById('cantidad').value;
+
+            // Validaciones
+            if (!codigo) {
+                mostrarMensaje('⚠️ Debe ingresar el código del ticket.', 'error');
+                return;
+            }
+            if (!fecha) {
+                mostrarMensaje('⚠️ Debe seleccionar una fecha.', 'error');
+                return;
+            }
+            if (!razon_social) {
+                mostrarMensaje('⚠️ Debe ingresar la Razón Social.', 'error');
+                return;
+            }
+            if (!nit) {
+                mostrarMensaje('⚠️ Debe ingresar el NIT.', 'error');
+                return;
+            }
+            if (!cantidad || parseInt(cantidad) <= 0) {
+                mostrarMensaje('⚠️ Debe indicar la cantidad de trabajadores.', 'error');
+                return;
+            }
+
+            const btn = document.querySelector('.btn-primary');
+            btn.disabled = true;
+            btn.textContent = '⏳ CONFIGURANDO...';
+
+            const data = {
+                codigo: codigo,
+                fecha: fecha,
+                hora_inicio: hora_inicio,
+                hora_fin: hora_fin,
+                razon_social: razon_social,
+                nit: nit,
+                tipo_tramite: parseInt(tipo_tramite),
+                departamento: parseInt(departamento),
+                cantidad_trabajadores: parseInt(cantidad)
+            };
+
+            fetch('/api/configurar_ticket', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(data)
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    mostrarMensaje('✅ Ticket configurado correctamente.', 'exito');
+                    // Recargar datos
+                    cargarDatos();
+                    // Mostrar script si existe
+                    if (data.script) {
+                        document.getElementById('scriptArea').style.display = 'block';
+                        document.getElementById('scriptBody').textContent = data.script;
+                    }
+                } else {
+                    mostrarMensaje('❌ Error: ' + (data.error || 'Error desconocido'), 'error');
+                }
+            })
+            .catch(error => {
+                mostrarMensaje('❌ Error de conexión: ' + error, 'error');
+            })
+            .finally(() => {
+                btn.disabled = false;
+                btn.textContent = '⚙️ CONFIGURAR TICKET';
+            });
+        }
+
+        // ============================================================
+        // GENERAR ID_TICKET (AUTOMÁTICO)
+        // ============================================================
+
+        function generarTicket() {
+            const btn = document.getElementById('btnGenerarTicket');
+            btn.disabled = true;
+            btn.textContent = '⏳ GENERANDO...';
+
+            fetch('/api/generar_ticket', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({})
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    mostrarMensaje(`✅ ID_TICKET generado: ${data.id_ticket}`, 'exito');
+                    document.getElementById('idTicket').textContent = data.id_ticket;
+                    document.getElementById('estado').textContent = '✅ Ticket Generado';
+                    document.getElementById('estado').style.color = '#27ae60';
+                    btn.disabled = true;
+                    btn.textContent = '✅ ID_TICKET GENERADO';
+                    
+                    // Mostrar script
+                    if (data.script) {
+                        document.getElementById('scriptArea').style.display = 'block';
+                        document.getElementById('scriptBody').textContent = data.script;
+                    }
+                    
+                    // Mostrar siguiente paso
+                    document.getElementById('linkSiguiente').style.display = 'inline-block';
+                } else {
+                    mostrarMensaje('❌ Error: ' + (data.error || 'Error desconocido'), 'error');
+                    btn.disabled = false;
+                    btn.textContent = '🎫 GENERAR ID_TICKET';
+                }
+            })
+            .catch(error => {
+                mostrarMensaje('❌ Error de conexión: ' + error, 'error');
+                btn.disabled = false;
+                btn.textContent = '🎫 GENERAR ID_TICKET';
+            });
+        }
+
+        // ============================================================
+        // PREVISUALIZAR
+        // ============================================================
+
+        function previsualizar() {
+            fetch('/api/previsualizacion')
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        mostrarMensaje('✅ Previsualización actualizada.', 'info');
+                        actualizarInfo(data);
+                    } else {
+                        mostrarMensaje('❌ Error: ' + (data.error || 'Error desconocido'), 'error');
+                    }
+                })
+                .catch(error => {
+                    mostrarMensaje('❌ Error de conexión: ' + error, 'error');
+                });
+        }
+
+        // ============================================================
+        // COPIAR SCRIPT
+        // ============================================================
+
+        function copiarScript() {
+            const script = document.getElementById('scriptBody').textContent;
+            navigator.clipboard.writeText(script).then(() => {
+                mostrarMensaje('✅ Script copiado al portapapeles.', 'exito');
+            }).catch(() => {
+                const textarea = document.createElement('textarea');
+                textarea.value = script;
+                document.body.appendChild(textarea);
+                textarea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textarea);
+                mostrarMensaje('✅ Script copiado al portapapeles.', 'exito');
+            });
+        }
+
+        // ============================================================
+        // MOSTRAR MENSAJES
+        // ============================================================
+
+        function mostrarMensaje(texto, tipo) {
+            const container = document.getElementById('mensajeContainer');
+            const clases = {
+                'exito': 'mensaje-exito',
+                'error': 'mensaje-error',
+                'info': 'mensaje-info',
+                'warning': 'mensaje-info'
+            };
+            
+            container.innerHTML = `
+                <div class="mensaje ${clases[tipo] || 'mensaje-info'}">
+                    ${texto}
+                </div>
+            `;
+            
+            setTimeout(() => {
+                container.innerHTML = '';
+            }, 5000);
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,106 @@
+{% extends "base.html" %}
+
+{% block title %}Tipo de Procesamiento - Sistema de Planillas{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-lg-8">
+        
+        <div class="d-flex align-items-center mb-4">
+            <i class="fas fa-layer-group fa-2x text-primary me-3"></i>
+            <div>
+                <h4 class="fw-bold mb-0">PASO 2: TIPO DE PROCESAMIENTO</h4>
+                <p class="text-muted small mb-0">Selecciona si es una planilla nueva o continuación</p>
+            </div>
+        </div>
+        
+        <div class="card-custom text-center mb-3">
+            <div class="row g-3">
+                <div class="col-md-6">
+                    <div class="p-4 border rounded-3 h-100" style="cursor: pointer;" onclick="seleccionarTipo('NUEVA')">
+                        <div class="display-4 mb-2">📄</div>
+                        <h5 class="fw-bold">PLANILLA NUEVA</h5>
+                        <p class="text-muted small">Iniciar desde cero con todos los trabajadores</p>
+                        <ul class="list-unstyled text-start small">
+                            <li>✅ Procesar todos los trabajadores</li>
+                            <li>✅ Generar nuevo ID_TICKET</li>
+                            <li>✅ Hora inicio: 08:30</li>
+                        </ul>
+                        <button class="btn btn-primary-custom w-100" id="btnNueva">
+                            <i class="fas fa-plus me-2"></i> SELECCIONAR
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="col-md-6">
+                    <div class="p-4 border rounded-3 h-100" style="cursor: pointer;" onclick="seleccionarTipo('RECIENTE')">
+                        <div class="display-4 mb-2">📋</div>
+                        <h5 class="fw-bold">PLANILLA RECIENTE</h5>
+                        <p class="text-muted small">Continuar desde el trabajador donde quedó</p>
+                        <ul class="list-unstyled text-start small">
+                            <li>✅ Continuar desde trabajador específico</li>
+                            <li>✅ Mismo ID_TICKET</li>
+                            <li>✅ Hora calculada automáticamente</li>
+                        </ul>
+                        <button class="btn btn-primary-custom w-100" id="btnReciente">
+                            <i class="fas fa-play me-2"></i> SELECCIONAR
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="d-flex gap-3 justify-content-end mt-3">
+            <button class="btn btn-secondary" onclick="volver()">⬅ VOLVER</button>
+        </div>
+        
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+function seleccionarTipo(tipo) {
+    const btn = tipo === 'NUEVA' ? document.getElementById('btnNueva') : document.getElementById('btnReciente');
+    btn.disabled = true;
+    btn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span> PROCESANDO...';
+    
+    document.querySelectorAll('.btn-primary-custom').forEach(b => b.disabled = true);
+    
+    mostrarLoading('Procesando...', 'Preparando datos');
+    
+    fetch('/api/tipo', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({ tipo: tipo })
+    })
+    .then(response => response.json())
+    .then(data => {
+        ocultarLoading();
+        if (data.success) {
+            if (tipo === 'NUEVA') {
+                window.location.href = '/ticket';
+            } else {
+                window.location.href = '/continuar';
+            }
+        } else {
+            mostrarNotificacion('❌ Error: ' + data.error, 'error');
+            restaurarBotones();
+        }
+    })
+    .catch(error => {
+        ocultarLoading();
+        mostrarNotificacion('❌ Error: ' + error, 'error');
+        restaurarBotones();
+    });
+}
+
+function restaurarBotones() {
+    document.querySelectorAll('.btn-primary-custom').forEach(b => {
+        b.disabled = false;
+        if (b.id === 'btnNueva') b.innerHTML = '<i class="fas fa-plus me-2"></i> SELECCIONAR';
+        else b.innerHTML = '<i class="fas fa-play me-2"></i> SELECCIONAR';
+    });
+}
+</script>
+{% endblock %}

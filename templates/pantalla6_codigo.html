@@ -1,0 +1,147 @@
+{% extends "base.html" %}
+
+{% block title %}CÓDIGO_TRAMITE - Sistema de Planillas{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-lg-12">
+        
+        <div class="d-flex align-items-center mb-4">
+            <i class="fas fa-code fa-2x text-primary me-3"></i>
+            <div>
+                <h4 class="fw-bold mb-0">PASO 6: CÓDIGO_TRAMITE</h4>
+                <p class="text-muted small mb-0">Genera el código visible del trámite</p>
+            </div>
+        </div>
+        
+        <div class="card-custom">
+            <div class="row g-3">
+                <div class="col-md-4">
+                    <label class="form-label fw-bold small">Prefijo</label>
+                    <input type="text" class="form-control" id="prefijo" value="TRM">
+                </div>
+                <div class="col-md-4">
+                    <label class="form-label fw-bold small">Año</label>
+                    <input type="number" class="form-control" id="anio" value="2026">
+                </div>
+                <div class="col-md-4">
+                    <label class="form-label fw-bold small">Número Inicial</label>
+                    <input type="number" class="form-control" id="numInicial" value="{{ session.get('desde_trabajador', 1) }}" readonly>
+                </div>
+            </div>
+            
+            <div class="mt-3 d-flex gap-3">
+                <button class="btn btn-primary-custom" onclick="generarCodigos()">
+                    <i class="fas fa-code me-2"></i> GENERAR CÓDIGOS
+                </button>
+                <button class="btn btn-success-custom" onclick="generarTodosCodigos()">
+                    <i class="fas fa-bolt me-2"></i> GENERAR TODOS
+                </button>
+            </div>
+        </div>
+        
+        <!-- Planilla -->
+        <div class="card-custom hidden" id="previewSection">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h6 class="fw-bold mb-0"><i class="fas fa-table me-2 text-primary"></i>PLANILLA CON CÓDIGO_TRAMITE</h6>
+                <span class="badge bg-primary" id="totalPreview">0</span>
+            </div>
+            
+            <div class="table-responsive" style="max-height: 350px; overflow-y: auto;">
+                <table class="table table-custom table-hover table-sm">
+                    <thead class="sticky-top bg-white">
+                        <tr>
+                            <th>N°</th>
+                            <th>ID_PERSONA</th>
+                            <th>CÓDIGO_TRAMITE</th>
+                            <th>C.I.</th>
+                            <th>Nombre</th>
+                            <th>Estado</th>
+                        </tr>
+                    </thead>
+                    <tbody id="planillaBody">
+                        <tr><td colspan="6" class="text-center text-muted py-3">Genera códigos para ver los datos</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        
+        <!-- Script -->
+        <div class="card-custom hidden" id="scriptSection">
+            <h6 class="fw-bold mb-3"><i class="fas fa-code me-2 text-primary"></i>SCRIPT GENERADO</h6>
+            <div class="script-box" id="scriptBox">Genera códigos para ver el script</div>
+        </div>
+        
+        <div class="d-flex gap-3 justify-content-end mt-3">
+            <button class="btn btn-secondary" onclick="volver()">⬅ VOLVER</button>
+            <button class="btn btn-success-custom" id="btnSiguiente" onclick="irA('/idtramite')" disabled>
+                <i class="fas fa-arrow-right me-2"></i> SIGUIENTE: ID_TRAMITE
+            </button>
+        </div>
+        
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+function generarCodigos() {
+    const prefijo = document.getElementById('prefijo').value;
+    const anio = parseInt(document.getElementById('anio').value);
+    
+    mostrarLoading('Generando CÓDIGO_TRAMITE...', 'Asignando códigos');
+    
+    fetch('/api/generar_codigo', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({ prefijo: prefijo, anio: anio })
+    })
+    .then(response => response.json())
+    .then(data => {
+        ocultarLoading();
+        if (data.success) {
+            mostrarPlanilla(data.trabajadores);
+            document.getElementById('scriptBox').textContent = data.script;
+            document.getElementById('scriptSection').classList.remove('hidden');
+            document.getElementById('btnSiguiente').disabled = false;
+            mostrarNotificacion('✅ CÓDIGO_TRAMITE generados', 'success');
+        }
+    })
+    .catch(error => {
+        ocultarLoading();
+        mostrarNotificacion('❌ Error: ' + error, 'error');
+    });
+}
+
+function generarTodosCodigos() {
+    generarCodigos();
+}
+
+function mostrarPlanilla(trabajadores) {
+    const tbody = document.getElementById('planillaBody');
+    tbody.innerHTML = '';
+    document.getElementById('previewSection').classList.remove('hidden');
+    
+    let contador = 0;
+    trabajadores.forEach(t => {
+        if (t.procesar !== false) {
+            contador++;
+            const estado = t.codigo_tramite ? '✅' : '⏳';
+            const color = t.codigo_tramite ? '#34a853' : '#fbbc04';
+            const tr = document.createElement('tr');
+            tr.innerHTML = `
+                <td><strong>${t.nro}</strong></td>
+                <td>${t.id_persona || '-'}</td>
+                <td><strong>${t.codigo_tramite || '-'}</strong></td>
+                <td>${t.ci || 'N/A'}</td>
+                <td>${t.nombre || 'N/A'}</td>
+                <td style="color:${color}">${estado}</td>
+            `;
+            tbody.appendChild(tr);
+        }
+    });
+    
+    document.getElementById('totalPreview').textContent = contador + ' trabajadores';
+}
+</script>
+{% endblock %}
