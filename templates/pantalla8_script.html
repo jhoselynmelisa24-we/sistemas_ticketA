@@ -1,1299 +1,708 @@
-{% extends "base.html" %}
-
-{% block title %}Paso 8 - Scripts{% endblock %}
-
-{% block content %}
-
-<div class="row justify-content-center">
-    <div class="col-lg-12">
-
-        <!-- =====================================================
-             ENCABEZADO
-        ====================================================== -->
-
-        <div class="d-flex align-items-center mb-4">
-
-            <i class="fas fa-code fa-2x text-primary me-3"></i>
-
-            <div>
-
-                <h4 class="fw-bold mb-0">
-                    PASO 8: GENERACIÓN DE SCRIPTS
-                </h4>
-
-                <p class="text-muted small mb-0">
-                    Previsualización final de la planilla y scripts SQL completos
-                </p>
-
-            </div>
-
-        </div>
-
-
-        <!-- =====================================================
-             RESUMEN
-        ====================================================== -->
-
-        <div class="card-custom mb-4">
-
-            <div class="row g-3">
-
-                <div class="col-md-3">
-
-                    <label class="form-label fw-bold">
-                        Total Excel
-                    </label>
-
-                    <div
-                        class="form-control bg-light"
-                        id="totalExcel">
-                        0
-                    </div>
-
-                </div>
-
-
-                <div class="col-md-3">
-
-                    <label class="form-label fw-bold">
-                        Trabajadores procesados
-                    </label>
-
-                    <div
-                        class="form-control bg-light"
-                        id="totalProcesados">
-                        0
-                    </div>
-
-                </div>
-
-
-                <div class="col-md-3">
-
-                    <label class="form-label fw-bold">
-                        Desde
-                    </label>
-
-                    <div
-                        class="form-control bg-light"
-                        id="desdeTrabajador">
-                        -
-                    </div>
-
-                </div>
-
-
-                <div class="col-md-3">
-
-                    <label class="form-label fw-bold">
-                        Hasta
-                    </label>
-
-                    <div
-                        class="form-control bg-light"
-                        id="hastaTrabajador">
-                        -
-                    </div>
-
-                </div>
-
-            </div>
-
-        </div>
-
-
-        <!-- =====================================================
-             INFORMACIÓN GENERAL
-        ====================================================== -->
-
-        <div class="card-custom mb-4">
-
-            <h6 class="fw-bold mb-3">
-
-                <i class="fas fa-info-circle text-primary me-2"></i>
-
-                INFORMACIÓN DEL PROCESO
-
-            </h6>
-
-
-            <div class="row g-3">
-
-                <div class="col-md-3">
-
-                    <label class="form-label">
-                        RF / ID_TICKET
-                    </label>
-
-                    <div
-                        class="form-control bg-light"
-                        id="idTicket">
-                        -
-                    </div>
-
-                </div>
-
-
-                <div class="col-md-3">
-
-                    <label class="form-label">
-                        Fecha
-                    </label>
-
-                    <div
-                        class="form-control bg-light"
-                        id="fechaProceso">
-                        -
-                    </div>
-
-                </div>
-
-
-                <div class="col-md-3">
-
-                    <label class="form-label">
-                        Empresa
-                    </label>
-
-                    <div
-                        class="form-control bg-light"
-                        id="empresaProceso">
-                        -
-                    </div>
-
-                </div>
-
-
-                <div class="col-md-3">
-
-                    <label class="form-label">
-                        NIT
-                    </label>
-
-                    <div
-                        class="form-control bg-light"
-                        id="nitProceso">
-                        -
-                    </div>
-
-                </div>
-
-            </div>
-
-        </div>
-
-
-        <!-- =====================================================
-             PREVISUALIZACIÓN FINAL DE PLANILLA
-        ====================================================== -->
-
-        <div class="card-custom mb-4">
-
-            <div class="d-flex justify-content-between align-items-center mb-3">
-
-                <div>
-
-                    <h6 class="fw-bold mb-0">
-
-                        <i class="fas fa-table text-primary me-2"></i>
-
-                        PLANILLA COMPLETA PROCESADA
-
-                    </h6>
-
-                    <small class="text-muted">
-
-                        Información acumulada de todos los pasos
-
-                    </small>
-
-                </div>
-
-
-                <span
-                    class="badge bg-success"
-                    id="badgeProcesados">
-
-                    0 procesados
-
-                </span>
-
-            </div>
-
-
-            <div
-                class="table-responsive"
-                style="max-height:600px; overflow:auto;">
-
-                <table
-                    class="table table-bordered table-hover table-custom">
-
-                    <thead class="table-light">
-
-                        <tr>
-
-                            <th>N°</th>
-
-                            <th>C.I.</th>
-
-                            <th>EXP.</th>
-
-                            <th>CODEXP</th>
-
-                            <th>CODIGO PERSONA</th>
-
-                            <th>COD_TRAM</th>
-
-                            <th>ID_TRAMITE</th>
-
-                            <th>HORA INICIO</th>
-
-                            <th>HORA FIN</th>
-
-                            <th>
-                                DOCENTES PENDIENTES
-                                DE VISADO DE FINIQUITO
-                            </th>
-
-                            <th>TELEFONO</th>
-
-                            <th>RELACIÓN CON LA EMPRESA</th>
-
-                            <th>DIRECCIÓN</th>
-
-                        </tr>
-
-                    </thead>
-
-
-                    <tbody id="previewBody">
-
-                        <tr>
-
-                            <td
-                                colspan="13"
-                                class="text-center text-muted py-4">
-
-                                Cargando información...
-
-                            </td>
-
-                        </tr>
-
-                    </tbody>
-
-                </table>
-
-            </div>
-
-        </div>
-
-
-        <!-- =====================================================
-             SCRIPT COMPLETO
-        ====================================================== -->
-
-        <div class="card-custom mb-4">
-
-            <div class="d-flex justify-content-between align-items-center mb-3">
-
-                <div>
-
-                    <h6 class="fw-bold mb-0">
-
-                        <i class="fas fa-terminal text-primary me-2"></i>
-
-                        SCRIPT SQL COMPLETO
-
-                    </h6>
-
-                    <small class="text-muted">
-
-                        Script correspondiente a todos los trabajadores procesados
-
-                    </small>
-
-                </div>
-
-
-                <div class="d-flex gap-2">
-
-                    <button
-                        type="button"
-                        class="btn btn-sm btn-outline-primary"
-                        onclick="copiarScript()">
-
-                        <i class="fas fa-copy me-1"></i>
-                        COPIAR
-
-                    </button>
-
-
-                    <button
-                        type="button"
-                        class="btn btn-sm btn-outline-success"
-                        onclick="descargarScript()">
-
-                        <i class="fas fa-download me-1"></i>
-                        DESCARGAR .SQL
-
-                    </button>
-
-                </div>
-
-            </div>
-
-
-            <div class="bg-dark rounded">
-
-                <pre
-                    id="scriptPreview"
-                    class="text-light mb-0 p-3"
-                    style="
-                        max-height:700px;
-                        overflow:auto;
-                        white-space:pre-wrap;
-                        font-family:Consolas,Monaco,monospace;
-                        font-size:13px;
-                        line-height:1.5;
-                    ">Cargando script...</pre>
-
-            </div>
-
-        </div>
-
-
-        <!-- =====================================================
-             ESTADO FINAL
-        ====================================================== -->
-
-        <div
-            class="alert alert-success d-none"
-            id="finalizado">
-
-            <i class="fas fa-check-circle me-2"></i>
-
-            <strong>Proceso completado.</strong>
-
-            Los datos de los trabajadores procesados,
-            los identificadores generados y el script SQL
-            se encuentran disponibles para revisión.
-
-        </div>
-
-
-        <!-- =====================================================
-             BOTONES
-        ====================================================== -->
-
-        <div class="d-flex justify-content-between mt-4 mb-5">
-
-            <button
-                type="button"
-                class="btn btn-secondary"
-                onclick="volver()">
-
-                <i class="fas fa-arrow-left me-2"></i>
-
-                ANTERIOR
-
-            </button>
-
-
-            <div class="d-flex gap-2">
-
-                <button
-                    type="button"
-                    class="btn btn-primary-custom"
-                    id="btnGenerarScript"
-                    onclick="generarScript()">
-
-                    <i class="fas fa-code me-2"></i>
-
-                    GENERAR SCRIPT COMPLETO
-
-                </button>
-
-
-                <button
-                    type="button"
-                    class="btn btn-success-custom"
-                    id="btnGuardar"
-                    onclick="guardarProceso()"
-                    disabled>
-
-                    <i class="fas fa-save me-2"></i>
-
-                    GUARDAR PROCESO
-
-                </button>
-
-            </div>
-
-        </div>
-
-    </div>
-</div>
-
-{% endblock %}
-
-
-{% block extra_js %}
-
-<script>
-
-/* ============================================================
-   ESTADO
-============================================================ */
-
-let trabajadoresData = [];
-let scriptCompleto = "";
-
-
-/* ============================================================
-   INICIO
-============================================================ */
-
-document.addEventListener("DOMContentLoaded", function () {
-
-    cargarScriptFinal();
-
-});
-
-
-/* ============================================================
-   CARGAR SCRIPT FINAL
-============================================================ */
-
-function cargarScriptFinal() {
-
-    fetch("/api/generar_script_final", {
-
-        method: "GET"
-
-    })
-
-    .then(function (response) {
-
-        if (!response.ok) {
-
-            throw new Error(
-                "Error HTTP " + response.status
-            );
-
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Paso 8 - Script Final</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
-
-        return response.json();
-
-    })
-
-    .then(function (data) {
-
-        if (!data.success) {
-
-            throw new Error(
-                data.error ||
-                "No se pudo obtener el script"
-            );
-
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f0f2f5;
+            padding: 20px;
         }
-
-
-        trabajadoresData =
-            data.trabajadores || [];
-
-
-        scriptCompleto =
-            data.script_completo || "";
-
-
-        mostrarResumen();
-
-        mostrarPlanilla();
-
-        mostrarScript();
-
-
-        const btnGuardar =
-            document.getElementById(
-                "btnGuardar"
-            );
-
-        if (btnGuardar) {
-
-            btnGuardar.disabled = false;
-
+        
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
         }
-
-
-        document
-            .getElementById("finalizado")
-            ?.classList.remove("d-none");
-
-    })
-
-    .catch(function (error) {
-
-        console.error(error);
-
-        mostrarNotificacion(
-            "❌ " + error.message,
-            "error"
-        );
-
-        const script =
-            document.getElementById(
-                "scriptPreview"
-            );
-
-        if (script) {
-
-            script.textContent =
-                "-- ERROR AL CARGAR SCRIPT\n" +
-                "-- " +
-                error.message;
-
+        
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #e9ecef;
         }
-
-    });
-
-}
-
-
-/* ============================================================
-   GENERAR SCRIPT
-============================================================ */
-
-function generarScript() {
-
-    const boton =
-        document.getElementById(
-            "btnGenerarScript"
-        );
-
-
-    if (boton) {
-
-        boton.disabled = true;
-
-        boton.innerHTML = `
-
-            <span class="spinner-border
-                         spinner-border-sm
-                         me-2"></span>
-
-            GENERANDO...
-
-        `;
-
-    }
-
-
-    fetch("/api/generar_script_final", {
-
-        method: "GET"
-
-    })
-
-    .then(function (response) {
-
-        if (!response.ok) {
-
-            throw new Error(
-                "Error HTTP " +
-                response.status
-            );
-
+        
+        .header h1 {
+            color: #1a3c6e;
+            font-size: 24px;
         }
-
-        return response.json();
-
-    })
-
-    .then(function (data) {
-
-        if (!data.success) {
-
-            throw new Error(
-                data.error ||
-                "No se pudo generar el script"
-            );
-
+        
+        .step-badge {
+            background: #1a3c6e;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 14px;
         }
-
-
-        trabajadoresData =
-            data.trabajadores || [];
-
-
-        scriptCompleto =
-            data.script_completo || "";
-
-
-        mostrarResumen();
-
-        mostrarPlanilla();
-
-        mostrarScript();
-
-
-        const btnGuardar =
-            document.getElementById(
-                "btnGuardar"
-            );
-
-        if (btnGuardar) {
-
-            btnGuardar.disabled = false;
-
+        
+        .alert {
+            padding: 25px 30px;
+            border-radius: 10px;
+            margin-bottom: 20px;
         }
-
-
-        const finalizado =
-            document.getElementById(
-                "finalizado"
-            );
-
-        if (finalizado) {
-
-            finalizado.classList.remove(
-                "d-none"
-            );
-
+        
+        .alert-success {
+            background: #d4edda;
+            color: #155724;
+            border: 2px solid #28a745;
         }
-
-
-        if (boton) {
-
-            boton.disabled = false;
-
-            boton.innerHTML = `
-
-                <i class="fas fa-check me-2"></i>
-
-                SCRIPT GENERADO
-
-            `;
-
+        
+        .alert-success h3 {
+            font-size: 24px;
+            margin-bottom: 10px;
         }
-
-
-        mostrarNotificacion(
-            "✅ Script completo generado correctamente",
-            "success"
-        );
-
-    })
-
-    .catch(function (error) {
-
-        console.error(error);
-
-
-        if (boton) {
-
-            boton.disabled = false;
-
-            boton.innerHTML = `
-
-                <i class="fas fa-code me-2"></i>
-
-                GENERAR SCRIPT COMPLETO
-
-            `;
-
+        
+        .alert-success p {
+            font-size: 15px;
+            margin: 5px 0;
         }
-
-
-        mostrarNotificacion(
-            "❌ " + error.message,
-            "error"
-        );
-
-    });
-
-}
-
-
-/* ============================================================
-   RESUMEN
-============================================================ */
-
-function mostrarResumen() {
-
-    const procesados =
-        obtenerProcesados();
-
-
-    const total =
-        document.getElementById(
-            "totalProcesados"
-        );
-
-    if (total) {
-
-        total.textContent =
-            procesados.length;
-
-    }
-
-
-    const totalExcel =
-        document.getElementById(
-            "totalExcel"
-        );
-
-    if (totalExcel) {
-
-        totalExcel.textContent =
-            trabajadoresData.length;
-
-    }
-
-
-    const badge =
-        document.getElementById(
-            "badgeProcesados"
-        );
-
-    if (badge) {
-
-        badge.textContent =
-            procesados.length +
-            " procesados";
-
-    }
-
-
-    if (procesados.length > 0) {
-
-        const numeros =
-            procesados.map(
-                t => Number(t.nro)
-            );
-
-
-        document.getElementById(
-            "desdeTrabajador"
-        ).textContent =
-            Math.min(...numeros);
-
-
-        document.getElementById(
-            "hastaTrabajador"
-        ).textContent =
-            Math.max(...numeros);
-
-    }
-
-
-    const idTicket =
-        document.getElementById(
-            "idTicket"
-        );
-
-    if (idTicket) {
-
-        const trabajador =
-            procesados[0];
-
-        idTicket.textContent =
-            trabajador?.id_ticket ||
-            "Generado en Paso 3";
-
-    }
-
-
-    const fecha =
-        document.getElementById(
-            "fechaProceso"
-        );
-
-    if (fecha) {
-
-        fecha.textContent =
-            "{{ session.get('fecha', '-') }}";
-
-    }
-
-
-    const empresa =
-        document.getElementById(
-            "empresaProceso"
-        );
-
-    if (empresa) {
-
-        empresa.textContent =
-            "{{ session.get('empresa', '-') }}";
-
-    }
-
-
-    const nit =
-        document.getElementById(
-            "nitProceso"
-        );
-
-    if (nit) {
-
-        nit.textContent =
-            "{{ session.get('nit', '-') }}";
-
-    }
-
-}
-
-
-/* ============================================================
-   OBTENER TRABAJADORES PROCESADOS
-============================================================ */
-
-function obtenerProcesados() {
-
-    return trabajadoresData.filter(
-        function (t) {
-
-            return (
-                t.procesar === true ||
-                t.id_ticket !== null &&
-                t.id_ticket !== undefined
-            );
-
+        
+        .resumen-final {
+            background: white;
+            border-radius: 8px;
+            padding: 20px 25px;
+            margin: 15px 0;
+            box-shadow: 0 1px 5px rgba(0,0,0,0.05);
         }
-    );
-
-}
-
-
-/* ============================================================
-   PREVISUALIZACIÓN COMPLETA
-============================================================ */
-
-function mostrarPlanilla() {
-
-    const tbody =
-        document.getElementById(
-            "previewBody"
-        );
-
-
-    if (!tbody) return;
-
-
-    tbody.innerHTML = "";
-
-
-    const procesados =
-        obtenerProcesados();
-
-
-    if (procesados.length === 0) {
-
-        tbody.innerHTML = `
-
-            <tr>
-
-                <td colspan="13"
-                    class="text-center text-muted py-4">
-
-                    No hay trabajadores procesados.
-
-                </td>
-
-            </tr>
-
-        `;
-
-        return;
-
-    }
-
-
-    /*
-     * IMPORTANTE:
-     *
-     * Aquí mostramos TODOS los trabajadores
-     * procesados, no solamente los primeros 5.
-     */
-
-    procesados.forEach(function (t) {
-
-        const tr =
-            document.createElement("tr");
-
-
-        tr.innerHTML = `
-
-            <td>
-                ${escapeHTML(t.nro)}
-            </td>
-
-            <td>
-                ${escapeHTML(t.ci)}
-            </td>
-
-            <td>
-                ${escapeHTML(t.expedicion)}
-            </td>
-
-            <td>
-                ${escapeHTML(t.codexp)}
-            </td>
-
-            <td>
-                ${escapeHTML(
-                    t.id_persona ||
-                    t.id_persona_excel ||
-                    "-"
-                )}
-            </td>
-
-            <td>
-                ${escapeHTML(
-                    t.codigo_tramite ||
-                    t.cod_tram ||
-                    "-"
-                )}
-            </td>
-
-            <td>
-                ${escapeHTML(
-                    t.id_tramite ||
-                    t.id_tramite_excel ||
-                    "-"
-                )}
-            </td>
-
-            <td>
-                ${escapeHTML(
-                    t.hora_inicio ||
-                    t.hora_inicio_excel ||
-                    "-"
-                )}
-            </td>
-
-            <td>
-                ${escapeHTML(
-                    t.hora_fin ||
-                    t.hora_fin_excel ||
-                    "-"
-                )}
-            </td>
-
-            <td>
-                ${escapeHTML(
-                    t.nombre ||
-                    "-"
-                )}
-            </td>
-
-            <td>
-                ${escapeHTML(
-                    t.telefono ||
-                    "N/A"
-                )}
-            </td>
-
-            <td>
-                ${escapeHTML(
-                    t.cargo ||
-                    t.relacion ||
-                    "N/A"
-                )}
-            </td>
-
-            <td>
-                ${escapeHTML(
-                    t.direccion ||
-                    "N/A"
-                )}
-            </td>
-
-        `;
-
-
-        tbody.appendChild(tr);
-
-    });
-
-}
-
-
-/* ============================================================
-   MOSTRAR SCRIPT
-============================================================ */
-
-function mostrarScript() {
-
-    const elemento =
-        document.getElementById(
-            "scriptPreview"
-        );
-
-
-    if (!elemento) return;
-
-
-    if (!scriptCompleto) {
-
-        elemento.textContent =
-            "-- No existe script generado.";
-
-        return;
-
-    }
-
-
-    /*
-     * textContent permite mostrar el SQL
-     * completo sin interpretarlo como HTML.
-     */
-
-    elemento.textContent =
-        scriptCompleto;
-
-}
-
-
-/* ============================================================
-   COPIAR SCRIPT
-============================================================ */
-
-function copiarScript() {
-
-    if (!scriptCompleto) {
-
-        mostrarNotificacion(
-            "⚠️ Primero genere el script",
-            "warning"
-        );
-
-        return;
-
-    }
-
-
-    navigator.clipboard
-        .writeText(scriptCompleto)
-
-        .then(function () {
-
-            mostrarNotificacion(
-                "✅ Script completo copiado",
-                "success"
-            );
-
-        })
-
-        .catch(function () {
-
-            mostrarNotificacion(
-                "❌ No se pudo copiar el script",
-                "error"
-            );
-
-        });
-
-}
-
-
-/* ============================================================
-   DESCARGAR SCRIPT SQL
-============================================================ */
-
-function descargarScript() {
-
-    if (!scriptCompleto) {
-
-        mostrarNotificacion(
-            "⚠️ Primero genere el script",
-            "warning"
-        );
-
-        return;
-
-    }
-
-
-    const blob =
-        new Blob(
-            [scriptCompleto],
-            {
-                type: "text/plain;charset=utf-8"
+        
+        .resumen-final p {
+            margin: 8px 0;
+            font-size: 16px;
+            padding: 6px 0;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        
+        .resumen-final p:last-child {
+            border-bottom: none;
+        }
+        
+        .resumen-final strong {
+            color: #1a3c6e;
+            min-width: 200px;
+            display: inline-block;
+        }
+        
+        .resumen-final .valor {
+            color: #28a745;
+            font-weight: bold;
+            font-size: 17px;
+        }
+        
+        .resumen-final .valor-pendiente {
+            color: #ffc107;
+            font-weight: bold;
+        }
+        
+        .acciones-finales {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .acciones-finales .btn {
+            padding: 12px 30px;
+            font-size: 16px;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            flex: 1;
+            min-width: 200px;
+            justify-content: center;
+            text-decoration: none;
+        }
+        
+        .btn-success {
+            background: #28a745;
+            color: white;
+        }
+        
+        .btn-success:hover {
+            background: #1e7e34;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(40, 167, 69, 0.3);
+        }
+        
+        .btn-primary {
+            background: #1a3c6e;
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background: #0f2a4e;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(26, 60, 110, 0.3);
+        }
+        
+        .btn-warning {
+            background: #ffc107;
+            color: #212529;
+        }
+        
+        .btn-warning:hover {
+            background: #e0a800;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(255, 193, 7, 0.3);
+        }
+        
+        .btn-secondary {
+            background: #6c757d;
+            color: white;
+        }
+        
+        .btn-secondary:hover {
+            background: #5a6268;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(108, 117, 125, 0.3);
+        }
+        
+        .btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none !important;
+            box-shadow: none !important;
+        }
+        
+        .loading {
+            display: inline-block;
+            width: 18px;
+            height: 18px;
+            border: 2px solid #f3f3f3;
+            border-top: 2px solid #1a3c6e;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .script-container {
+            margin-top: 25px;
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+            overflow: hidden;
+            display: none;
+        }
+        
+        .script-container.show {
+            display: block;
+        }
+        
+        .script-header {
+            background: #f8f9fa;
+            padding: 12px 20px;
+            border-bottom: 1px solid #dee2e6;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        
+        .script-header h3 {
+            font-size: 16px;
+            color: #333;
+            margin: 0;
+        }
+        
+        .script-body {
+            background: #1e1e1e;
+            padding: 20px;
+            max-height: 500px;
+            overflow-y: auto;
+            overflow-x: auto;
+        }
+        
+        .script-body pre {
+            color: #d4d4d4;
+            font-family: 'Courier New', monospace;
+            font-size: 13px;
+            line-height: 1.7;
+            margin: 0;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+        
+        .script-body pre .sql-keyword {
+            color: #569cd6;
+            font-weight: 600;
+        }
+        
+        .script-body pre .sql-string {
+            color: #ce9178;
+        }
+        
+        .script-body pre .sql-comment {
+            color: #6a9955;
+            font-style: italic;
+        }
+        
+        .script-body pre .sql-number {
+            color: #b5cea8;
+        }
+        
+        .btn-copy {
+            background: #ffc107;
+            color: #212529;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .btn-copy:hover {
+            background: #e0a800;
+            transform: translateY(-1px);
+        }
+        
+        .btn-copy.copied {
+            background: #28a745;
+            color: white;
+        }
+        
+        .navigation-buttons {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 2px solid #e9ecef;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        
+        .btn-outline-secondary {
+            background: transparent;
+            color: #6c757d;
+            border: 2px solid #6c757d;
+            padding: 10px 25px;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .btn-outline-secondary:hover {
+            background: #6c757d;
+            color: white;
+        }
+        
+        /* Alerta flotante */
+        .alert-flotante {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 15px 25px;
+            border-radius: 8px;
+            color: white;
+            font-weight: 600;
+            z-index: 9999;
+            display: none;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+            max-width: 400px;
+        }
+        
+        .alert-flotante.success {
+            background: #28a745;
+            display: block;
+        }
+        
+        .alert-flotante.error {
+            background: #dc3545;
+            display: block;
+        }
+        
+        .alert-flotante.warning {
+            background: #ffc107;
+            color: #212529;
+            display: block;
+        }
+        
+        .alert-flotante.info {
+            background: #17a2b8;
+            display: block;
+        }
+        
+        .alert-flotante .cerrar {
+            margin-left: 15px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 18px;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 15px;
             }
-        );
+            
+            .acciones-finales {
+                flex-direction: column;
+            }
+            
+            .acciones-finales .btn {
+                width: 100%;
+                min-width: unset;
+            }
+            
+            .navigation-buttons {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            
+            .navigation-buttons .left-buttons,
+            .navigation-buttons .right-buttons {
+                flex-direction: column;
+                width: 100%;
+            }
+            
+            .navigation-buttons .left-buttons .btn,
+            .navigation-buttons .right-buttons .btn {
+                width: 100%;
+            }
+            
+            .resumen-final strong {
+                min-width: 140px;
+            }
+            
+            .script-body {
+                max-height: 300px;
+                padding: 15px;
+            }
+            
+            .script-body pre {
+                font-size: 11px;
+                line-height: 1.5;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Alerta flotante -->
+    <div id="alertaFlotante" class="alert-flotante">
+        <span id="alertaMensaje">Mensaje</span>
+        <span class="cerrar" onclick="cerrarAlerta()">×</span>
+    </div>
 
+    <div class="container">
+        <!-- HEADER -->
+        <div class="header">
+            <h1>📋 Script Final</h1>
+            <span class="step-badge">Paso 8 de 8</span>
+        </div>
 
-    const url =
-        URL.createObjectURL(blob);
+        <!-- RESULTADO FINAL -->
+        <div id="resultadoFinal">
+            <div class="alert alert-success">
+                <h3>✅ ¡Proceso Finalizado con Éxito!</h3>
+                <p>La planilla ha sido generada correctamente.</p>
+                
+                <div class="resumen-final" id="resumenFinal">
+                    <p><strong>📌 ID_TICKET:</strong> <span class="valor" id="idTicketFinal">-</span></p>
+                    <p><strong>👥 Total trabajadores:</strong> <span class="valor" id="totalTrabajadoresFinal">-</span></p>
+                    <p><strong>🆔 ID_PERSONA asignados:</strong> <span class="valor" id="idPersonaFinal">-</span></p>
+                    <p><strong>🆔 ID_TRAMITE asignados:</strong> <span class="valor" id="idTramiteFinal">-</span></p>
+                    <p><strong>🏢 ID_EMPRESA:</strong> <span class="valor" id="idEmpresaFinal">-</span></p>
+                </div>
+                
+                <div class="acciones-finales">
+                    <button class="btn btn-success" id="btnDescargarExcel" onclick="descargarExcel()">
+                        📥 Descargar Planilla en Excel
+                    </button>
+                    <button class="btn btn-warning" id="btnCopiarScript" onclick="copiarScript()">
+                        📋 Copiar Script
+                    </button>
+                    <button class="btn btn-primary" id="btnVolverInicio" onclick="volverAlPaso1()">
+                        🔄 Volver al Paso 1 (Nueva Planilla)
+                    </button>
+                </div>
+            </div>
+        </div>
 
+        <!-- SCRIPT GENERADO -->
+        <div id="scriptContainer" class="script-container">
+            <div class="script-header">
+                <h3>📝 Script SQL Generado</h3>
+                <button class="btn-copy" id="btnCopiarScriptHeader" onclick="copiarScript()">📋 Copiar Script</button>
+            </div>
+            <div class="script-body">
+                <pre id="scriptOutput"><span class="sql-comment">-- El script se generará automáticamente...</span></pre>
+            </div>
+        </div>
 
-    const enlace =
-        document.createElement("a");
+        <!-- BOTONES DE NAVEGACIÓN -->
+        <div class="navigation-buttons">
+            <div class="left-buttons">
+                <button type="button" class="btn-outline-secondary" id="btnVolver" onclick="volver()">
+                    ⬅️ Volver
+                </button>
+            </div>
+            <div class="right-buttons">
+                <button type="button" class="btn-outline-secondary" id="btnFinalizar" onclick="finalizar()" style="opacity: 0.5; cursor: not-allowed;">
+                    🏁 Finalizar
+                </button>
+            </div>
+        </div>
+    </div>
 
+    <script>
+        // ============================================================
+        // VARIABLES GLOBALES
+        // ============================================================
+        
+        let scriptActual = '';
+        let datosPlanilla = {};
 
-    enlace.href = url;
-
-    enlace.download =
-        "script_planilla.sql";
-
-
-    document.body.appendChild(enlace);
-
-    enlace.click();
-
-    document.body.removeChild(enlace);
-
-
-    URL.revokeObjectURL(url);
-
-
-    mostrarNotificacion(
-        "✅ Script SQL descargado",
-        "success"
-    );
-
-}
-
-
-/* ============================================================
-   GUARDAR PROCESO
-============================================================ */
-
-function guardarProceso() {
-
-    const procesados =
-        obtenerProcesados();
-
-
-    if (procesados.length === 0) {
-
-        mostrarNotificacion(
-            "⚠️ No existen trabajadores procesados",
-            "warning"
-        );
-
-        return;
-
-    }
-
-
-    const ultimo =
-        Math.max(
-            ...procesados.map(
-                t => Number(t.nro)
-            )
-        );
-
-
-    fetch("/api/guardar_avance", {
-
-        method: "POST",
-
-        headers: {
-
-            "Content-Type":
-                "application/json"
-
-        },
-
-        body: JSON.stringify({
-
-            ultimo_procesado: ultimo
-
-        })
-
-    })
-
-    .then(function (response) {
-
-        if (!response.ok) {
-
-            throw new Error(
-                "No se pudo guardar el proceso"
-            );
-
+        // ============================================================
+        // FUNCIÓN: ALERTA FLOTANTE
+        // ============================================================
+        
+        function mostrarAlerta(mensaje, tipo = 'info') {
+            const alerta = document.getElementById('alertaFlotante');
+            const mensajeEl = document.getElementById('alertaMensaje');
+            alerta.className = `alert-flotante ${tipo}`;
+            mensajeEl.textContent = mensaje;
+            alerta.style.display = 'block';
+            
+            setTimeout(() => {
+                alerta.style.display = 'none';
+            }, 5000);
+        }
+        
+        function cerrarAlerta() {
+            document.getElementById('alertaFlotante').style.display = 'none';
         }
 
-        return response.json();
-
-    })
-
-    .then(function (data) {
-
-        if (!data.success) {
-
-            throw new Error(
-                data.error ||
-                "Error al guardar"
-            );
-
+        // ============================================================
+        // FUNCIÓN: CARGAR DATOS FINALES
+        // ============================================================
+        
+        async function cargarDatosFinales() {
+            try {
+                const response = await fetch('/api/estado');
+                const data = await response.json();
+                
+                if (data.success && data.planilla_id) {
+                    datosPlanilla = data;
+                    
+                    // Mostrar resumen
+                    document.getElementById('idTicketFinal').textContent = data.id_ticket || 'PENDIENTE';
+                    document.getElementById('totalTrabajadoresFinal').textContent = data.total || 0;
+                    document.getElementById('idEmpresaFinal').textContent = data.id_empresa || 'No asignado';
+                    
+                    // Contar ID_PERSONA e ID_TRAMITE asignados
+                    const procesados = data.procesados || [];
+                    const idPersonaCount = procesados.filter(t => t.id_persona).length;
+                    const idTramiteCount = procesados.filter(t => t.id_tramite).length;
+                    
+                    document.getElementById('idPersonaFinal').textContent = idPersonaCount;
+                    document.getElementById('idTramiteFinal').textContent = idTramiteCount;
+                    
+                    // Cargar script
+                    await cargarScript();
+                } else {
+                    mostrarAlerta('⚠️ No se encontró una planilla activa', 'warning');
+                }
+            } catch (error) {
+                console.error('Error al cargar datos finales:', error);
+                mostrarAlerta('❌ Error al cargar los datos: ' + error.message, 'error');
+            }
         }
 
+        // ============================================================
+        // FUNCIÓN: CARGAR SCRIPT
+        // ============================================================
+        
+        async function cargarScript() {
+            try {
+                const response = await fetch('/api/previsualizacion_completa');
+                const data = await response.json();
+                
+                if (data.success && data.script_completo) {
+                    mostrarScript(data.script_completo);
+                } else {
+                    // Intentar generar el script final
+                    const scriptResponse = await fetch('/api/generar_script_final', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            id_ticket: datosPlanilla.id_ticket
+                        })
+                    });
+                    const scriptData = await scriptResponse.json();
+                    
+                    if (scriptData.success && scriptData.script_completo) {
+                        mostrarScript(scriptData.script_completo);
+                    } else {
+                        mostrarAlerta('⚠️ No se pudo generar el script automáticamente', 'warning');
+                        document.getElementById('scriptOutput').innerHTML = 
+                            '<span class="sql-comment">-- No se pudo generar el script automáticamente.\n-- Puedes generarlo manualmente en el Paso 8.</span>';
+                    }
+                }
+            } catch (error) {
+                console.error('Error al cargar script:', error);
+                mostrarAlerta('❌ Error al cargar el script: ' + error.message, 'error');
+            }
+        }
 
-        mostrarNotificacion(
-            "✅ Proceso guardado correctamente",
-            "success"
-        );
+        // ============================================================
+        // FUNCIÓN: MOSTRAR SCRIPT
+        // ============================================================
+        
+        function mostrarScript(script) {
+            if (!script || script.trim() === '') {
+                scriptOutput.innerHTML = '<span class="sql-comment">-- No se generó ningún script</span>';
+                scriptContainer.classList.add('show');
+                return;
+            }
+            
+            try {
+                let highlighted = script
+                    .replace(/--(.*)/g, '<span class="sql-comment">--$1</span>')
+                    .replace(/'([^']*)'/g, '<span class="sql-string">\'$1\'</span>')
+                    .replace(/\b(INSERT|INTO|VALUES|SELECT|FROM|WHERE|UPDATE|DELETE|CREATE|TABLE|DROP|ALTER|ADD|COLUMN|NOT|NULL|DEFAULT|PRIMARY|KEY|FOREIGN|REFERENCES|UNIQUE|CHECK|INDEX|VIEW|PROCEDURE|FUNCTION|TRIGGER|DATABASE|SCHEMA|USE|SHOW|DESCRIBE|EXPLAIN|ANALYZE|OPTIMIZE|GRANT|REVOKE|COMMIT|ROLLBACK|SAVEPOINT|TRANSACTION|LOCK|UNLOCK|SET|now)\b/gi, 
+                    '<span class="sql-keyword">$1</span>')
+                    .replace(/\b(\d+)\b/g, '<span class="sql-number">$1</span>');
+                
+                document.getElementById('scriptOutput').innerHTML = highlighted;
+                scriptActual = script;
+                document.getElementById('scriptContainer').classList.add('show');
+            } catch (error) {
+                console.error('Error al mostrar script:', error);
+                document.getElementById('scriptOutput').innerHTML = 
+                    `<span class="sql-comment">-- Error al mostrar el script: ${error.message}</span>`;
+                document.getElementById('scriptContainer').classList.add('show');
+            }
+        }
 
-    })
+        // ============================================================
+        // FUNCIÓN: COPIAR SCRIPT
+        // ============================================================
+        
+        function copiarScript() {
+            if (!scriptActual) {
+                mostrarAlerta('⚠️ No hay script para copiar', 'warning');
+                return;
+            }
+            
+            navigator.clipboard.writeText(scriptActual).then(() => {
+                mostrarAlerta('✅ Script copiado al portapapeles', 'success');
+                const btn = document.getElementById('btnCopiarScriptHeader');
+                btn.textContent = '✅ ¡Copiado!';
+                btn.classList.add('copied');
+                setTimeout(() => {
+                    btn.textContent = '📋 Copiar Script';
+                    btn.classList.remove('copied');
+                }, 3000);
+            }).catch(() => {
+                // Fallback
+                const textarea = document.createElement('textarea');
+                textarea.value = scriptActual;
+                textarea.style.position = 'fixed';
+                textarea.style.opacity = '0';
+                document.body.appendChild(textarea);
+                textarea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textarea);
+                mostrarAlerta('✅ Script copiado al portapapeles', 'success');
+            });
+        }
 
-    .catch(function (error) {
+        // ============================================================
+        // FUNCIÓN: DESCARGAR EXCEL
+        // ============================================================
+        
+        function descargarExcel() {
+            mostrarAlerta('📥 Función de descarga en desarrollo...', 'info');
+        }
 
-        console.error(error);
+        // ============================================================
+        // ⭐ FUNCIÓN: VOLVER AL PASO 1 (NUEVA PLANILLA)
+        // ============================================================
+        
+        function volverAlPaso1() {
+            if (!confirm('¿Estás seguro de que quieres volver al inicio?\nSe perderá el progreso actual.')) {
+                return;
+            }
+            
+            const btn = document.getElementById('btnVolverInicio');
+            btn.disabled = true;
+            btn.innerHTML = '<span class="loading"></span> Cerrando sesión...';
+            
+            fetch('/api/cerrar_sesion', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    mostrarAlerta('✅ Sesión cerrada. Redirigiendo al inicio...', 'success');
+                    setTimeout(() => {
+                        window.location.href = '/';
+                    }, 1000);
+                } else {
+                    mostrarAlerta('❌ Error al cerrar sesión: ' + data.error, 'error');
+                    btn.disabled = false;
+                    btn.innerHTML = '🔄 Volver al Paso 1 (Nueva Planilla)';
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                mostrarAlerta('❌ Error de conexión: ' + error.message, 'error');
+                btn.disabled = false;
+                btn.innerHTML = '🔄 Volver al Paso 1 (Nueva Planilla)';
+            });
+        }
 
-        mostrarNotificacion(
-            "❌ " + error.message,
-            "error"
-        );
+        // ============================================================
+        // FUNCIÓN: VOLVER (Paso 7)
+        // ============================================================
+        
+        function volver() {
+            window.location.href = '/idtramite';
+        }
 
-    });
+        // ============================================================
+        // FUNCIÓN: FINALIZAR (deshabilitado)
+        // ============================================================
+        
+        function finalizar() {
+            mostrarAlerta('⚠️ El proceso ya está finalizado. Usa "Volver al Paso 1" para iniciar una nueva planilla.', 'warning');
+        }
 
-}
-
-
-/* ============================================================
-   VOLVER AL PASO 7
-============================================================ */
-
-function volver() {
-
-    window.location.href =
-        "/idtramite";
-
-}
-
-
-/* ============================================================
-   ESCAPAR HTML
-============================================================ */
-
-function escapeHTML(valor) {
-
-    if (
-        valor === null ||
-        valor === undefined ||
-        valor === ""
-    ) {
-
-        return "-";
-
-    }
-
-
-    const div =
-        document.createElement("div");
-
-
-    div.textContent =
-        String(valor);
-
-
-    return div.innerHTML;
-
-}
-
-</script>
-
-{% endblock %}
+        // ============================================================
+        // INICIALIZACIÓN
+        // ============================================================
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            cargarDatosFinales();
+            console.log('✅ Pantalla 8 - Script Final cargada correctamente');
+        });
+    </script>
+</body>
+</html>

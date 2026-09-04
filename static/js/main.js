@@ -556,194 +556,86 @@ function handleFile(file) {
 /* ============================================================
    ANALIZAR EXCEL
    ============================================================ */
-
 function analizarExcel() {
 
     if (!archivoSeleccionado) {
-
-        mostrarNotificacion(
-            '⚠️ Primero seleccione una planilla Excel.',
-            'warning'
-        );
-
+        mostrarNotificacion('⚠️ Primero seleccione una planilla Excel.', 'warning');
         return;
     }
 
+    mostrarLoading('Analizando planilla...', 'Extrayendo los datos de todos los trabajadores.');
 
-    mostrarLoading(
-        'Analizando planilla...',
-        'Extrayendo los datos de todos los trabajadores.'
-    );
-
-
-    const btnAnalizar =
-        document.getElementById(
-            'btnAnalizar'
-        );
-
-
+    const btnAnalizar = document.getElementById('btnAnalizar');
     if (btnAnalizar) {
-
-        btnAnalizar.disabled =
-            true;
-
-        btnAnalizar.innerHTML =
-            '<span class="spinner-border spinner-border-sm me-2"></span> ANALIZANDO...';
-
+        btnAnalizar.disabled = true;
+        btnAnalizar.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span> ANALIZANDO...';
     }
 
+    const formData = new FormData();
+    formData.append('file', archivoSeleccionado);
 
-    const formData =
-        new FormData();
-
-
-    formData.append(
-        'file',
-        archivoSeleccionado
-    );
-
-
-    fetch(
-        '/api/upload',
-        {
-            method: 'POST',
-            body: formData
-        }
-    )
+    fetch('/api/upload', {
+        method: 'POST',
+        body: formData
+    })
 
     .then(async function (response) {
-
-        const data =
-            await response.json();
-
+        const data = await response.json();
         if (!response.ok) {
-
-            throw new Error(
-                data.error ||
-                'Error al procesar la planilla.'
-            );
-
+            throw new Error(data.error || 'Error al procesar la planilla.');
         }
-
         return data;
-
     })
 
     .then(function (data) {
-
         ocultarLoading();
 
-
         if (!data.success) {
-
-            throw new Error(
-                data.error ||
-                'No se pudo analizar la planilla.'
-            );
-
+            throw new Error(data.error || 'No se pudo analizar la planilla.');
         }
-
 
         /* ====================================================
            GUARDAR TRABAJADORES
            ==================================================== */
 
-        trabajadoresData =
-            data.trabajadores || [];
-
-
-        totalTrabajadores =
-            Number(data.total) ||
-            trabajadoresData.length;
-
-
-        /*
-         * NUEVA PLANILLA
-         *
-         * El rango siempre empieza en 1.
-         */
-
+        trabajadoresData = data.trabajadores || [];
+        totalTrabajadores = Number(data.total) || trabajadoresData.length;
         desdeTrabajador = 1;
-
         hastaTrabajador = 0;
-
         cantidadProcesar = 0;
-
 
         /* ====================================================
            CORRELATIVO
            ==================================================== */
 
-        /*
-         * Si el backend devuelve un correlativo,
-         * lo utilizamos.
-         *
-         * Si todavía no lo devuelve,
-         * dejamos el valor preparado para la
-         * implementación del correlativo.
-         */
-
-        correlativoPlanilla =
-            data.correlativo_planilla ||
-            data.planilla_id ||
-            null;
-
+        correlativoPlanilla = data.correlativo_planilla || data.planilla_id || null;
 
         /* ====================================================
            TOTAL
            ==================================================== */
 
-        const totalElement =
-            document.getElementById(
-                'totalTrabajadores'
-            );
-
-
+        const totalElement = document.getElementById('totalTrabajadores');
         if (totalElement) {
-
-            totalElement.textContent =
-                totalTrabajadores;
-
+            totalElement.textContent = totalTrabajadores;
         }
-
 
         /* ====================================================
            EMPRESA
            ==================================================== */
 
-        const empresaElement =
-            document.getElementById(
-                'empresaNombre'
-            );
-
-
+        const empresaElement = document.getElementById('empresaNombre');
         if (empresaElement) {
-
-            empresaElement.textContent =
-                data.empresa ||
-                'No detectada';
-
+            empresaElement.textContent = data.empresa || 'No detectada';
         }
-
 
         /* ====================================================
            NIT
            ==================================================== */
 
-        const nitElement =
-            document.getElementById(
-                'nitEmpresa'
-            );
-
-
+        const nitElement = document.getElementById('nitEmpresa');
         if (nitElement) {
-
-            nitElement.textContent =
-                data.nit ||
-                'No detectado';
-
+            nitElement.textContent = data.nit || 'No detectado';
         }
-
 
         /* ====================================================
            MOSTRAR CORRELATIVO
@@ -751,76 +643,38 @@ function analizarExcel() {
 
         mostrarCorrelativoPlanilla();
 
+        // ⭐⭐⭐ GUARDAR NIT Y RAZÓN SOCIAL DEL EXCEL ⭐⭐⭐
+        const datosEmpresa = guardarDatosEmpresaDesdeExcel(data);
+        if (datosEmpresa.nit || datosEmpresa.razonSocial) {
+            console.log('📌 Datos de empresa extraídos del Excel:', datosEmpresa);
+        }
 
         /* ====================================================
            PREVISUALIZACIÓN
            ==================================================== */
 
-        mostrarVistaPrevia(
-            trabajadoresData
-        );
+        mostrarVistaPrevia(trabajadoresData);
 
-
-        const previewSection =
-            document.getElementById(
-                'previewSection'
-            );
-
-
+        const previewSection = document.getElementById('previewSection');
         if (previewSection) {
-
-            previewSection.classList.remove(
-                'd-none'
-            );
-
+            previewSection.classList.remove('d-none');
         }
 
-
-        const totalPreview =
-            document.getElementById(
-                'totalPreview'
-            );
-
-
+        const totalPreview = document.getElementById('totalPreview');
         if (totalPreview) {
-
-            totalPreview.textContent =
-                `${totalTrabajadores} trabajadores`;
-
+            totalPreview.textContent = `${totalTrabajadores} trabajadores`;
         }
 
-
-        /* ====================================================
-           ESTADO
-           ==================================================== */
-
-        const fileStatus =
-            document.getElementById(
-                'fileStatus'
-            );
-
-
+        const fileStatus = document.getElementById('fileStatus');
         if (fileStatus) {
-
-            fileStatus.textContent =
-                '✅ Planilla analizada correctamente';
-
-            fileStatus.className =
-                'badge bg-success';
-
+            fileStatus.textContent = '✅ Planilla analizada correctamente';
+            fileStatus.className = 'badge bg-success';
         }
-
 
         if (btnAnalizar) {
-
-            btnAnalizar.disabled =
-                false;
-
-            btnAnalizar.innerHTML =
-                '<i class="fas fa-check me-2"></i> EXCEL ANALIZADO';
-
+            btnAnalizar.disabled = false;
+            btnAnalizar.innerHTML = '<i class="fas fa-check me-2"></i> EXCEL ANALIZADO';
         }
-
 
         mostrarNotificacion(
             `✅ Se extrajeron ${totalTrabajadores} trabajadores de la planilla.`,
@@ -830,28 +684,13 @@ function analizarExcel() {
     })
 
     .catch(function (error) {
-
         ocultarLoading();
-
-
-        console.error(
-            'Error:',
-            error
-        );
-
-
-        mostrarNotificacion(
-            '❌ ' + error.message,
-            'danger'
-        );
-
-
+        console.error('Error:', error);
+        mostrarNotificacion('❌ ' + error.message, 'danger');
         restaurarBotonAnalizar();
-
     });
 
 }
-
 
 /* ============================================================
    MOSTRAR CORRELATIVO DE PLANILLA
@@ -912,6 +751,82 @@ function mostrarCorrelativoPlanilla() {
     elemento.textContent =
         'Pendiente de asignación';
 
+}
+
+/* ============================================================
+   GUARDAR NIT Y RAZÓN SOCIAL DEL EXCEL
+   ============================================================ */
+
+function guardarDatosEmpresaDesdeExcel(data) {
+    /*
+     * Esta función extrae el NIT y Razón Social del Excel
+     * y los guarda en la planilla para usarlos en el Paso 4
+     */
+    
+    let nit = '';
+    let razonSocial = '';
+    
+    // Buscar en los trabajadores el primer NIT y Razón Social
+    if (data.trabajadores && data.trabajadores.length > 0) {
+        for (let i = 0; i < data.trabajadores.length; i++) {
+            const t = data.trabajadores[i];
+            // Buscar campos que puedan contener NIT
+            if (t.nit && t.nit !== '' && t.nit !== null) {
+                nit = t.nit;
+            }
+            // Buscar campos que puedan contener Razón Social
+            if (t.razon_social && t.razon_social !== '' && t.razon_social !== null) {
+                razonSocial = t.razon_social;
+            }
+            // Si encontramos ambos, salimos
+            if (nit && razonSocial) break;
+        }
+    }
+    
+    // Si no encontramos, buscar en filas_excel
+    if ((!nit || !razonSocial) && data.filas_excel && data.filas_excel.length > 0) {
+        for (let i = 0; i < data.filas_excel.length; i++) {
+            const fila = data.filas_excel[i];
+            // Buscar NIT en diferentes nombres de columna
+            for (const [key, value] of Object.entries(fila)) {
+                const keyUpper = key.toUpperCase();
+                if (keyUpper.includes('NIT') && value && value !== '') {
+                    nit = value;
+                }
+                if ((keyUpper.includes('RAZON SOCIAL') || keyUpper.includes('RAZÓN SOCIAL') || keyUpper.includes('EMPRESA')) && value && value !== '') {
+                    razonSocial = value;
+                }
+            }
+            if (nit && razonSocial) break;
+        }
+    }
+    
+    // Guardar en la planilla (enviar al backend)
+    if (nit || razonSocial) {
+        fetch('/api/guardar_datos_empresa', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                nit: nit,
+                razon_social: razonSocial
+            })
+        })
+        .then(response => response.json())
+        .then(result => {
+            if (result.success) {
+                console.log('✅ Datos de empresa guardados:', { nit, razonSocial });
+            } else {
+                console.warn('⚠️ No se pudieron guardar los datos de empresa');
+            }
+        })
+        .catch(error => {
+            console.warn('⚠️ Error al guardar datos de empresa:', error);
+        });
+    }
+    
+    return { nit, razonSocial };
 }
 
 
@@ -1406,20 +1321,6 @@ function continuarPaso1() {
         return data;
 
     })
-
-    .then(function (data) {
-
-        ocultarLoading();
-
-
-        if (!data.success) {
-
-            throw new Error(
-                data.error ||
-                'No se pudo guardar la configuración.'
-            );
-
-        }
 
 
         /*

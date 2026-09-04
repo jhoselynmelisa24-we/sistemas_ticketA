@@ -3,777 +3,1240 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Paso 5 - Registrar ID_PERSONA</title>
+    <title>Paso 5 - Generar Personas</title>
     <style>
+        /* ============================================================
+           ESTILOS COMPLETOS PARA PANTALLA 5 - GENERAR PERSONAS
+           CON SCROLL HORIZONTAL PARA VISUALIZAR SCRIPT COMPLETO
+           ============================================================ */
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
+
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background: #f0f2f5;
             padding: 20px;
         }
+
+        /* ============================================================
+           CONTENEDOR PRINCIPAL - MÁS ANCHO
+           ============================================================ */
         .container {
-            max-width: 1400px;
+            max-width: 1600px !important;
             margin: 0 auto;
             background: white;
             border-radius: 12px;
-            padding: 25px;
+            padding: 30px 50px;
             box-shadow: 0 2px 10px rgba(0,0,0,0.1);
         }
-        h1 {
-            color: #1a3c6e;
-            border-bottom: 3px solid #1a3c6e;
-            padding-bottom: 15px;
-            margin-bottom: 20px;
-        }
-        .info-bar {
+
+        .header {
             display: flex;
-            gap: 30px;
-            background: #e8edf4;
-            padding: 15px 20px;
-            border-radius: 8px;
-            margin-bottom: 20px;
-            flex-wrap: wrap;
-        }
-        .info-item {
-            display: flex;
+            justify-content: space-between;
             align-items: center;
-            gap: 8px;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #e9ecef;
         }
-        .info-item strong {
+
+        .header h1 {
             color: #1a3c6e;
+            font-size: 24px;
         }
-        .info-item .value {
-            font-weight: bold;
-            color: #2c3e50;
-        }
-        .form-group {
-            display: flex;
-            flex-direction: column;
-            margin: 15px 0;
-            background: #f8f9fa;
-            padding: 20px;
-            border-radius: 8px;
-            border: 2px solid #e8edf4;
-        }
-        .form-group label {
-            font-weight: 600;
-            color: #2c3e50;
-            margin-bottom: 5px;
-            font-size: 16px;
-        }
-        .form-group label .required {
-            color: #e74c3c;
-        }
-        .form-control {
-            padding: 12px 15px;
-            border: 2px solid #d0d7e2;
-            border-radius: 8px;
-            font-size: 16px;
-            transition: all 0.3s;
-            max-width: 300px;
-        }
-        .form-control:focus {
-            border-color: #1a3c6e;
-            outline: none;
-            box-shadow: 0 0 0 3px rgba(26, 60, 110, 0.2);
-        }
-        .text-muted {
-            color: #7f8c8d;
-            font-size: 14px;
-            margin-top: 8px;
-        }
-        .text-muted strong {
-            color: #1a3c6e;
-        }
-        .table-container {
-            overflow-x: auto;
-            margin: 20px 0;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            font-size: 13px;
-        }
-        thead {
+
+        .step-badge {
             background: #1a3c6e;
             color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 14px;
         }
-        th {
-            padding: 12px 8px;
-            text-align: left;
-            white-space: nowrap;
-            position: sticky;
-            top: 0;
-            z-index: 10;
+
+        /* ============================================================
+           INFO BOX
+           ============================================================ */
+        .info-box {
+            background: #e7f3ff;
+            border-left: 6px solid #1a3c6e;
+            padding: 20px 25px;
+            border-radius: 10px;
+            margin-bottom: 25px;
         }
-        td {
-            padding: 10px 8px;
-            border-bottom: 1px solid #e0e0e0;
-            vertical-align: middle;
+
+        .info-box h4 {
+            color: #1a3c6e;
+            margin-bottom: 10px;
+            font-size: 18px;
         }
-        tr:hover {
-            background: #f5f8ff;
+
+        .info-box p {
+            color: #333;
+            font-size: 15px;
+            margin: 6px 0;
         }
-        .badge-registrado {
-            display: inline-block;
-            background: #27ae60;
-            color: white;
-            padding: 2px 10px;
-            border-radius: 12px;
-            font-size: 11px;
-            font-weight: bold;
+
+        .info-box .highlight {
+            background: #fff3cd;
+            padding: 3px 10px;
+            border-radius: 4px;
+            font-weight: 700;
         }
-        .badge-pendiente {
-            display: inline-block;
-            background: #f39c12;
-            color: white;
-            padding: 2px 10px;
-            border-radius: 12px;
-            font-size: 11px;
-            font-weight: bold;
+
+        .info-box code {
+            background: #1e1e1e;
+            color: #ce9178;
+            padding: 3px 10px;
+            border-radius: 4px;
+            font-family: 'Consolas', monospace;
+            font-size: 14px;
         }
-        .badge-correlativo {
-            display: inline-block;
-            background: #3498db;
-            color: white;
-            padding: 2px 10px;
-            border-radius: 12px;
-            font-size: 11px;
-            font-weight: bold;
-        }
-        .acciones {
+
+        /* ============================================================
+           BOTONES
+           ============================================================ */
+        .buttons {
             display: flex;
-            gap: 15px;
-            margin: 20px 0;
+            gap: 12px;
+            margin-top: 20px;
             flex-wrap: wrap;
-            align-items: center;
         }
+
         .btn {
-            padding: 12px 30px;
+            padding: 12px 28px;
             border: none;
-            border-radius: 8px;
+            border-radius: 6px;
             font-size: 15px;
             font-weight: 600;
             cursor: pointer;
             transition: all 0.3s;
-            text-decoration: none;
-            display: inline-block;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
         }
+
         .btn-success {
-            background: #27ae60;
+            background: #28a745;
             color: white;
         }
+
         .btn-success:hover {
-            background: #1e8449;
+            background: #1e7e34;
             transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(39, 174, 96, 0.3);
+            box-shadow: 0 6px 20px rgba(40, 167, 69, 0.4);
         }
-        .btn-primary {
+
+        .btn-success:disabled {
+            background: #6c757d;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .btn-info {
+            background: #17a2b8;
+            color: white;
+        }
+
+        .btn-info:hover {
+            background: #117a8b;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(23, 162, 184, 0.4);
+        }
+
+        .btn-secondary {
+            background: #6c757d;
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background: #5a6268;
+            transform: translateY(-2px);
+        }
+
+        .btn-outline-secondary {
+            background: transparent;
+            color: #6c757d;
+            border: 2px solid #6c757d;
+        }
+
+        .btn-outline-secondary:hover {
+            background: #6c757d;
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .btn-outline-primary {
+            background: transparent;
+            color: #1a3c6e;
+            border: 2px solid #1a3c6e;
+        }
+
+        .btn-outline-primary:hover {
             background: #1a3c6e;
             color: white;
-        }
-        .btn-primary:hover {
-            background: #152d52;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(26, 60, 110, 0.3);
-        }
-        .btn-warning {
-            background: #f39c12;
-            color: white;
-        }
-        .btn-warning:hover {
-            background: #d68910;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(243, 156, 18, 0.3);
-        }
-        .btn-secondary {
-            background: #95a5a6;
-            color: white;
-        }
-        .btn-secondary:hover {
-            background: #7f8c8d;
             transform: translateY(-2px);
         }
+
         .btn:disabled {
             opacity: 0.6;
             cursor: not-allowed;
             transform: none !important;
+            box-shadow: none !important;
         }
-        .script-area {
-            margin-top: 20px;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            overflow: hidden;
+
+        /* ============================================================
+           ALERTAS
+           ============================================================ */
+        .alert {
+            padding: 15px 20px;
+            border-radius: 6px;
+            margin-bottom: 20px;
+            display: none;
         }
-        .script-header {
-            background: #2c3e50;
-            color: white;
-            padding: 12px 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+
+        .alert.show {
+            display: block;
         }
-        .script-header h3 {
-            margin: 0;
-            font-size: 16px;
-        }
-        .script-body {
-            background: #1e1e1e;
-            color: #d4d4d4;
-            padding: 20px;
-            max-height: 400px;
-            overflow: auto;
-            font-family: 'Consolas', 'Monaco', monospace;
-            font-size: 12px;
-            line-height: 1.6;
-            white-space: pre-wrap;
-            word-break: break-all;
-        }
-        .mensaje {
-            padding: 12px 18px;
-            border-radius: 8px;
-            margin: 10px 0;
-            font-weight: 500;
-        }
-        .mensaje-exito {
+
+        .alert-success {
             background: #d4edda;
             color: #155724;
             border: 1px solid #c3e6cb;
         }
-        .mensaje-error {
+
+        .alert-danger {
             background: #f8d7da;
             color: #721c24;
             border: 1px solid #f5c6cb;
         }
-        .mensaje-info {
+
+        .alert-info {
             background: #d1ecf1;
             color: #0c5460;
             border: 1px solid #bee5eb;
         }
-        .progress-bar {
-            height: 6px;
-            background: #e0e0e0;
-            border-radius: 3px;
-            margin: 15px 0;
-            overflow: hidden;
+
+        .alert-warning {
+            background: #fff3cd;
+            color: #856404;
+            border: 1px solid #ffeeba;
         }
-        .progress-fill {
-            height: 100%;
-            background: linear-gradient(90deg, #27ae60, #2ecc71);
-            border-radius: 3px;
-            transition: width 0.5s ease;
+
+        /* ============================================================
+           TABLA DE TRABAJADORES
+           ============================================================ */
+        .table-container {
+            margin-top: 25px;
+            overflow-x: auto;
+            border: 1px solid #dee2e6;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
         }
-        .stats {
-            display: flex;
-            gap: 20px;
-            flex-wrap: wrap;
-            margin: 10px 0;
+
+        .table-container table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 15px;
+            min-width: 700px;
         }
-        .stat-card {
+
+        .table-container thead {
+            background: #1a3c6e;
+            color: white;
+        }
+
+        .table-container th {
+            padding: 14px 20px;
+            text-align: left;
+            font-weight: 700;
+            font-size: 14px;
+            letter-spacing: 0.5px;
+        }
+
+        .table-container td {
+            padding: 12px 20px;
+            border-bottom: 1px solid #e9ecef;
+            font-size: 14px;
+        }
+
+        .table-container tr:hover {
             background: #f8f9fa;
-            padding: 10px 18px;
+        }
+
+        /* ============================================================
+           CONTENEDOR DEL SCRIPT - CON SCROLL HORIZONTAL
+           ============================================================ */
+        .script-container {
+            margin-top: 25px;
+            border: 1px solid #2d2d2d;
+            border-radius: 10px;
+            overflow: hidden;
+            display: none;
+            width: 100%;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.15);
+            background: #1a1a1a;
+        }
+
+        .script-container.show {
+            display: block;
+        }
+
+        /* ============================================================
+           HEADER DEL SCRIPT
+           ============================================================ */
+        .script-header {
+            background: #1e3a5f;
+            padding: 18px 30px;
+            border-bottom: 3px solid #ffc107;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .script-header h3 {
+            font-size: 18px;
+            color: #ffffff;
+            margin: 0;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+        }
+
+        .script-header .header-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        /* ============================================================
+           HINT DE SCROLL
+           ============================================================ */
+        .scroll-hint {
+            background: #2d2d2d;
+            color: #adb5bd;
+            padding: 10px 20px;
+            text-align: center;
+            font-size: 14px;
+            border-bottom: 1px solid #444;
+            display: none;
+            font-family: 'Consolas', monospace;
+            letter-spacing: 0.5px;
+        }
+
+        .scroll-hint.show {
+            display: block;
+        }
+
+        .scroll-hint .arrow {
+            color: #ffc107;
+            font-size: 18px;
+            font-weight: 700;
+        }
+
+        /* ============================================================
+           CUERPO DEL SCRIPT - CON SCROLL HORIZONTAL Y VERTICAL
+           ============================================================ */
+        .script-body {
+            background: #0d0d0d;
+            padding: 25px 30px;
+            max-height: 700px;
+            min-height: 200px;
+            overflow-y: auto;
+            overflow-x: auto;
+            width: 100%;
+            position: relative;
+        }
+
+        /* ============================================================
+           ESTILO DEL PRE - TEXTO EN UNA SOLA LÍNEA (SIN WRAP)
+           ============================================================ */
+        .script-body pre {
+            color: #d4d4d4;
+            font-family: 'Consolas', 'Courier New', 'Fira Code', monospace;
+            font-size: 14px;
+            line-height: 2.0;
+            margin: 0;
+            white-space: pre;
+            width: auto;
+            min-width: 100%;
+            padding: 5px 0;
+            display: block;
+        }
+
+        /* ============================================================
+           RESALTADO DE SINTAXIS SQL
+           ============================================================ */
+        .script-body pre .sql-keyword {
+            color: #569cd6;
+            font-weight: 700;
+        }
+
+        .script-body pre .sql-string {
+            color: #ce9178;
+        }
+
+        .script-body pre .sql-comment {
+            color: #6a9955;
+            font-style: italic;
+        }
+
+        .script-body pre .sql-number {
+            color: #b5cea8;
+        }
+
+        .script-body pre .sql-function {
+            color: #dcdcaa;
+            font-weight: 600;
+        }
+
+        /* ============================================================
+           BARRA DE DESPLAZAMIENTO PERSONALIZADA
+           ============================================================ */
+        .script-body::-webkit-scrollbar {
+            width: 12px;
+            height: 12px;
+        }
+
+        .script-body::-webkit-scrollbar-track {
+            background: #1a1a1a;
+            border-radius: 6px;
+        }
+
+        .script-body::-webkit-scrollbar-thumb {
+            background: #1e3a5f;
+            border-radius: 6px;
+            border: 2px solid #0d0d0d;
+        }
+
+        .script-body::-webkit-scrollbar-thumb:hover {
+            background: #2a5a8f;
+        }
+
+        /* Para Firefox */
+        .script-body {
+            scrollbar-width: thin;
+            scrollbar-color: #1e3a5f #1a1a1a;
+        }
+
+        /* ============================================================
+           BOTONES DE ACCIÓN
+           ============================================================ */
+        .btn-copy {
+            background: #28a745;
+            color: white;
+            border: none;
+            padding: 10px 24px;
             border-radius: 8px;
-            border-left: 4px solid #1a3c6e;
+            font-size: 14px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+            letter-spacing: 0.3px;
         }
-        .stat-card .label {
-            font-size: 12px;
-            color: #7f8c8d;
+
+        .btn-copy:hover {
+            background: #1e7e34;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(40, 167, 69, 0.4);
         }
-        .stat-card .number {
-            font-size: 22px;
-            font-weight: bold;
-            color: #2c3e50;
+
+        .btn-copy.copied {
+            background: #17a2b8;
         }
-        .stat-card.success {
-            border-left-color: #27ae60;
+
+        .btn-copy.copied:hover {
+            background: #117a8b;
         }
-        .stat-card.warning {
-            border-left-color: #f39c12;
+
+        /* ============================================================
+           CONTADOR DE LÍNEAS Y ESTADO
+           ============================================================ */
+        .line-counter {
+            color: #adb5bd;
+            font-size: 14px;
+            padding: 6px 18px;
+            background: #2d2d2d;
+            border-radius: 20px;
+            font-family: 'Consolas', monospace;
+            border: 1px solid #444;
+            font-weight: 600;
         }
-        .id-persona-preview {
-            font-weight: bold;
+
+        .status-badge {
+            display: inline-block;
+            padding: 6px 20px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 700;
+            letter-spacing: 0.3px;
+        }
+
+        .status-badge.success {
+            background: #28a745;
+            color: white;
+        }
+
+        .status-badge.info {
+            background: #17a2b8;
+            color: white;
+        }
+
+        .status-badge.warning {
+            background: #ffc107;
+            color: #212529;
+        }
+
+        /* ============================================================
+           RESUMEN
+           ============================================================ */
+        .summary-box {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 20px 30px;
+            margin-top: 20px;
+            display: none;
+            border: 1px solid #e9ecef;
+        }
+
+        .summary-box.show {
+            display: block;
+        }
+
+        .summary-box .item {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px solid #e9ecef;
+        }
+
+        .summary-box .item:last-child {
+            border-bottom: none;
+        }
+
+        .summary-box .label {
+            font-weight: 700;
+            color: #333;
+            font-size: 15px;
+        }
+
+        .summary-box .value {
             color: #1a3c6e;
+            font-weight: 700;
+            font-size: 15px;
         }
-        @media (max-width: 768px) {
+
+        /* ============================================================
+           NAVEGACIÓN
+           ============================================================ */
+        .navigation-buttons {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 2px solid #e9ecef;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .navigation-buttons .left-buttons {
+            display: flex;
+            gap: 10px;
+        }
+
+        .navigation-buttons .right-buttons {
+            display: flex;
+            gap: 10px;
+        }
+
+        .loading {
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            border: 2px solid #f3f3f3;
+            border-top: 2px solid #1a3c6e;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* ============================================================
+           RESPONSIVE - PANTALLAS GRANDES
+           ============================================================ */
+
+        /* Pantallas muy grandes (4K) */
+        @media (min-width: 2000px) {
             .container {
-                padding: 15px;
+                max-width: 1800px !important;
+                padding: 40px 80px;
             }
-            .info-bar {
+            .script-body {
+                max-height: 900px;
+                padding: 40px 50px;
+            }
+            .script-body pre {
+                font-size: 17px;
+                line-height: 2.4;
+            }
+            .script-header h3 {
+                font-size: 22px;
+            }
+        }
+
+        /* Pantallas grandes (1440p) */
+        @media (min-width: 1600px) and (max-width: 1999px) {
+            .container {
+                max-width: 1600px !important;
+                padding: 35px 60px;
+            }
+            .script-body {
+                max-height: 800px;
+                padding: 30px 40px;
+            }
+            .script-body pre {
+                font-size: 15px;
+                line-height: 2.2;
+            }
+        }
+
+        /* Pantallas medianas (Laptops) */
+        @media (min-width: 1200px) and (max-width: 1599px) {
+            .container {
+                max-width: 1300px !important;
+                padding: 25px 35px;
+            }
+            .script-body {
+                max-height: 700px;
+                padding: 25px 30px;
+            }
+            .script-body pre {
+                font-size: 14px;
+                line-height: 2.0;
+            }
+        }
+
+        /* ============================================================
+           RESPONSIVE - PANTALLAS PEQUEÑAS
+           ============================================================ */
+
+        /* Pantallas pequeñas (Tablets) */
+        @media (max-width: 1199px) {
+            .container {
+                padding: 20px 25px !important;
+                max-width: 100% !important;
+            }
+            .script-header {
+                padding: 15px 20px;
                 flex-direction: column;
+                align-items: stretch;
                 gap: 10px;
             }
-            .acciones {
+            .script-header .header-info {
+                justify-content: space-between;
+                flex-wrap: wrap;
+            }
+            .script-body {
+                max-height: 500px;
+                padding: 20px 25px;
+            }
+            .script-body pre {
+                font-size: 13px;
+                line-height: 1.9;
+            }
+            .btn-copy {
+                padding: 8px 16px;
+                font-size: 12px;
+            }
+            .line-counter {
+                font-size: 12px;
+                padding: 4px 12px;
+            }
+            .status-badge {
+                font-size: 12px;
+                padding: 4px 14px;
+            }
+            .table-container th,
+            .table-container td {
+                padding: 8px 12px;
+                font-size: 13px;
+            }
+        }
+
+        /* Móviles */
+        @media (max-width: 768px) {
+            .container {
+                padding: 15px 15px !important;
+            }
+            .header h1 {
+                font-size: 18px;
+            }
+            .step-badge {
+                font-size: 12px;
+                padding: 4px 12px;
+            }
+            .script-body {
+                max-height: 400px;
+                padding: 15px 18px;
+            }
+            .script-body pre {
+                font-size: 12px;
+                line-height: 1.8;
+            }
+            .script-header h3 {
+                font-size: 14px;
+            }
+            .buttons {
                 flex-direction: column;
             }
             .btn {
                 width: 100%;
-                text-align: center;
+                justify-content: center;
             }
-            table {
-                font-size: 11px;
+            .navigation-buttons {
+                flex-direction: column;
+                align-items: stretch;
             }
-            th, td {
-                padding: 6px 4px;
+            .navigation-buttons .left-buttons,
+            .navigation-buttons .right-buttons {
+                flex-direction: column;
+                width: 100%;
             }
-            .form-control {
-                max-width: 100%;
+            .navigation-buttons .left-buttons .btn,
+            .navigation-buttons .right-buttons .btn {
+                width: 100%;
+                justify-content: center;
+            }
+            .info-box {
+                padding: 15px;
+            }
+            .info-box h4 {
+                font-size: 16px;
+            }
+            .info-box p {
+                font-size: 13px;
+            }
+            .scroll-hint {
+                font-size: 12px;
+                padding: 8px 15px;
+            }
+            .summary-box {
+                padding: 15px;
+            }
+            .summary-box .label,
+            .summary-box .value {
+                font-size: 13px;
+            }
+        }
+
+        /* ============================================================
+           IMPRIMIR - PARA GUARDAR COMO PDF
+           ============================================================ */
+        @media print {
+            .container {
+                max-width: 100% !important;
+                padding: 20px !important;
+                box-shadow: none !important;
+            }
+            
+            .script-body {
+                max-height: none !important;
+                background: white !important;
+                padding: 20px !important;
+                overflow: visible !important;
+            }
+            
+            .script-body pre {
+                color: black !important;
+                font-size: 10px !important;
+                line-height: 1.4 !important;
+                white-space: pre-wrap !important;
+                font-family: 'Courier New', monospace !important;
+            }
+            
+            .script-body pre .sql-keyword {
+                color: #0000ff !important;
+                font-weight: bold !important;
+            }
+            
+            .script-body pre .sql-string {
+                color: #008000 !important;
+            }
+            
+            .script-body pre .sql-comment {
+                color: #808080 !important;
+                font-style: italic !important;
+            }
+            
+            .script-body pre .sql-number {
+                color: #0000ff !important;
+            }
+            
+            .script-body pre .sql-function {
+                color: #a31515 !important;
+            }
+            
+            .script-header {
+                background: #f0f0f0 !important;
+                border-bottom: 2px solid #333 !important;
+            }
+            
+            .script-header h3 {
+                color: #333 !important;
+            }
+            
+            .btn-copy,
+            .btn-download,
+            .line-counter,
+            .status-badge {
+                display: none !important;
+            }
+            
+            .header-info {
+                display: none !important;
+            }
+            
+            .buttons {
+                display: none !important;
+            }
+            
+            .navigation-buttons {
+                display: none !important;
+            }
+            
+            .scroll-hint {
+                display: none !important;
             }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>📝 PASO 5: REGISTRAR ID_PERSONA</h1>
-        <p style="color: #7f8c8d; margin-bottom: 15px;">
-            Ingrese el <strong>primer ID_PERSONA</strong> y el sistema llenará automáticamente los siguientes de forma <strong>correlativa</strong>.
-        </p>
-
-        <!-- Barra de información -->
-        <div class="info-bar" id="infoBar">
-            <div class="info-item">
-                <strong>TRABAJADORES:</strong>
-                <span class="value" id="totalTrabajadores">0</span>
-            </div>
-            <div class="info-item">
-                <strong>ID_TICKET:</strong>
-                <span class="value" id="idTicket">-</span>
-            </div>
-            <div class="info-item">
-                <strong>TIPO PLANILLA:</strong>
-                <span class="value" id="tipoPlanilla">-</span>
-            </div>
-            <div class="info-item">
-                <strong>ESTADO:</strong>
-                <span class="value" id="estado">Pendiente</span>
-            </div>
+        <!-- HEADER -->
+        <div class="header">
+            <h1>👤 Generar Personas (ext_persona)</h1>
+            <span class="step-badge">Paso 5 de 8</span>
         </div>
 
-        <!-- Campo para el primer ID_PERSONA -->
-        <div class="form-group">
-            <label for="primer_id_persona">Primer ID_PERSONA <span class="required">*</span></label>
-            <input type="number" id="primer_id_persona" class="form-control" placeholder="Ej: 100" min="1">
-            <span class="text-muted">
-                📌 Los demás se llenarán automáticamente: 
-                <strong id="ejemploCorrelativo">100, 101, 102, ...</strong>
-            </span>
+        <!-- ALERTAS -->
+        <div id="alertContainer">
+            <div id="alertMessage" class="alert"></div>
         </div>
 
-        <!-- Estadísticas -->
-        <div class="stats">
-            <div class="stat-card">
-                <div class="label">Total Bloque</div>
-                <div class="number" id="statTotal">0</div>
-            </div>
-            <div class="stat-card success">
-                <div class="label">Registrados</div>
-                <div class="number" id="statRegistrados">0</div>
-            </div>
-            <div class="stat-card warning">
-                <div class="label">Pendientes</div>
-                <div class="number" id="statPendientes">0</div>
-            </div>
+        <!-- INFO BOX -->
+        <div class="info-box">
+            <h4>📌 Generación Automática de Personas</h4>
+            <p>El sistema generará automáticamente el script de <span class="highlight">ext_persona</span> con:</p>
+            <p>• <strong>ID_PERSONA</strong>: <code>externos_mteps.f_secuencial('ext_persona')</code> (automático)</p>
+            <p>• <strong>Datos</strong>: Extraídos de la planilla cargada</p>
+            <p>• <strong>Usuario Creación</strong>: El que ingresaste en el Paso 4</p>
+            <p style="margin-top: 8px; color: #1a3c6e;">
+                ⚡ <strong>No se requiere ingreso manual</strong> - El script se genera automáticamente al hacer clic en "Generar Script"
+            </p>
         </div>
 
-        <!-- Barra de progreso -->
-        <div class="progress-bar">
-            <div class="progress-fill" id="progressFill" style="width: 0%"></div>
+        <!-- BOTONES -->
+        <div class="buttons">
+            <button type="button" class="btn btn-success" id="btnGenerarPersonas">
+                ✅ Generar Script de Personas
+            </button>
+            
+            <button type="button" class="btn btn-info" id="btnCargarEstado">
+                📊 Cargar Estado
+            </button>
+            
+            <button type="button" class="btn btn-secondary" id="btnLimpiar">
+                🗑️ Limpiar
+            </button>
         </div>
 
-        <!-- Mensajes -->
-        <div id="mensajeContainer"></div>
-
-        <!-- Tabla de trabajadores -->
-        <div class="table-container">
+        <!-- TABLA DE TRABAJADORES -->
+        <div id="tablaContainer" class="table-container">
             <table>
                 <thead>
                     <tr>
-                        <th>N°</th>
-                        <th>C.I.</th>
-                        <th>EXP.</th>
-                        <th>CODEXP</th>
-                        <th>DOCENTE</th>
-                        <th>COD_TRAM</th>
-                        <th>ID_TRAMITE</th>
-                        <th>HORA INICIO</th>
-                        <th>HORA FIN</th>
-                        <th>RELACIÓN</th>
-                        <th>DIRECCIÓN</th>
-                        <th>TELEFONO</th>
-                        <th style="min-width:120px;">ID_PERSONA</th>
-                        <th>Estado</th>
+                        <th>#</th>
+                        <th>Nombre</th>
+                        <th>CI</th>
+                        <th>Teléfono</th>
+                        <th>Dirección</th>
                     </tr>
                 </thead>
                 <tbody id="tablaTrabajadores">
                     <tr>
-                        <td colspan="14" style="text-align:center; padding: 30px; color: #95a5a6;">
-                            <span style="font-size: 18px;">📂</span><br>
-                            No hay datos generados todavía.<br>
-                            <small>Cargue un Excel y configure la cantidad en los pasos anteriores.</small>
+                        <td colspan="5" style="text-align: center; color: #6c757d; padding: 20px;">
+                            ⏳ Cargando trabajadores...
                         </td>
                     </tr>
                 </tbody>
             </table>
         </div>
 
-        <!-- Acciones -->
-        <div class="acciones">
-            <button class="btn btn-success" id="btnRegistrar" onclick="registrarPersonas()">
-                ✅ REGISTRAR ID_PERSONA
-            </button>
-            <button class="btn btn-primary" id="btnSiguiente" onclick="irAlSiguiente()">
-                ▶ SIGUIENTE PASO
-            </button>
-            <button class="btn btn-warning" id="btnPrevisualizar" onclick="previsualizar()">
-                👁 PREVISUALIZAR
-            </button>
-            <button class="btn btn-secondary" id="btnActualizar" onclick="cargarDatos()">
-                🔄 ACTUALIZAR
-            </button>
+        <!-- RESUMEN -->
+        <div id="summaryBox" class="summary-box">
+            <div class="item">
+                <span class="label">📊 Total Trabajadores:</span>
+                <span class="value" id="totalTrabajadores">0</span>
+            </div>
+            <div class="item">
+                <span class="label">📌 ID_TICKET:</span>
+                <span class="value" id="idTicket">-</span>
+            </div>
+            <div class="item">
+                <span class="label">👤 Usuario Creación:</span>
+                <span class="value" id="usuarioCreacion">-</span>
+            </div>
         </div>
 
-        <!-- Script generado -->
-        <div class="script-area" id="scriptArea" style="display: none;">
+        <!-- SCRIPT GENERADO -->
+        <div id="scriptContainer" class="script-container">
             <div class="script-header">
-                <h3>📄 SCRIPT GENERADO - ID_PERSONA</h3>
-                <button class="btn btn-secondary" onclick="copiarScript()" style="padding: 5px 15px; font-size: 12px;">
-                    📋 COPIAR
+                <h3>📝 Script de Personas (ext_persona)</h3>
+                <div class="header-info">
+                    <span id="scriptStatus" class="status-badge info">⏳ Generando...</span>
+                    <span id="lineCounter" class="line-counter">📄 0 líneas</span>
+                    <button class="btn-copy" id="btnCopiarScript" title="Copiar script al portapapeles">
+                        📋 Copiar
+                    </button>
+                </div>
+            </div>
+            <!-- HINT DE SCROLL -->
+            <div class="scroll-hint" id="scrollHint">
+                ⬅️ Usa las flechas <span class="arrow">←</span> y <span class="arrow">→</span> para desplazarte horizontalmente ➡️
+            </div>
+            <div class="script-body">
+                <pre id="scriptOutput"><span class="sql-comment">-- El script se generará al hacer clic en "Generar Script"</span></pre>
+            </div>
+        </div>
+
+        <!-- BOTONES DE NAVEGACIÓN -->
+        <div class="navigation-buttons">
+            <div class="left-buttons">
+                <button type="button" class="btn btn-outline-secondary" id="btnVolver">
+                    ⬅️ Volver
                 </button>
             </div>
-            <div class="script-body" id="scriptBody">
-                -- Script generado automáticamente
+            <div class="right-buttons">
+                <button type="button" class="btn btn-outline-primary" id="btnSiguiente">
+                    Siguiente ➡️
+                </button>
             </div>
         </div>
     </div>
 
     <script>
-        let trabajadoresData = [];
+        // ============================================================
+        // VARIABLES GLOBALES
+        // ============================================================
+        
+        let scriptGenerado = false;
+        let scriptActual = '';
 
         // ============================================================
-        // CARGAR DATOS INICIALES
+        // DOM ELEMENTOS
         // ============================================================
+        
+        const alertContainer = document.getElementById('alertContainer');
+        const alertMessage = document.getElementById('alertMessage');
+        const tablaTrabajadores = document.getElementById('tablaTrabajadores');
+        const btnGenerar = document.getElementById('btnGenerarPersonas');
+        const btnCargarEstado = document.getElementById('btnCargarEstado');
+        const btnLimpiar = document.getElementById('btnLimpiar');
+        const btnVolver = document.getElementById('btnVolver');
+        const btnSiguiente = document.getElementById('btnSiguiente');
+        const summaryBox = document.getElementById('summaryBox');
+        const totalTrabajadores = document.getElementById('totalTrabajadores');
+        const idTicket = document.getElementById('idTicket');
+        const usuarioCreacion = document.getElementById('usuarioCreacion');
+        const scriptContainer = document.getElementById('scriptContainer');
+        const scriptOutput = document.getElementById('scriptOutput');
+        const scriptStatus = document.getElementById('scriptStatus');
+        const lineCounter = document.getElementById('lineCounter');
+        const scrollHint = document.getElementById('scrollHint');
 
-        document.addEventListener('DOMContentLoaded', function() {
-            cargarDatos();
-            
-            // Actualizar ejemplo correlativo al cambiar el valor
-            document.getElementById('primer_id_persona').addEventListener('input', function() {
-                const valor = this.value;
-                if (valor && parseInt(valor) > 0) {
-                    const num = parseInt(valor);
-                    const total = parseInt(document.getElementById('statTotal').textContent) || 0;
-                    if (total > 0) {
-                        document.getElementById('ejemploCorrelativo').textContent = 
-                            `${num}, ${num+1}, ${num+2}, ... ${num+total-1}`;
-                    } else {
-                        document.getElementById('ejemploCorrelativo').textContent = 
-                            `${num}, ${num+1}, ${num+2}, ...`;
-                    }
+        // ============================================================
+        // FUNCIONES DE UTILIDAD
+        // ============================================================
+        
+        function mostrarAlerta(mensaje, tipo = 'info') {
+            alertMessage.textContent = mensaje;
+            alertMessage.className = `alert alert-${tipo} show`;
+            alertContainer.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+
+        function ocultarAlerta() {
+            alertMessage.className = 'alert';
+            alertMessage.textContent = '';
+        }
+
+        function setLoading(btn, loading) {
+            if (loading) {
+                btn.disabled = true;
+                btn.innerHTML = '<span class="loading"></span> Procesando...';
+            } else {
+                btn.disabled = false;
+                if (btn.id === 'btnGenerarPersonas') {
+                    btn.innerHTML = '✅ Generar Script de Personas';
+                } else if (btn.id === 'btnCargarEstado') {
+                    btn.innerHTML = '📊 Cargar Estado';
                 }
-            });
-        });
+            }
+        }
 
-        function cargarDatos() {
-            fetch('/api/estado')
-                .then(response => response.json())
-                .then(data => {
-                    if (data.success) {
-                        actualizarInfo(data);
-                        actualizarTabla(data);
-                        actualizarStats(data);
-                    } else {
-                        mostrarMensaje('Error al cargar datos: ' + (data.error || 'Error desconocido'), 'error');
-                    }
-                })
-                .catch(error => {
-                    mostrarMensaje('Error de conexión: ' + error, 'error');
-                });
+        function mostrarScrollHint() {
+            if (scrollHint) {
+                scrollHint.classList.add('show');
+                // Ocultar después de 8 segundos
+                setTimeout(() => {
+                    scrollHint.classList.remove('show');
+                }, 8000);
+            }
+        }
+
+        function mostrarScript(script, total, ticket, usuario) {
+            let highlighted = script
+                .replace(/--(.*)/g, '<span class="sql-comment">--$1</span>')
+                .replace(/'([^']*)'/g, '<span class="sql-string">\'$1\'</span>')
+                .replace(/\b(INSERT|INTO|VALUES|SELECT|FROM|WHERE|UPDATE|DELETE|CREATE|TABLE|DROP|ALTER|ADD|COLUMN|NOT|NULL|DEFAULT|PRIMARY|KEY|FOREIGN|REFERENCES|UNIQUE|CHECK|INDEX|VIEW|PROCEDURE|FUNCTION|TRIGGER|DATABASE|SCHEMA|USE|SHOW|DESCRIBE|EXPLAIN|ANALYZE|OPTIMIZE|GRANT|REVOKE|COMMIT|ROLLBACK|SAVEPOINT|TRANSACTION|LOCK|UNLOCK|SET|now)\b/gi, 
+                '<span class="sql-keyword">$1</span>')
+                .replace(/\b(\d+)\b/g, '<span class="sql-number">$1</span>')
+                .replace(/externos_mteps\.f_secuencial\([^)]*\)/g, '<span class="sql-function">$&</span>');
+            
+            scriptOutput.innerHTML = highlighted;
+            scriptActual = script;
+            scriptContainer.classList.add('show');
+            scriptStatus.textContent = `✅ ${total} trabajadores - Ticket: ${ticket}`;
+            scriptStatus.className = 'status-badge success';
+            
+            // Actualizar contador de líneas
+            const lineas = script.split('\n').filter(line => line.trim() !== '').length;
+            lineCounter.textContent = `📄 ${lineas} líneas`;
+            
+            scriptGenerado = true;
+            scriptContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            
+            // Mostrar hint de scroll después de 1 segundo
+            setTimeout(mostrarScrollHint, 1000);
+        }
+
+        function limpiarResultado() {
+            scriptContainer.classList.remove('show');
+            scriptOutput.innerHTML = '<span class="sql-comment">-- El script se generará al hacer clic en "Generar Script"</span>';
+            scriptStatus.textContent = '⏳ Generando...';
+            scriptStatus.className = 'status-badge info';
+            lineCounter.textContent = '📄 0 líneas';
+            scriptGenerado = false;
+            scriptActual = '';
+            scrollHint.classList.remove('show');
         }
 
         // ============================================================
-        // ACTUALIZAR INFORMACIÓN
+        // FUNCIÓN: ACTUALIZAR TABLA
         // ============================================================
-
-        function actualizarInfo(data) {
-            document.getElementById('totalTrabajadores').textContent = data.total || 0;
-            document.getElementById('idTicket').textContent = data.id_ticket || '-';
-            document.getElementById('tipoPlanilla').textContent = data.tipo || '-';
-            
-            const estado = data.pendientes > 0 ? 'Pendiente' : 'Completado';
-            document.getElementById('estado').textContent = estado;
-            document.getElementById('estado').style.color = data.pendientes > 0 ? '#f39c12' : '#27ae60';
-        }
-
-        // ============================================================
-        // ACTUALIZAR ESTADÍSTICAS
-        // ============================================================
-
-        function actualizarStats(data) {
-            const procesados = data.procesados || [];
-            const total = procesados.length;
-            
-            let registrados = 0;
-            procesados.forEach(t => {
-                if (t.id_persona && t.id_persona !== 'None' && t.id_persona !== null) {
-                    registrados++;
-                }
-            });
-            
-            document.getElementById('statTotal').textContent = total;
-            document.getElementById('statRegistrados').textContent = registrados;
-            document.getElementById('statPendientes').textContent = total - registrados;
-            
-            const porcentaje = total > 0 ? (registrados / total) * 100 : 0;
-            document.getElementById('progressFill').style.width = porcentaje + '%';
-        }
-
-        // ============================================================
-        // ACTUALIZAR TABLA - Mostrar IDs correlativos en preview
-        // ============================================================
-
+        
         function actualizarTabla(data) {
-            const procesados = data.procesados || [];
+            const trabajadores = data.trabajadores || [];
+            const desde = data.desde || 1;
+            const hasta = data.hasta || 0;
             
-            if (procesados.length === 0) {
-                document.getElementById('tablaTrabajadores').innerHTML = `
+            const bloque = trabajadores.filter(t => {
+                const nro = parseInt(t.nro);
+                return nro >= desde && nro <= hasta;
+            });
+            
+            if (bloque.length === 0) {
+                tablaTrabajadores.innerHTML = `
                     <tr>
-                        <td colspan="14" style="text-align:center; padding: 30px; color: #95a5a6;">
-                            <span style="font-size: 18px;">📂</span><br>
-                            No hay datos generados todavía.<br>
-                            <small>Cargue un Excel y configure la cantidad en los pasos anteriores.</small>
+                        <td colspan="5" style="text-align: center; color: #6c757d; padding: 20px;">
+                            ⚠️ No hay trabajadores en el bloque actual
                         </td>
                     </tr>
                 `;
                 return;
             }
-
+            
             let html = '';
-            trabajadoresData = procesados;
-            
-            // Obtener el primer ID ingresado para mostrar preview
-            const primerIdInput = document.getElementById('primer_id_persona');
-            const primerId = primerIdInput.value ? parseInt(primerIdInput.value) : null;
-            
-            procesados.forEach((t, index) => {
-                const nro = t.nro;
-                const idPersona = t.id_persona && t.id_persona !== 'None' ? t.id_persona : '';
-                const registrado = idPersona !== '';
-                
-                // Calcular ID correlativo para preview
-                let idPreview = '';
-                if (primerId !== null && !isNaN(primerId)) {
-                    idPreview = primerId + index;
-                }
-                
+            bloque.forEach(t => {
                 html += `
                     <tr>
-                        <td><strong>${nro}</strong></td>
-                        <td>${t.ci || ''}</td>
-                        <td>${t.expedicion || ''}</td>
-                        <td>${t.codexp || ''}</td>
-                        <td>${t.nombre || ''}</td>
-                        <td>${t.codigo_tramite || 'PENDIENTE'}</td>
-                        <td>${t.id_tramite || 'PENDIENTE'}</td>
-                        <td>${t.hora_inicio || '-'}</td>
-                        <td>${t.hora_fin || '-'}</td>
-                        <td>${t.relacion || ''}</td>
-                        <td>${t.direccion || ''}</td>
-                        <td>${t.telefono || ''}</td>
-                        <td>
-                            ${idPreview ? `<span class="id-persona-preview">${idPreview}</span>` : '—'}
-                            ${registrado ? ` <span class="badge-registrado">✓</span>` : ''}
-                        </td>
-                        <td>
-                            ${registrado 
-                                ? '<span class="badge-registrado">✓ REGISTRADO</span>' 
-                                : (idPreview ? '<span class="badge-correlativo">⏳ CORRELATIVO</span>' : '<span class="badge-pendiente">⏳ PENDIENTE</span>')}
-                        </td>
+                        <td>${t.nro}</td>
+                        <td>${t.nombre || 'Sin nombre'}</td>
+                        <td>${t.ci || '-'}</td>
+                        <td>${t.telefono || '-'}</td>
+                        <td>${t.direccion || '-'}</td>
                     </tr>
                 `;
             });
-
-            document.getElementById('tablaTrabajadores').innerHTML = html;
             
-            // Actualizar ejemplo correlativo
-            const total = procesados.length;
-            if (primerId !== null && !isNaN(primerId) && total > 0) {
-                document.getElementById('ejemploCorrelativo').textContent = 
-                    `${primerId}, ${primerId+1}, ${primerId+2}, ... ${primerId+total-1}`;
-            }
+            tablaTrabajadores.innerHTML = html;
+            
+            // Actualizar resumen
+            summaryBox.classList.add('show');
+            totalTrabajadores.textContent = bloque.length;
+            idTicket.textContent = data.id_ticket || '-';
+            usuarioCreacion.textContent = data.usuario_creacion || '-';
         }
 
         // ============================================================
-        // REGISTRAR ID_PERSONA (SOLO EL PRIMERO - CORRELATIVO)
+        // FUNCIÓN: GENERAR SCRIPT DE PERSONAS
         // ============================================================
+        
+        async function generarPersonas() {
+            try {
+                setLoading(btnGenerar, true);
+                ocultarAlerta();
+                limpiarResultado();
 
-        function registrarPersonas() {
-            const primerId = document.getElementById('primer_id_persona').value.trim();
-            
-            if (!primerId) {
-                mostrarMensaje('⚠️ Debe ingresar el primer ID_PERSONA.', 'error');
-                document.getElementById('primer_id_persona').focus();
-                return;
-            }
-            
-            if (parseInt(primerId) <= 0) {
-                mostrarMensaje('⚠️ El ID_PERSONA debe ser un número mayor que cero.', 'error');
-                document.getElementById('primer_id_persona').focus();
-                return;
-            }
+                // Primero obtener el estado para verificar que hay ticket
+                const estadoResponse = await fetch('/api/estado');
+                const estadoData = await estadoResponse.json();
 
-            const btn = document.getElementById('btnRegistrar');
-            btn.disabled = true;
-            btn.textContent = '⏳ REGISTRANDO...';
-
-            fetch('/api/registrar_personas', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    primer_id_persona: parseInt(primerId)
-                })
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    mostrarMensaje(`✅ ${data.mensaje || 'ID_PERSONA registrados correctamente.'}`, 'exito');
-                    
-                    // Mostrar script completo acumulado
-                    if (data.script_completo) {
-                        document.getElementById('scriptArea').style.display = 'block';
-                        document.getElementById('scriptBody').textContent = data.script_completo;
-                    }
-                    
-                    // Actualizar estado
-                    cargarDatos();
-                    
-                    // Habilitar botón siguiente
-                    document.getElementById('btnSiguiente').disabled = false;
-                    
-                } else {
-                    mostrarMensaje('❌ Error: ' + (data.error || 'Error desconocido'), 'error');
+                if (!estadoData.success || !estadoData.planilla_id) {
+                    mostrarAlerta('⚠️ No hay una planilla cargada. Primero debe cargar un Excel y generar el ticket.', 'warning');
+                    return;
                 }
-            })
-            .catch(error => {
-                mostrarMensaje('❌ Error de conexión: ' + error, 'error');
-            })
-            .finally(() => {
-                btn.disabled = false;
-                btn.textContent = '✅ REGISTRAR ID_PERSONA';
-            });
-        }
 
-        // ============================================================
-        // PREVISUALIZAR
-        // ============================================================
+                if (!estadoData.id_ticket) {
+                    mostrarAlerta('⚠️ Primero debe generar el ticket en el Paso 4.', 'warning');
+                    return;
+                }
 
-        function previsualizar() {
-            fetch('/api/previsualizacion')
-                .then(response => response.json())
-                .then(data => {
-                    if (data.success) {
-                        actualizarTabla(data);
-                        actualizarStats(data);
-                        mostrarMensaje('✅ Previsualización actualizada.', 'info');
-                    } else {
-                        mostrarMensaje('❌ Error: ' + (data.error || 'Error desconocido'), 'error');
+                // Generar el script de personas
+                const response = await fetch('/api/generar_personas', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
                     }
-                })
-                .catch(error => {
-                    mostrarMensaje('❌ Error de conexión: ' + error, 'error');
                 });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    mostrarAlerta(`✅ Script de personas generado correctamente - ${data.total} trabajadores`, 'success');
+                    mostrarScript(data.script, data.total, estadoData.id_ticket, estadoData.usuario_creacion || 1155);
+                } else {
+                    mostrarAlerta('❌ ' + data.error, 'danger');
+                }
+            } catch (error) {
+                mostrarAlerta('❌ Error de conexión: ' + error.message, 'danger');
+            } finally {
+                setLoading(btnGenerar, false);
+            }
         }
 
         // ============================================================
-        // IR AL SIGUIENTE PASO
+        // FUNCIÓN: CARGAR ESTADO
         // ============================================================
+        
+        async function cargarEstado() {
+            try {
+                setLoading(btnCargarEstado, true);
+                ocultarAlerta();
 
-        function irAlSiguiente() {
-            // Verificar que se haya registrado al menos un ID_PERSONA
-            const procesados = trabajadoresData || [];
-            let tieneRegistrados = false;
-            
-            procesados.forEach(t => {
-                if (t.id_persona && t.id_persona !== 'None' && t.id_persona !== null) {
-                    tieneRegistrados = true;
+                const response = await fetch('/api/estado');
+                const data = await response.json();
+
+                if (data.success && data.planilla_id) {
+                    actualizarTabla(data);
+                    mostrarAlerta(`✅ Estado cargado - ${data.total} trabajadores`, 'success');
+                } else {
+                    mostrarAlerta('⚠️ No hay una planilla cargada. Primero cargue un Excel.', 'warning');
                 }
-            });
-            
-            if (!tieneRegistrados) {
-                mostrarMensaje('⚠️ Debe registrar los ID_PERSONA antes de continuar.', 'error');
+            } catch (error) {
+                mostrarAlerta('❌ Error de conexión: ' + error.message, 'danger');
+            } finally {
+                setLoading(btnCargarEstado, false);
+            }
+        }
+
+        // ============================================================
+        // FUNCIÓN: COPIAR SCRIPT
+        // ============================================================
+        
+        document.getElementById('btnCopiarScript').addEventListener('click', function() {
+            if (!scriptGenerado || !scriptActual) {
+                mostrarAlerta('⚠️ Primero genere el script con el botón "Generar Script de Personas"', 'warning');
                 return;
             }
             
-            // Guardar avance antes de ir al siguiente paso
-            fetch('/api/guardar_avance', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({})
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    window.location.href = '/codigo';
-                } else {
-                    mostrarMensaje('⚠️ No se pudo guardar el avance, pero puede continuar.', 'warning');
-                    window.location.href = '/codigo';
-                }
-            })
-            .catch(() => {
-                window.location.href = '/codigo';
-            });
-        }
-
-        // ============================================================
-        // COPIAR SCRIPT
-        // ============================================================
-
-        function copiarScript() {
-            const script = document.getElementById('scriptBody').textContent;
-            navigator.clipboard.writeText(script).then(() => {
-                mostrarMensaje('✅ Script copiado al portapapeles.', 'exito');
+            navigator.clipboard.writeText(scriptActual).then(() => {
+                const btn = document.getElementById('btnCopiarScript');
+                btn.textContent = '✅ ¡Copiado!';
+                btn.classList.add('copied');
+                mostrarAlerta('✅ Script copiado al portapapeles', 'success');
+                setTimeout(() => {
+                    btn.textContent = '📋 Copiar';
+                    btn.classList.remove('copied');
+                }, 3000);
             }).catch(() => {
+                // Fallback
                 const textarea = document.createElement('textarea');
-                textarea.value = script;
+                textarea.value = scriptActual;
+                textarea.style.position = 'fixed';
+                textarea.style.opacity = '0';
                 document.body.appendChild(textarea);
                 textarea.select();
                 document.execCommand('copy');
                 document.body.removeChild(textarea);
-                mostrarMensaje('✅ Script copiado al portapapeles.', 'exito');
+                mostrarAlerta('✅ Script copiado al portapapeles', 'success');
             });
+        });
+
+        // ============================================================
+        // NAVEGACIÓN
+        // ============================================================
+        
+        function irA(pagina) {
+            window.location.href = pagina;
         }
 
         // ============================================================
-        // MOSTRAR MENSAJES
+        // EVENTOS
         // ============================================================
+        
+        btnGenerar.addEventListener('click', generarPersonas);
+        btnCargarEstado.addEventListener('click', cargarEstado);
+        
+        btnLimpiar.addEventListener('click', function() {
+            ocultarAlerta();
+            limpiarResultado();
+            mostrarAlerta('🧹 Resultado limpiado', 'info');
+        });
+        
+        btnVolver.addEventListener('click', function() {
+            irA('/ticket');
+        });
+        
+        btnSiguiente.addEventListener('click', function() {
+            if (!scriptGenerado) {
+                mostrarAlerta('⚠️ Debe generar el script de personas antes de continuar (botón "Generar Script de Personas")', 'warning');
+                return;
+            }
+            irA('/codigo');
+        });
 
-        function mostrarMensaje(texto, tipo) {
-            const container = document.getElementById('mensajeContainer');
-            const clases = {
-                'exito': 'mensaje-exito',
-                'error': 'mensaje-error',
-                'info': 'mensaje-info',
-                'warning': 'mensaje-info'
-            };
-            
-            container.innerHTML = `
-                <div class="mensaje ${clases[tipo] || 'mensaje-info'}">
-                    ${texto}
-                </div>
-            `;
-            
-            setTimeout(() => {
-                container.innerHTML = '';
-            }, 5000);
-        }
+        // ============================================================
+        // INICIALIZACIÓN
+        // ============================================================
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            setTimeout(cargarEstado, 500);
+        });
+
+        console.log('✅ Pantalla 5 - Generar Personas cargada correctamente');
     </script>
 </body>
 </html>

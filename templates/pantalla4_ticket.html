@@ -10,630 +10,1467 @@
             padding: 0;
             box-sizing: border-box;
         }
+        
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background: #f0f2f5;
             padding: 20px;
         }
+        
         .container {
-            max-width: 1200px;
+            max-width: 950px;
             margin: 0 auto;
             background: white;
             border-radius: 12px;
             padding: 30px;
             box-shadow: 0 2px 10px rgba(0,0,0,0.1);
         }
-        h1 {
-            color: #1a3c6e;
-            border-bottom: 3px solid #1a3c6e;
-            padding-bottom: 15px;
-            margin-bottom: 20px;
-        }
-        .info-bar {
+        
+        .header {
             display: flex;
-            gap: 30px;
-            background: #e8edf4;
-            padding: 15px 20px;
-            border-radius: 8px;
-            margin-bottom: 20px;
-            flex-wrap: wrap;
-        }
-        .info-item {
-            display: flex;
+            justify-content: space-between;
             align-items: center;
-            gap: 8px;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #e9ecef;
         }
-        .info-item strong {
+        
+        .header h1 {
             color: #1a3c6e;
+            font-size: 24px;
         }
-        .info-item .value {
-            font-weight: bold;
-            color: #2c3e50;
+        
+        .step-badge {
+            background: #1a3c6e;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 14px;
         }
+        
         .form-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 20px;
-            margin: 20px 0;
         }
+        
         .form-group {
-            display: flex;
-            flex-direction: column;
+            margin-bottom: 15px;
         }
-        .form-group label {
-            font-weight: 600;
-            color: #2c3e50;
-            margin-bottom: 5px;
-        }
-        .form-group label .required {
-            color: #e74c3c;
-        }
-        .form-control {
-            padding: 10px 12px;
-            border: 2px solid #d0d7e2;
-            border-radius: 8px;
-            font-size: 14px;
-            transition: all 0.3s;
-        }
-        .form-control:focus {
-            border-color: #1a3c6e;
-            outline: none;
-            box-shadow: 0 0 0 3px rgba(26, 60, 110, 0.2);
-        }
-        .form-control-sm {
-            padding: 8px 10px;
-            font-size: 13px;
-        }
-        select.form-control {
-            appearance: none;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23333' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
-            background-repeat: no-repeat;
-            background-position: right 12px center;
-            padding-right: 35px;
-        }
-        .full-width {
+        
+        .form-group.full-width {
             grid-column: 1 / -1;
         }
-        .acciones {
-            display: flex;
-            gap: 15px;
-            margin: 25px 0 15px 0;
-            flex-wrap: wrap;
-            align-items: center;
+        
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 5px;
+            font-size: 14px;
         }
+        
+        .form-group label .required {
+            color: #dc3545;
+            margin-left: 3px;
+        }
+        
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid #ced4da;
+            border-radius: 6px;
+            font-size: 14px;
+            transition: border-color 0.3s;
+        }
+        
+        .form-group input:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #1a3c6e;
+            box-shadow: 0 0 0 3px rgba(26, 60, 110, 0.1);
+        }
+        
+        .form-group input.error {
+            border-color: #dc3545;
+        }
+        
+        .form-group input:disabled {
+            background: #e9ecef;
+            cursor: not-allowed;
+        }
+        
+        .error-message {
+            color: #dc3545;
+            font-size: 12px;
+            margin-top: 4px;
+            display: none;
+        }
+        
+        .error-message.show {
+            display: block;
+        }
+        
+        .info-box {
+            background: #e7f3ff;
+            border-left: 4px solid #1a3c6e;
+            padding: 15px 20px;
+            border-radius: 6px;
+            margin-bottom: 20px;
+        }
+        
+        .info-box h4 {
+            color: #1a3c6e;
+            margin-bottom: 8px;
+        }
+        
+        .info-box p {
+            color: #333;
+            font-size: 14px;
+            margin: 4px 0;
+        }
+        
+        .info-box .highlight {
+            background: #fff3cd;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-weight: 600;
+        }
+        
+        .buttons {
+            display: flex;
+            gap: 12px;
+            margin-top: 30px;
+            flex-wrap: wrap;
+        }
+        
         .btn {
-            padding: 12px 30px;
+            padding: 12px 28px;
             border: none;
-            border-radius: 8px;
+            border-radius: 6px;
             font-size: 15px;
             font-weight: 600;
             cursor: pointer;
             transition: all 0.3s;
-            text-decoration: none;
-            display: inline-block;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
         }
+        
         .btn-primary {
             background: #1a3c6e;
             color: white;
         }
+        
         .btn-primary:hover {
-            background: #152d52;
-            transform: translateY(-2px);
+            background: #0f2a4e;
+            transform: translateY(-1px);
             box-shadow: 0 4px 12px rgba(26, 60, 110, 0.3);
         }
+        
+        .btn-primary:disabled {
+            background: #6c757d;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+        
         .btn-success {
-            background: #27ae60;
+            background: #28a745;
             color: white;
         }
+        
         .btn-success:hover {
-            background: #1e8449;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(39, 174, 96, 0.3);
+            background: #1e7e34;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(40, 167, 69, 0.3);
         }
+        
+        .btn-info {
+            background: #17a2b8;
+            color: white;
+        }
+        
+        .btn-info:hover {
+            background: #117a8b;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(23, 162, 184, 0.3);
+        }
+        
         .btn-warning {
-            background: #f39c12;
-            color: white;
+            background: #ffc107;
+            color: #212529;
         }
+        
         .btn-warning:hover {
-            background: #d68910;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(243, 156, 18, 0.3);
+            background: #e0a800;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(255, 193, 7, 0.3);
         }
+        
         .btn-secondary {
-            background: #95a5a6;
+            background: #6c757d;
             color: white;
         }
+        
         .btn-secondary:hover {
-            background: #7f8c8d;
-            transform: translateY(-2px);
+            background: #5a6268;
+            transform: translateY(-1px);
         }
+        
+        .btn-outline-secondary {
+            background: transparent;
+            color: #6c757d;
+            border: 2px solid #6c757d;
+        }
+        
+        .btn-outline-secondary:hover {
+            background: #6c757d;
+            color: white;
+            transform: translateY(-1px);
+        }
+        
+        .btn-outline-primary {
+            background: transparent;
+            color: #1a3c6e;
+            border: 2px solid #1a3c6e;
+        }
+        
+        .btn-outline-primary:hover {
+            background: #1a3c6e;
+            color: white;
+            transform: translateY(-1px);
+        }
+        
         .btn:disabled {
             opacity: 0.6;
             cursor: not-allowed;
             transform: none !important;
+            box-shadow: none !important;
         }
-        .script-area {
-            margin-top: 20px;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            overflow: hidden;
+        
+        .alert {
+            padding: 15px 20px;
+            border-radius: 6px;
+            margin-bottom: 20px;
+            display: none;
         }
-        .script-header {
-            background: #2c3e50;
-            color: white;
-            padding: 12px 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+        
+        .alert.show {
+            display: block;
         }
-        .script-header h3 {
-            margin: 0;
-            font-size: 16px;
-        }
-        .script-body {
-            background: #1e1e1e;
-            color: #d4d4d4;
-            padding: 20px;
-            max-height: 400px;
-            overflow: auto;
-            font-family: 'Consolas', 'Monaco', monospace;
-            font-size: 12px;
-            line-height: 1.6;
-            white-space: pre-wrap;
-            word-break: break-all;
-        }
-        .mensaje {
-            padding: 12px 18px;
-            border-radius: 8px;
-            margin: 10px 0;
-            font-weight: 500;
-        }
-        .mensaje-exito {
+        
+        .alert-success {
             background: #d4edda;
             color: #155724;
             border: 1px solid #c3e6cb;
         }
-        .mensaje-error {
+        
+        .alert-danger {
             background: #f8d7da;
             color: #721c24;
             border: 1px solid #f5c6cb;
         }
-        .mensaje-info {
+        
+        .alert-info {
             background: #d1ecf1;
             color: #0c5460;
             border: 1px solid #bee5eb;
         }
-        .table-container {
-            overflow-x: auto;
-            margin: 15px 0;
-            border: 1px solid #ddd;
-            border-radius: 8px;
+        
+        .alert-warning {
+            background: #fff3cd;
+            color: #856404;
+            border: 1px solid #ffeeba;
         }
-        table {
-            width: 100%;
-            border-collapse: collapse;
+        
+        .script-container {
+            margin-top: 25px;
+            border: 1px solid #dee2e6;
+            border-radius: 6px;
+            overflow: hidden;
+            display: none;
+        }
+        
+        .script-container.show {
+            display: block;
+        }
+        
+        .script-header {
+            background: #f8f9fa;
+            padding: 12px 20px;
+            border-bottom: 1px solid #dee2e6;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .script-header h3 {
+            font-size: 16px;
+            color: #333;
+            margin: 0;
+        }
+        
+        .script-body {
+            background: #1e1e1e;
+            padding: 20px;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        
+        .script-body pre {
+            color: #d4d4d4;
+            font-family: 'Courier New', monospace;
             font-size: 13px;
+            line-height: 1.6;
+            margin: 0;
+            white-space: pre-wrap;
+            word-wrap: break-word;
         }
-        thead {
-            background: #1a3c6e;
-            color: white;
+        
+        .script-body pre .sql-keyword {
+            color: #569cd6;
         }
-        th {
-            padding: 10px 8px;
-            text-align: left;
-            white-space: nowrap;
+        
+        .script-body pre .sql-string {
+            color: #ce9178;
         }
-        td {
-            padding: 8px;
-            border-bottom: 1px solid #e0e0e0;
+        
+        .script-body pre .sql-comment {
+            color: #6a9955;
         }
-        .badge-ticket {
+        
+        .script-body pre .sql-number {
+            color: #b5cea8;
+        }
+        
+        .loading {
             display: inline-block;
-            background: #27ae60;
-            color: white;
-            padding: 2px 12px;
+            width: 16px;
+            height: 16px;
+            border: 2px solid #f3f3f3;
+            border-top: 2px solid #1a3c6e;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .status-badge {
+            display: inline-block;
+            padding: 4px 12px;
             border-radius: 12px;
             font-size: 12px;
+            font-weight: 600;
+        }
+        
+        .status-badge.success {
+            background: #d4edda;
+            color: #155724;
+        }
+        
+        .status-badge.error {
+            background: #f8d7da;
+            color: #721c24;
+        }
+        
+        .status-badge.info {
+            background: #d1ecf1;
+            color: #0c5460;
+        }
+        
+        .help-text {
+            display: block;
+            color: #6c757d;
+            font-size: 12px;
+            margin-top: 4px;
+        }
+        
+        .navigation-buttons {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 2px solid #e9ecef;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        
+        .navigation-buttons .left-buttons {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .navigation-buttons .right-buttons {
+            display: flex;
+            gap: 10px;
+        }
+        
+        /* Estilos para resultados */
+        .list-group-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 20px;
+            border-bottom: 1px solid #e9ecef;
+            background: white;
+            cursor: pointer;
+            transition: background 0.2s;
+            width: 100%;
+            text-align: left;
+            border: none;
+        }
+        
+        .list-group-item:hover {
+            background: #f0f4ff;
+        }
+        
+        .list-group-item .badge {
+            background: #1a3c6e;
+            color: white;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 12px;
+        }
+        
+        .list-group-item .badge:hover {
+            background: #0f2a4e;
+        }
+        
+        .list-group-item .text-muted {
+            color: #6c757d;
+            font-size: 13px;
+        }
+        
+        .list-group-item .text-primary {
+            color: #1a3c6e;
             font-weight: bold;
         }
+        
+        .text-center {
+            text-align: center;
+        }
+        
+        .py-4 {
+            padding: 20px 0;
+        }
+        
+        /* Card styles */
+        .card {
+            border: 1px solid #dee2e6;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        
+        .card-header {
+            background: #f8f9fa;
+            padding: 12px 20px;
+            border-bottom: 1px solid #dee2e6;
+        }
+        
+        .card-body {
+            padding: 20px;
+        }
+        
+        .card-body.p-0 {
+            padding: 0;
+        }
+        
+        .input-group {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+        
+        .input-group .form-control {
+            flex: 1;
+        }
+        
         @media (max-width: 768px) {
             .form-grid {
                 grid-template-columns: 1fr;
             }
-            .container {
-                padding: 15px;
-            }
-            .info-bar {
-                flex-direction: column;
-                gap: 10px;
-            }
-            .acciones {
+            
+            .buttons {
                 flex-direction: column;
             }
+            
             .btn {
                 width: 100%;
-                text-align: center;
+                justify-content: center;
+            }
+            
+            .navigation-buttons {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            
+            .navigation-buttons .left-buttons,
+            .navigation-buttons .right-buttons {
+                flex-direction: column;
+                width: 100%;
+            }
+            
+            .navigation-buttons .left-buttons .btn,
+            .navigation-buttons .right-buttons .btn {
+                width: 100%;
+                justify-content: center;
+            }
+            
+            .input-group {
+                flex-direction: column;
+            }
+            
+            .input-group .btn {
+                width: 100%;
             }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>🎫 PASO 4: CONFIGURAR TICKET</h1>
-        <p style="color: #7f8c8d; margin-bottom: 15px;">
-            Configure los datos del ticket y el sistema generará automáticamente el <strong>ID_TICKET</strong>.
-        </p>
-
-        <!-- Barra de información -->
-        <div class="info-bar" id="infoBar">
-            <div class="info-item">
-                <strong>PLANILLA:</strong>
-                <span class="value" id="planillaId">-</span>
-            </div>
-            <div class="info-item">
-                <strong>TRABAJADORES:</strong>
-                <span class="value" id="totalTrabajadores">0</span>
-            </div>
-            <div class="info-item">
-                <strong>ID_TICKET:</strong>
-                <span class="value" id="idTicket">-</span>
-            </div>
-            <div class="info-item">
-                <strong>ESTADO:</strong>
-                <span class="value" id="estado">Pendiente</span>
-            </div>
+        <!-- HEADER -->
+        <div class="header">
+            <h1>📋 Configurar Ticket</h1>
+            <span class="step-badge">Paso 4 de 8</span>
         </div>
 
-        <!-- Mensajes -->
-        <div id="mensajeContainer"></div>
+        <!-- ALERTAS -->
+        <div id="alertContainer">
+            <div id="alertMessage" class="alert"></div>
+        </div>
 
-        <!-- Formulario -->
-        <form id="formTicket" onsubmit="return false;">
+        <!-- INFO BOX -->
+        <div class="info-box">
+            <h4>⏰ Cálculo automático de horas</h4>
+            <p>El sistema calculará automáticamente las horas de cada trabajador:</p>
+            <p>• <span class="highlight">3 minutos</span> de atención por persona</p>
+            <p>• <span class="highlight">1 minuto</span> adicional entre cada atención</p>
+            <p>• <strong>Total: 4 minutos por persona</strong></p>
+            <p style="margin-top: 8px; color: #1a3c6e;">
+                Ejemplo: Hora Inicio 09:30 → Trabajador #1: 09:30-09:33, #2: 09:34-09:37, #3: 09:38-09:41
+            </p>
+        </div>
+
+        <!-- FORMULARIO -->
+        <form id="ticketForm" autocomplete="off">
             <div class="form-grid">
-                <!-- Código Ticket -->
+                <!-- CÓDIGO -->
                 <div class="form-group">
-                    <label for="codigo">Código Ticket <span class="required">*</span></label>
-                    <input type="text" id="codigo" class="form-control" value="RF-001" placeholder="Ej: RF-001">
+                    <label>
+                        Código <span class="required">*</span>
+                    </label>
+                    <input 
+                        type="text" 
+                        id="codigo" 
+                        placeholder="Ej: RF-2026-001"
+                        required
+                    >
+                    <div class="error-message" id="codigoError">
+                        El código es obligatorio
+                    </div>
                 </div>
 
-                <!-- Fecha -->
+                <!-- FECHA -->
                 <div class="form-group">
-                    <label for="fecha">Fecha <span class="required">*</span></label>
-                    <input type="date" id="fecha" class="form-control">
+                    <label>
+                        Fecha <span class="required">*</span>
+                    </label>
+                    <input 
+                        type="text" 
+                        id="fecha" 
+                        placeholder="DD/MM/YYYY"
+                        value="28/08/2026"
+                        required
+                    >
+                    <span class="help-text">📅 Formato: Día/Mes/Año (ej: 28/08/2026)</span>
+                    <div class="error-message" id="fechaError">
+                        La fecha es obligatoria (formato DD/MM/YYYY)
+                    </div>
                 </div>
 
-                <!-- Hora Inicio -->
+                <!-- HORA INICIO -->
                 <div class="form-group">
-                    <label for="hora_inicio">Hora Inicio <span class="required">*</span></label>
-                    <input type="time" id="hora_inicio" class="form-control" value="08:30">
+                    <label>
+                        Hora Inicio <span class="required">*</span>
+                    </label>
+                    <input 
+                        type="time" 
+                        id="hora_inicio" 
+                        value="08:30"
+                        step="60"
+                        required
+                    >
+                    <span class="help-text">⏰ El sistema calculará automáticamente las horas de cada trabajador (3 min atención + 1 min extra)</span>
+                    <div class="error-message" id="horaInicioError">
+                        La hora de inicio es obligatoria
+                    </div>
                 </div>
 
-                <!-- Hora Fin -->
-                <div class="form-group">
-                    <label for="hora_fin">Hora Fin <span class="required">*</span></label>
-                    <input type="time" id="hora_fin" class="form-control" value="13:21">
-                </div>
-
-                <!-- RAZON SOCIAL - NUEVO -->
-                <div class="form-group">
-                    <label for="razon_social">Razón Social <span class="required">*</span></label>
-                    <input type="text" id="razon_social" class="form-control" placeholder="Ingrese la razón social">
-                </div>
-
-                <!-- NIT - NUEVO -->
-                <div class="form-group">
-                    <label for="nit">NIT <span class="required">*</span></label>
-                    <input type="text" id="nit" class="form-control" placeholder="Ingrese el NIT">
-                </div>
-
-                <!-- Tipo Trámite -->
-                <div class="form-group">
-                    <label for="tipo_tramite">Tipo Trámite <span class="required">*</span></label>
-                    <select id="tipo_tramite" class="form-control">
-                        <option value="173">CONTRATOS</option>
-                        <option value="174" selected>FINIQUITO</option>
-                        <option value="175">TRÁMITES</option>
-                    </select>
-                </div>
-
-                <!-- Departamento -->
-                <div class="form-group">
-                    <label for="departamento">Departamento <span class="required">*</span></label>
-                    <select id="departamento" class="form-control">
-                        <option value="30">LA PAZ</option>
-                        <option value="31">COCHABAMBA</option>
-                        <option value="32" selected>SANTA CRUZ</option>
-                    </select>
-                </div>
-
-                <!-- Cantidad de Trabajadores -->
+                <!-- =================================================
+                     BUSCADOR INTELIGENTE DE EMPRESAS
+                ================================================== -->
                 <div class="form-group full-width">
-                    <label for="cantidad">Cantidad de Trabajadores a Procesar <span class="required">*</span></label>
-                    <input type="number" id="cantidad" class="form-control" placeholder="Ej: 5" min="1">
-                    <small class="text-muted" style="margin-top: 5px; color: #7f8c8d;">
-                        Total disponibles: <span id="totalDisponibles">0</span> trabajadores
-                    </small>
+                    <div class="card" style="border: 1px solid #e0e7ff; border-radius: 10px; background: #f8faff;">
+                        <div class="card-body" style="padding: 20px;">
+                            <h5 style="color: #1a3c6e; margin-bottom: 10px;">
+                                🏢 Buscar empresa (por nombre o NIT)
+                            </h5>
+                            <p class="text-muted" style="font-size: 14px; margin-bottom: 15px;">
+                                Escribe el nombre de la empresa o el NIT para buscarla automáticamente
+                            </p>
+                            
+                            <div class="input-group">
+                                <input 
+                                    type="text" 
+                                    id="buscar_empresa"
+                                    class="form-control" 
+                                    placeholder="Escribe nombre o NIT (mínimo 3 caracteres)..."
+                                    autocomplete="off"
+                                    style="font-size: 15px; padding: 12px 15px;"
+                                >
+                                <button class="btn btn-primary" type="button" id="btnBuscarEmpresa" style="padding: 12px 25px;">
+                                    🔍 Buscar
+                                </button>
+                            </div>
+                            <small class="text-muted" style="display: block; margin-top: 6px;">
+                                💡 Escribe al menos 3 caracteres (nombre o NIT) para buscar
+                            </small>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Resultados de búsqueda -->
+                <div id="resultadosEmpresa" style="display: none; margin-top: 10px;" class="full-width">
+                    <div class="card">
+                        <div class="card-header bg-light">
+                            <strong>📋 Resultados encontrados</strong>
+                            <span id="totalResultados" class="badge" style="background: #1a3c6e; color: white; margin-left: 8px;">0</span>
+                        </div>
+                        <div class="card-body p-0" style="max-height: 250px; overflow-y: auto;">
+                            <div id="listaEmpresas">
+                                <!-- Los resultados se cargarán aquí -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- =================================================
+                     ID_EMPRESA - VISIBLE (SE CARGA AUTOMÁTICAMENTE)
+                ================================================== -->
+                <div class="form-group">
+                    <label>
+                        ID_EMPRESA 
+                        <span style="font-weight: normal; font-size: 12px; color: #28a745;">
+                            ✅ (se carga automáticamente)
+                        </span>
+                    </label>
+                    <input 
+                        type="text" 
+                        id="id_empresa_display" 
+                        readonly
+                        placeholder="Seleccione una empresa para cargar el ID"
+                        style="background: #e9ecef; font-weight: bold; color: #1a3c6e;"
+                    >
+                    <!-- Campo oculto para el backend -->
+                    <input type="hidden" id="id_empresa">
+                    <span class="help-text">📌 ID de la empresa obtenido de la base de datos de empresas</span>
+                </div>
+
+                <!-- RAZÓN SOCIAL -->
+                <div class="form-group">
+                    <label>
+                        Razón Social <span class="required">*</span>
+                    </label>
+                    <input 
+                        type="text" 
+                        id="razon_social"
+                        placeholder="Nombre de la empresa"
+                        required
+                    >
+                    <div class="error-message" id="razonSocialError">
+                        La razón social es obligatoria
+                    </div>
+                </div>
+
+                <!-- NIT -->
+                <div class="form-group">
+                    <label>
+                        NIT <span class="required">*</span>
+                    </label>
+                    <input 
+                        type="text" 
+                        id="nit"
+                        placeholder="Ej: 123456789"
+                        required
+                    >
+                    <div class="error-message" id="nitError">
+                        El NIT es obligatorio
+                    </div>
+                </div>
+
+                <!-- TIPO TRÁMITE -->
+                <div class="form-group">
+                    <label>
+                        Tipo Trámite <span class="required">*</span>
+                    </label>
+                    <select id="tipo_tramite" required>
+                        <option value="">Seleccionar...</option>
+                        {% for key, value in tipos_tramite.items() %}
+                        <option value="{{ key }}">{{ value }}</option>
+                        {% endfor %}
+                    </select>
+                    <div class="error-message" id="tipoTramiteError">
+                        Debe seleccionar un tipo de trámite
+                    </div>
+                </div>
+
+                <!-- DEPARTAMENTO -->
+                <div class="form-group">
+                    <label>
+                        Departamento <span class="required">*</span>
+                    </label>
+                    <select id="departamento" required>
+                        <option value="">Seleccionar...</option>
+                        {% for key, value in departamentos.items() %}
+                        <option value="{{ key }}">{{ value }}</option>
+                        {% endfor %}
+                    </select>
+                    <div class="error-message" id="departamentoError">
+                        Debe seleccionar un departamento
+                    </div>
+                </div>
+
+                <!-- USUARIO CREACIÓN -->
+                <div class="form-group">
+                    <label>
+                        Usuario Creación <span class="required">*</span>
+                    </label>
+                    <input 
+                        type="number" 
+                        id="usuario_creacion" 
+                        placeholder="Ej: 1155"
+                        value="1155"
+                        required
+                    >
+                    <span class="help-text">ID del usuario que crea el ticket (número entero)</span>
+                    <div class="error-message" id="usuarioCreacionError">
+                        El usuario de creación es obligatorio (número entero)
+                    </div>
+                </div>
+
+                <!-- CANTIDAD TRABAJADORES -->
+                <div class="form-group">
+                    <label>
+                        Cantidad de Trabajadores <span class="required">*</span>
+                    </label>
+                    <input 
+                        type="number" 
+                        id="cantidad" 
+                        placeholder="Ej: 5"
+                        min="1"
+                        required
+                    >
+                    <span class="help-text">⚠️ Debe ser igual o menor a los trabajadores disponibles</span>
+                    <div class="error-message" id="cantidadError">
+                        La cantidad es obligatoria y debe ser mayor a 0
+                    </div>
                 </div>
             </div>
 
-            <!-- Botones -->
-            <div class="acciones">
-                <button type="button" class="btn btn-primary" onclick="configurarTicket()">
-                    ⚙️ CONFIGURAR TICKET
+            <!-- BOTONES DE ACCIÓN -->
+            <div class="buttons">
+                <button type="submit" class="btn btn-primary" id="btnGenerarTicket">
+                    🎫 Generar Ticket
                 </button>
-                <button type="button" class="btn btn-success" id="btnGenerarTicket" onclick="generarTicket()">
-                    🎫 GENERAR ID_TICKET
+                
+                <button type="button" class="btn btn-info" id="btnPrevisualizar">
+                    👁️ Previsualizar Script
                 </button>
-                <button type="button" class="btn btn-warning" onclick="previsualizar()">
-                    👁 PREVISUALIZAR
+                
+                <button type="button" class="btn btn-success" id="btnGuardarAvance">
+                    💾 Guardar Avance
                 </button>
-                <button type="button" class="btn btn-secondary" onclick="cargarDatos()">
-                    🔄 ACTUALIZAR
+                
+                <button type="button" class="btn btn-warning" id="btnCargarEstado">
+                    📊 Cargar Estado
                 </button>
-                <a href="/persona" class="btn btn-primary" id="linkSiguiente" style="display: none;">
-                    ▶ SIGUIENTE PASO
-                </a>
+                
+                <button type="button" class="btn btn-secondary" id="btnLimpiar">
+                    🗑️ Limpiar
+                </button>
             </div>
         </form>
 
-        <!-- Script generado -->
-        <div class="script-area" id="scriptArea" style="display: none;">
+        <!-- RESULTADO DEL TICKET -->
+        <div id="resultadoTicket" class="script-container">
             <div class="script-header">
-                <h3>📄 SCRIPT GENERADO - ID_TICKET</h3>
-                <button class="btn btn-secondary" onclick="copiarScript()" style="padding: 5px 15px; font-size: 12px;">
-                    📋 COPIAR
+                <h3>✅ Ticket Generado</h3>
+                <span id="ticketStatus" class="status-badge info">ID: Cargando...</span>
+            </div>
+            <div class="script-body">
+                <pre id="scriptOutput"><span class="sql-comment">-- El script se generará aquí...</span></pre>
+            </div>
+        </div>
+
+        <!-- BOTONES DE NAVEGACIÓN -->
+        <div class="navigation-buttons">
+            <div class="left-buttons">
+                <button type="button" class="btn btn-outline-secondary" id="btnVolver">
+                    ⬅️ Volver
                 </button>
             </div>
-            <div class="script-body" id="scriptBody">
-                -- Script generado automáticamente
+            <div class="right-buttons">
+                <button type="button" class="btn btn-outline-primary" id="btnSiguiente">
+                    Siguiente ➡️
+                </button>
             </div>
         </div>
     </div>
 
     <script>
-        let datosPlanilla = {};
+        // ============================================================
+        // VARIABLES GLOBALES
+        // ============================================================
+        
+        let datosTicket = null;
+        let ticketGenerado = false;
 
         // ============================================================
-        // CARGAR DATOS INICIALES
+        // DOM ELEMENTOS
+        // ============================================================
+        
+        const form = document.getElementById('ticketForm');
+        const alertContainer = document.getElementById('alertContainer');
+        const alertMessage = document.getElementById('alertMessage');
+        const resultadoTicket = document.getElementById('resultadoTicket');
+        const scriptOutput = document.getElementById('scriptOutput');
+        const ticketStatus = document.getElementById('ticketStatus');
+        
+        const btnGenerarTicket = document.getElementById('btnGenerarTicket');
+        const btnPrevisualizar = document.getElementById('btnPrevisualizar');
+        const btnGuardarAvance = document.getElementById('btnGuardarAvance');
+        const btnCargarEstado = document.getElementById('btnCargarEstado');
+        const btnLimpiar = document.getElementById('btnLimpiar');
+        const btnVolver = document.getElementById('btnVolver');
+        const btnSiguiente = document.getElementById('btnSiguiente');
+
+        // Elementos del buscador
+        const buscarInput = document.getElementById('buscar_empresa');
+        const btnBuscar = document.getElementById('btnBuscarEmpresa');
+        const resultadosDiv = document.getElementById('resultadosEmpresa');
+        const listaEmpresas = document.getElementById('listaEmpresas');
+        const totalResultados = document.getElementById('totalResultados');
+
+        // ============================================================
+        // FUNCIONES DE UTILIDAD
+        // ============================================================
+        
+        function mostrarAlerta(mensaje, tipo = 'info') {
+            alertMessage.textContent = mensaje;
+            alertMessage.className = `alert alert-${tipo} show`;
+            alertContainer.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+
+        function ocultarAlerta() {
+            alertMessage.className = 'alert';
+            alertMessage.textContent = '';
+        }
+
+        function mostrarError(campoId, mensaje) {
+            const campo = document.getElementById(campoId);
+            const error = document.getElementById(campoId + 'Error');
+            if (campo) campo.classList.add('error');
+            if (error) {
+                error.textContent = mensaje;
+                error.classList.add('show');
+            }
+        }
+
+        function ocultarError(campoId) {
+            const campo = document.getElementById(campoId);
+            const error = document.getElementById(campoId + 'Error');
+            if (campo) campo.classList.remove('error');
+            if (error) error.classList.remove('show');
+        }
+
+        function limpiarErrores() {
+            ['codigo', 'fecha', 'hora_inicio', 'razon_social', 'nit', 'tipo_tramite', 'departamento', 'usuario_creacion', 'cantidad']
+                .forEach(id => ocultarError(id));
+        }
+
+        function setLoading(btn, loading) {
+            if (loading) {
+                btn.disabled = true;
+                btn.innerHTML = '<span class="loading"></span> Procesando...';
+            } else {
+                btn.disabled = false;
+                if (btn.id === 'btnGenerarTicket') {
+                    btn.innerHTML = '🎫 Generar Ticket';
+                } else if (btn.id === 'btnPrevisualizar') {
+                    btn.innerHTML = '👁️ Previsualizar Script';
+                } else if (btn.id === 'btnGuardarAvance') {
+                    btn.innerHTML = '💾 Guardar Avance';
+                } else if (btn.id === 'btnCargarEstado') {
+                    btn.innerHTML = '📊 Cargar Estado';
+                }
+            }
+        }
+
+        function mostrarScript(script, idTicket, cantidad, usuario, horaInicio, horaFin) {
+            let highlighted = script
+                .replace(/--(.*)/g, '<span class="sql-comment">--$1</span>')
+                .replace(/'([^']*)'/g, '<span class="sql-string">\'$1\'</span>')
+                .replace(/\b(INSERT|INTO|VALUES|SELECT|FROM|WHERE|UPDATE|DELETE|CREATE|TABLE|DROP|ALTER|ADD|COLUMN|NOT|NULL|DEFAULT|PRIMARY|KEY|FOREIGN|REFERENCES|UNIQUE|CHECK|INDEX|VIEW|PROCEDURE|FUNCTION|TRIGGER|DATABASE|SCHEMA|USE|SHOW|DESCRIBE|EXPLAIN|ANALYZE|OPTIMIZE|GRANT|REVOKE|COMMIT|ROLLBACK|SAVEPOINT|TRANSACTION|LOCK|UNLOCK|SET|now)\b/gi, 
+                '<span class="sql-keyword">$1</span>')
+                .replace(/\b(\d+)\b/g, '<span class="sql-number">$1</span>');
+            
+            scriptOutput.innerHTML = highlighted;
+            resultadoTicket.classList.add('show');
+            ticketStatus.textContent = `✅ ID: ${idTicket} - ${cantidad} trabajadores - Usuario: ${usuario} - ${horaInicio} → ${horaFin}`;
+            ticketStatus.className = 'status-badge success';
+            ticketGenerado = true;
+            
+            resultadoTicket.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+
+        function limpiarResultado() {
+            resultadoTicket.classList.remove('show');
+            scriptOutput.innerHTML = '<span class="sql-comment">-- El script se generará aquí...</span>';
+            ticketStatus.textContent = '⏳ Sin datos';
+            ticketStatus.className = 'status-badge info';
+            ticketGenerado = false;
+        }
+
+        // ============================================================
+        // FUNCIÓN: OBTENER DATOS DEL FORMULARIO
+        // ============================================================
+        
+        function obtenerDatosFormulario() {
+            return {
+                codigo: document.getElementById('codigo').value.trim(),
+                fecha: document.getElementById('fecha').value,
+                hora_inicio: document.getElementById('hora_inicio').value,
+                razon_social: document.getElementById('razon_social').value.trim(),
+                nit: document.getElementById('nit').value.trim(),
+                tipo_tramite: document.getElementById('tipo_tramite').value,
+                departamento: document.getElementById('departamento').value,
+                usuario_creacion: document.getElementById('usuario_creacion').value.trim(),
+                cantidad_trabajadores: document.getElementById('cantidad').value
+            };
+        }
+
+        // ============================================================
+        // FUNCIÓN: VALIDAR FORMULARIO
+        // ============================================================
+        
+        function validarFormulario(datos) {
+            let valido = true;
+            limpiarErrores();
+
+            if (!datos.codigo) {
+                mostrarError('codigo', 'El código es obligatorio');
+                valido = false;
+            }
+            if (!datos.fecha) {
+                mostrarError('fecha', 'La fecha es obligatoria');
+                valido = false;
+            }
+            if (!datos.hora_inicio) {
+                mostrarError('hora_inicio', 'La hora de inicio es obligatoria');
+                valido = false;
+            }
+            if (!datos.razon_social) {
+                mostrarError('razon_social', 'La razón social es obligatoria');
+                valido = false;
+            }
+            if (!datos.nit) {
+                mostrarError('nit', 'El NIT es obligatorio');
+                valido = false;
+            }
+            if (!datos.tipo_tramite) {
+                mostrarError('tipo_tramite', 'Debe seleccionar un tipo de trámite');
+                valido = false;
+            }
+            if (!datos.departamento) {
+                mostrarError('departamento', 'Debe seleccionar un departamento');
+                valido = false;
+            }
+            if (!datos.usuario_creacion) {
+                mostrarError('usuario_creacion', 'El usuario de creación es obligatorio');
+                valido = false;
+            } else {
+                const usuario = parseInt(datos.usuario_creacion);
+                if (isNaN(usuario) || usuario <= 0) {
+                    mostrarError('usuario_creacion', 'El usuario debe ser un número entero positivo');
+                    valido = false;
+                }
+            }
+            const cantidad = parseInt(datos.cantidad_trabajadores);
+            if (!datos.cantidad_trabajadores || isNaN(cantidad) || cantidad <= 0) {
+                mostrarError('cantidad', 'La cantidad debe ser un número mayor a 0');
+                valido = false;
+            }
+
+            if (!valido) {
+                mostrarAlerta('❌ Por favor, complete todos los campos obligatorios', 'danger');
+            }
+
+            return valido;
+        }
+
+        // ============================================================
+        // FUNCIÓN: CARGAR ESTADO GUARDADO
+        // ============================================================
+        
+        async function cargarEstado() {
+            try {
+                setLoading(btnCargarEstado, true);
+                ocultarAlerta();
+
+                const response = await fetch('/api/estado');
+                const data = await response.json();
+
+                if (data.success) {
+                    if (data.planilla_id) {
+                        if (data.codigo_ticket) {
+                            document.getElementById('codigo').value = data.codigo_ticket;
+                        }
+                        if (data.fecha) {
+                            const fechaParts = data.fecha.split('-');
+                            if (fechaParts.length === 3) {
+                                document.getElementById('fecha').value = `${fechaParts[2]}/${fechaParts[1]}/${fechaParts[0]}`;
+                            } else {
+                                document.getElementById('fecha').value = data.fecha;
+                            }
+                        }
+                        if (data.hora_inicio) {
+                            document.getElementById('hora_inicio').value = data.hora_inicio.substring(0, 5);
+                        }
+                        if (data.razon_social) {
+                            document.getElementById('razon_social').value = data.razon_social;
+                        }
+                        if (data.nit) {
+                            document.getElementById('nit').value = data.nit;
+                        }
+                        if (data.tipo_tramite) {
+                            document.getElementById('tipo_tramite').value = data.tipo_tramite;
+                        }
+                        if (data.departamento) {
+                            document.getElementById('departamento').value = data.departamento;
+                        }
+                        if (data.usuario_creacion) {
+                            document.getElementById('usuario_creacion').value = data.usuario_creacion;
+                        }
+                        if (data.cantidad_procesar) {
+                            document.getElementById('cantidad').value = data.cantidad_procesar;
+                        }
+                        // ⭐ CARGAR ID_EMPRESA
+                        if (data.id_empresa) {
+                            document.getElementById('id_empresa').value = data.id_empresa;
+                            document.getElementById('id_empresa_display').value = data.id_empresa;
+                        }
+
+                        mostrarAlerta(`✅ Estado cargado - ${data.total} trabajadores, ${data.cantidad_procesar} en proceso`, 'success');
+                        
+                        if (data.id_ticket && data.procesados && data.procesados.length > 0) {
+                            try {
+                                const scriptResponse = await fetch('/api/previsualizacion_completa');
+                                const scriptData = await scriptResponse.json();
+                                if (scriptData.success && scriptData.script_completo) {
+                                    mostrarScript(scriptData.script_completo, data.id_ticket, scriptData.total, data.usuario_creacion || 1155, data.hora_inicio, data.hora_fin);
+                                }
+                            } catch (e) {
+                                console.log('No se pudo cargar el script automáticamente');
+                            }
+                        }
+                    } else {
+                        mostrarAlerta('⚠️ No hay una planilla cargada. Primero cargue un Excel.', 'warning');
+                    }
+                } else {
+                    mostrarAlerta('❌ ' + (data.error || 'Error al cargar el estado'), 'danger');
+                }
+            } catch (error) {
+                mostrarAlerta('❌ Error de conexión: ' + error.message, 'danger');
+            } finally {
+                setLoading(btnCargarEstado, false);
+            }
+        }
+
+        // ============================================================
+        // FUNCIÓN: GENERAR TICKET
         // ============================================================
 
-        document.addEventListener('DOMContentLoaded', function() {
-            // Establecer fecha actual por defecto
-            const hoy = new Date().toISOString().split('T')[0];
-            document.getElementById('fecha').value = hoy;
-            cargarDatos();
+        async function generarTicket() {
+            const datos = obtenerDatosFormulario();
+            
+            if (!validarFormulario(datos)) {
+                return;
+            }
+
+            try {
+                setLoading(btnGenerarTicket, true);
+                ocultarAlerta();
+                limpiarResultado();
+
+                const usuarioCreacion = parseInt(datos.usuario_creacion);
+
+                let fechaBackend = datos.fecha;
+                if (fechaBackend && fechaBackend.includes('/')) {
+                    const partes = fechaBackend.split('/');
+                    fechaBackend = `${partes[2]}-${partes[1]}-${partes[0]}`;
+                }
+
+                const response = await fetch('/api/generar_ticket', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        codigo: datos.codigo,
+                        fecha: fechaBackend,
+                        hora_inicio: datos.hora_inicio + ':00',
+                        razon_social: datos.razon_social,
+                        nit: datos.nit,
+                        tipo_tramite: parseInt(datos.tipo_tramite),
+                        departamento: parseInt(datos.departamento),
+                        usuario_creacion: usuarioCreacion,
+                        cantidad_trabajadores: parseInt(datos.cantidad_trabajadores)
+                    })
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    mostrarAlerta(`✅ ${data.mensaje} - ID Ticket: ${data.id_ticket}`, 'success');
+                    datosTicket = data;
+                    mostrarScript(data.script_ticket, data.id_ticket, data.cantidad, usuarioCreacion, data.hora_inicio, data.hora_fin);
+                } else {
+                    mostrarAlerta('❌ ' + data.error, 'danger');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                mostrarAlerta('❌ Error de conexión: ' + error.message, 'danger');
+            } finally {
+                setLoading(btnGenerarTicket, false);
+            }
+        }
+
+        // ============================================================
+        // FUNCIÓN: PREVISUALIZAR SCRIPT
+        // ============================================================
+        
+        async function previsualizarScript() {
+            try {
+                setLoading(btnPrevisualizar, true);
+                ocultarAlerta();
+
+                const estadoResponse = await fetch('/api/estado');
+                const estadoData = await estadoResponse.json();
+
+                if (!estadoData.success || !estadoData.planilla_id) {
+                    mostrarAlerta('⚠️ No hay una planilla cargada. Primero genere un ticket.', 'warning');
+                    return;
+                }
+
+                if (!estadoData.id_ticket) {
+                    mostrarAlerta('⚠️ Primero debe generar el ticket (botón "Generar Ticket")', 'warning');
+                    return;
+                }
+
+                const response = await fetch('/api/previsualizacion_completa');
+                const data = await response.json();
+
+                if (data.success && data.script_completo) {
+                    const usuario = estadoData.usuario_creacion || 1155;
+                    mostrarAlerta(`✅ Script previsualizado - ${data.total} trabajadores`, 'success');
+                    mostrarScript(data.script_completo, estadoData.id_ticket, data.total, usuario, estadoData.hora_inicio, estadoData.hora_fin);
+                } else {
+                    mostrarAlerta('❌ ' + (data.error || 'Error al previsualizar el script'), 'danger');
+                }
+            } catch (error) {
+                mostrarAlerta('❌ Error de conexión: ' + error.message, 'danger');
+            } finally {
+                setLoading(btnPrevisualizar, false);
+            }
+        }
+
+        // ============================================================
+        // FUNCIÓN: GUARDAR AVANCE
+        // ============================================================
+        
+        async function guardarAvance() {
+            try {
+                setLoading(btnGuardarAvance, true);
+                ocultarAlerta();
+
+                const usuario = document.getElementById('usuario_creacion').value.trim();
+                if (usuario) {
+                    await fetch('/api/guardar_usuario_creacion', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            usuario_creacion: parseInt(usuario)
+                        })
+                    });
+                }
+
+                const response = await fetch('/api/guardar_avance', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    mostrarAlerta(`✅ Avance guardado correctamente - ${data.registro.procesados} procesados`, 'success');
+                } else {
+                    mostrarAlerta('❌ ' + (data.error || 'Error al guardar avance'), 'danger');
+                }
+            } catch (error) {
+                mostrarAlerta('❌ Error de conexión: ' + error.message, 'danger');
+            } finally {
+                setLoading(btnGuardarAvance, false);
+            }
+        }
+
+        // ============================================================
+        // ⭐ FUNCIÓN: GUARDAR ID_EMPRESA EN LA PLANILLA
+        // ============================================================
+
+        function guardarIdEmpresa(id_empresa) {
+            fetch('/api/guardar_id_empresa', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ id_empresa: id_empresa })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    console.log('✅ ID_EMPRESA guardado en planilla:', id_empresa);
+                } else {
+                    console.error('❌ Error al guardar ID_EMPRESA:', data.error);
+                }
+            })
+            .catch(error => console.error('❌ Error:', error));
+        }
+
+        // ============================================================
+        // ⭐ BUSCADOR INTELIGENTE DE EMPRESAS (CORREGIDO)
+        // ============================================================
+
+        // BUSCAR MIENTRAS ESCRIBE (después de 3 caracteres)
+        if (buscarInput) {
+            buscarInput.addEventListener('input', function() {
+                const termino = this.value.trim();
+                if (termino.length >= 3) {
+                    buscarEmpresas(termino);
+                } else if (termino.length === 0) {
+                    resultadosDiv.style.display = 'none';
+                }
+            });
+
+            buscarInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    const termino = this.value.trim();
+                    if (termino.length >= 3) {
+                        buscarEmpresas(termino);
+                    }
+                }
+            });
+        }
+
+        // BUSCAR CON EL BOTÓN
+        if (btnBuscar) {
+            btnBuscar.addEventListener('click', function() {
+                const termino = buscarInput.value.trim();
+                if (termino.length >= 3) {
+                    buscarEmpresas(termino);
+                } else {
+                    mostrarAlerta('⚠️ Escribe al menos 3 caracteres para buscar', 'warning');
+                }
+            });
+        }
+
+        // ============================================================
+        // FUNCIÓN: BUSCAR EMPRESAS EN EL BACKEND
+        // ============================================================
+
+        async function buscarEmpresas(termino) {
+            try {
+                const response = await fetch(`/api/empresa/buscar?termino=${encodeURIComponent(termino)}`);
+                const data = await response.json();
+                
+                if (data.success) {
+                    mostrarResultados(data.empresas);
+                } else {
+                    mostrarAlerta('❌ ' + data.error, 'danger');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                mostrarAlerta('❌ Error de conexión: ' + error.message, 'danger');
+            }
+        }
+
+        // ============================================================
+        // ⭐ FUNCIÓN: MOSTRAR RESULTADOS (CORREGIDO - usa id_empresa)
+        // ============================================================
+
+        function mostrarResultados(empresas) {
+            resultadosDiv.style.display = 'block';
+            totalResultados.textContent = empresas.length;
+            
+            if (empresas.length === 0) {
+                listaEmpresas.innerHTML = `
+                    <div class="list-group-item text-center text-muted py-4">
+                        ⚠️ No se encontraron empresas con ese nombre o NIT
+                    </div>
+                `;
+                return;
+            }
+            
+            let html = '';
+            empresas.forEach(empresa => {
+                const razonSocial = empresa.razon_social.replace(/'/g, "\\'");
+                html += `
+                    <button 
+                        class="list-group-item"
+                        onclick="seleccionarEmpresa(${empresa.id_empresa}, '${razonSocial}', '${empresa.nit}')"
+                        style="border: none; border-bottom: 1px solid #e9ecef; padding: 12px 20px; text-align: left; width: 100%; cursor: pointer; background: white;"
+                    >
+                        <div>
+                            <strong>🏢 ${empresa.razon_social}</strong>
+                            <br>
+                            <small class="text-muted">NIT: ${empresa.nit}</small>
+                            <br>
+                            <small class="text-primary" style="font-weight: bold;">ID_EMPRESA: ${empresa.id_empresa}</small>
+                        </div>
+                        <span class="badge" style="background: #1a3c6e; color: white; padding: 4px 12px; border-radius: 12px;">Seleccionar</span>
+                    </button>
+                `;
+            });
+            
+            listaEmpresas.innerHTML = html;
+        }
+
+        // ============================================================
+        // ⭐ FUNCIÓN: SELECCIONAR EMPRESA (CORREGIDO - usa id_empresa)
+        // ============================================================
+
+        function seleccionarEmpresa(id_empresa, razonSocial, nit) {
+            // Llenar campos visibles
+            document.getElementById('razon_social').value = razonSocial;
+            document.getElementById('nit').value = nit;
+            
+            // ⭐ GUARDAR ID_EMPRESA (CORRECTO)
+            document.getElementById('id_empresa').value = id_empresa;
+            document.getElementById('id_empresa_display').value = id_empresa;
+            
+            // Ocultar resultados
+            resultadosDiv.style.display = 'none';
+            document.getElementById('buscar_empresa').value = razonSocial;
+            
+            // ⭐ GUARDAR EN LA PLANILLA
+            guardarIdEmpresa(id_empresa);
+            
+            mostrarAlerta(`✅ Empresa seleccionada: ${razonSocial} (ID: ${id_empresa})`, 'success');
+        }
+
+        // ============================================================
+        // NAVEGACIÓN
+        // ============================================================
+        
+        function irA(pagina) {
+            window.location.href = pagina;
+        }
+
+        // ============================================================
+        // EVENTOS
+        // ============================================================
+        
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+            generarTicket();
         });
 
-        function cargarDatos() {
-            fetch('/api/estado')
-                .then(response => response.json())
-                .then(data => {
-                    if (data.success) {
-                        datosPlanilla = data;
-                        actualizarInfo(data);
-                        document.getElementById('totalDisponibles').textContent = data.total || 0;
-                        
-                        // Si ya tiene ID_TICKET, mostrar
-                        if (data.id_ticket) {
-                            document.getElementById('idTicket').textContent = data.id_ticket;
-                            document.getElementById('btnGenerarTicket').disabled = true;
-                            document.getElementById('btnGenerarTicket').textContent = '✅ ID_TICKET GENERADO';
-                        }
-                    }
-                })
-                .catch(error => {
-                    mostrarMensaje('Error de conexión: ' + error, 'error');
-                });
-        }
+        btnPrevisualizar.addEventListener('click', previsualizarScript);
+        btnGuardarAvance.addEventListener('click', guardarAvance);
+        btnCargarEstado.addEventListener('click', cargarEstado);
 
-        // ============================================================
-        // ACTUALIZAR INFORMACIÓN
-        // ============================================================
+        btnLimpiar.addEventListener('click', function() {
+            form.reset();
+            limpiarErrores();
+            ocultarAlerta();
+            limpiarResultado();
+            document.getElementById('hora_inicio').value = '08:30';
+            document.getElementById('usuario_creacion').value = '1155';
+            document.getElementById('id_empresa_display').value = '';
+            document.getElementById('id_empresa').value = '';
+            mostrarAlerta('🧹 Formulario limpiado', 'info');
+        });
 
-        function actualizarInfo(data) {
-            document.getElementById('planillaId').textContent = data.planilla_id || '-';
-            document.getElementById('totalTrabajadores').textContent = data.total || 0;
-            
-            if (data.id_ticket) {
-                document.getElementById('idTicket').textContent = data.id_ticket;
-                document.getElementById('estado').textContent = '✅ Ticket Generado';
-                document.getElementById('estado').style.color = '#27ae60';
-            } else {
-                document.getElementById('idTicket').textContent = '-';
-                document.getElementById('estado').textContent = 'Pendiente';
-                document.getElementById('estado').style.color = '#f39c12';
-            }
-        }
+        // BOTONES DE NAVEGACIÓN
+        btnVolver.addEventListener('click', function() {
+            irA('/continuar');
+        });
 
-        // ============================================================
-        // CONFIGURAR TICKET (CON NIT Y RAZON SOCIAL)
-        // ============================================================
-
-        function configurarTicket() {
-            const codigo = document.getElementById('codigo').value.trim();
-            const fecha = document.getElementById('fecha').value;
-            const hora_inicio = document.getElementById('hora_inicio').value;
-            const hora_fin = document.getElementById('hora_fin').value;
-            const razon_social = document.getElementById('razon_social').value.trim();
-            const nit = document.getElementById('nit').value.trim();
-            const tipo_tramite = document.getElementById('tipo_tramite').value;
-            const departamento = document.getElementById('departamento').value;
-            const cantidad = document.getElementById('cantidad').value;
-
-            // Validaciones
-            if (!codigo) {
-                mostrarMensaje('⚠️ Debe ingresar el código del ticket.', 'error');
+        btnSiguiente.addEventListener('click', function() {
+            if (!ticketGenerado) {
+                mostrarAlerta('⚠️ Debe generar el ticket antes de continuar (botón "Generar Ticket")', 'warning');
                 return;
             }
-            if (!fecha) {
-                mostrarMensaje('⚠️ Debe seleccionar una fecha.', 'error');
-                return;
-            }
-            if (!razon_social) {
-                mostrarMensaje('⚠️ Debe ingresar la Razón Social.', 'error');
-                return;
-            }
-            if (!nit) {
-                mostrarMensaje('⚠️ Debe ingresar el NIT.', 'error');
-                return;
-            }
-            if (!cantidad || parseInt(cantidad) <= 0) {
-                mostrarMensaje('⚠️ Debe indicar la cantidad de trabajadores.', 'error');
-                return;
-            }
+            irA('/persona');
+        });
 
-            const btn = document.querySelector('.btn-primary');
-            btn.disabled = true;
-            btn.textContent = '⏳ CONFIGURANDO...';
-
-            const data = {
-                codigo: codigo,
-                fecha: fecha,
-                hora_inicio: hora_inicio,
-                hora_fin: hora_fin,
-                razon_social: razon_social,
-                nit: nit,
-                tipo_tramite: parseInt(tipo_tramite),
-                departamento: parseInt(departamento),
-                cantidad_trabajadores: parseInt(cantidad)
-            };
-
-            fetch('/api/configurar_ticket', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(data)
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    mostrarMensaje('✅ Ticket configurado correctamente.', 'exito');
-                    // Recargar datos
-                    cargarDatos();
-                    // Mostrar script si existe
-                    if (data.script) {
-                        document.getElementById('scriptArea').style.display = 'block';
-                        document.getElementById('scriptBody').textContent = data.script;
-                    }
+        // Validación en tiempo real
+        document.querySelectorAll('input, select').forEach(element => {
+            element.addEventListener('blur', function() {
+                const id = this.id;
+                const value = this.value.trim();
+                
+                if (this.hasAttribute('required') && !value) {
+                    mostrarError(id, 'Este campo es obligatorio');
                 } else {
-                    mostrarMensaje('❌ Error: ' + (data.error || 'Error desconocido'), 'error');
+                    ocultarError(id);
                 }
-            })
-            .catch(error => {
-                mostrarMensaje('❌ Error de conexión: ' + error, 'error');
-            })
-            .finally(() => {
-                btn.disabled = false;
-                btn.textContent = '⚙️ CONFIGURAR TICKET';
             });
-        }
 
-        // ============================================================
-        // GENERAR ID_TICKET (AUTOMÁTICO)
-        // ============================================================
-
-        function generarTicket() {
-            const btn = document.getElementById('btnGenerarTicket');
-            btn.disabled = true;
-            btn.textContent = '⏳ GENERANDO...';
-
-            fetch('/api/generar_ticket', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({})
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    mostrarMensaje(`✅ ID_TICKET generado: ${data.id_ticket}`, 'exito');
-                    document.getElementById('idTicket').textContent = data.id_ticket;
-                    document.getElementById('estado').textContent = '✅ Ticket Generado';
-                    document.getElementById('estado').style.color = '#27ae60';
-                    btn.disabled = true;
-                    btn.textContent = '✅ ID_TICKET GENERADO';
-                    
-                    // Mostrar script
-                    if (data.script) {
-                        document.getElementById('scriptArea').style.display = 'block';
-                        document.getElementById('scriptBody').textContent = data.script;
-                    }
-                    
-                    // Mostrar siguiente paso
-                    document.getElementById('linkSiguiente').style.display = 'inline-block';
-                } else {
-                    mostrarMensaje('❌ Error: ' + (data.error || 'Error desconocido'), 'error');
-                    btn.disabled = false;
-                    btn.textContent = '🎫 GENERAR ID_TICKET';
+            element.addEventListener('input', function() {
+                const id = this.id;
+                if (this.value.trim()) {
+                    ocultarError(id);
                 }
-            })
-            .catch(error => {
-                mostrarMensaje('❌ Error de conexión: ' + error, 'error');
-                btn.disabled = false;
-                btn.textContent = '🎫 GENERAR ID_TICKET';
             });
-        }
+        });
 
         // ============================================================
-        // PREVISUALIZAR
+        // INICIALIZACIÓN
         // ============================================================
+        
+        const hoy = new Date();
+        const dia = String(hoy.getDate()).padStart(2, '0');
+        const mes = String(hoy.getMonth() + 1).padStart(2, '0');
+        const anio = hoy.getFullYear();
+        document.getElementById('fecha').value = `${dia}/${mes}/${anio}`;
 
-        function previsualizar() {
-            fetch('/api/previsualizacion')
-                .then(response => response.json())
-                .then(data => {
-                    if (data.success) {
-                        mostrarMensaje('✅ Previsualización actualizada.', 'info');
-                        actualizarInfo(data);
-                    } else {
-                        mostrarMensaje('❌ Error: ' + (data.error || 'Error desconocido'), 'error');
-                    }
-                })
-                .catch(error => {
-                    mostrarMensaje('❌ Error de conexión: ' + error, 'error');
-                });
-        }
+        document.addEventListener('DOMContentLoaded', function() {
+            setTimeout(cargarEstado, 500);
+        });
 
-        // ============================================================
-        // COPIAR SCRIPT
-        // ============================================================
-
-        function copiarScript() {
-            const script = document.getElementById('scriptBody').textContent;
-            navigator.clipboard.writeText(script).then(() => {
-                mostrarMensaje('✅ Script copiado al portapapeles.', 'exito');
-            }).catch(() => {
-                const textarea = document.createElement('textarea');
-                textarea.value = script;
-                document.body.appendChild(textarea);
-                textarea.select();
-                document.execCommand('copy');
-                document.body.removeChild(textarea);
-                mostrarMensaje('✅ Script copiado al portapapeles.', 'exito');
-            });
-        }
-
-        // ============================================================
-        // MOSTRAR MENSAJES
-        // ============================================================
-
-        function mostrarMensaje(texto, tipo) {
-            const container = document.getElementById('mensajeContainer');
-            const clases = {
-                'exito': 'mensaje-exito',
-                'error': 'mensaje-error',
-                'info': 'mensaje-info',
-                'warning': 'mensaje-info'
-            };
-            
-            container.innerHTML = `
-                <div class="mensaje ${clases[tipo] || 'mensaje-info'}">
-                    ${texto}
-                </div>
-            `;
-            
-            setTimeout(() => {
-                container.innerHTML = '';
-            }, 5000);
-        }
+        console.log('✅ Pantalla 4 - Configurar Ticket cargada correctamente');
+        console.log('✅ ID_EMPRESA se carga automáticamente desde la otra BD');
     </script>
 </body>
 </html>

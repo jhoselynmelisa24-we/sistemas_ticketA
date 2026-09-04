@@ -21,11 +21,12 @@
         rel="stylesheet"
         href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
     >
-
     <style>
-
+        /* ============================================================
+           ESTILOS GENERALES
+           ============================================================ */
         body {
-            background: #f4f6f9;
+            background: #324f7c;
             font-family: Arial, sans-serif;
         }
 
@@ -50,17 +51,17 @@
         }
 
         .zona-carga {
-            border: 2px dashed #adb5bd;
+            border: 2px dashed #529bb1;
             border-radius: 12px;
             padding: 35px;
             text-align: center;
-            background: #fff;
+            background: #3bb5c5;
             transition: .3s;
         }
 
         .zona-carga:hover {
             border-color: #0d6efd;
-            background: #f8fbff;
+            background: #043a80;
         }
 
         .icono-excel {
@@ -161,6 +162,232 @@
             display: none;
         }
 
+        /* ============================================================
+           SALUDO DE BIENVENIDA CON COLORES - ESTILOS MEJORADOS
+           ============================================================ */
+        .saludo-bienvenida {
+            background: linear-gradient(135deg, #1a3c6e 0%, #2d6da8 40%, #4a90d9 70%, #6aafd4 100%);
+            border-radius: 16px;
+            padding: 30px 35px;
+            margin: 0 0 25px 0;
+            box-shadow: 0 10px 40px rgba(26, 60, 110, 0.35), 
+                        inset 0 1px 0 rgba(255, 255, 255, 0.15);
+            animation: saludoFadeIn 0.8s ease;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .saludo-bienvenida::before {
+            content: '';
+            position: absolute;
+            top: -80px;
+            right: -60px;
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(255, 215, 0, 0.10) 0%, transparent 70%);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+
+        .saludo-bienvenida::after {
+            content: '';
+            position: absolute;
+            bottom: -80px;
+            left: -40px;
+            width: 250px;
+            height: 250px;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.06) 0%, transparent 70%);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+
+        @keyframes saludoFadeIn {
+            0% { opacity: 0; transform: translateY(-20px) scale(0.98); }
+            100% { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        .saludo-contenido {
+            display: flex;
+            align-items: center;
+            gap: 25px;
+            position: relative;
+            z-index: 1;
+            flex-wrap: wrap;
+        }
+
+        .saludo-icono {
+            font-size: 60px;
+            animation: saludoWave 3s ease-in-out infinite;
+            flex-shrink: 0;
+            background: rgba(255, 255, 255, 0.12);
+            border-radius: 50%;
+            padding: 15px;
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+            transition: transform 0.3s ease;
+        }
+
+        .saludo-icono:hover {
+            transform: scale(1.08);
+        }
+
+        @keyframes saludoWave {
+            0%, 100% { transform: rotate(0deg) scale(1); }
+            10% { transform: rotate(18deg) scale(1.05); }
+            20% { transform: rotate(-10deg) scale(1.02); }
+            30% { transform: rotate(15deg) scale(1.05); }
+            40% { transform: rotate(-6deg) scale(1.02); }
+            50% { transform: rotate(10deg) scale(1.05); }
+            60%, 100% { transform: rotate(0deg) scale(1); }
+        }
+
+        .saludo-texto {
+            flex: 1;
+            min-width: 200px;
+        }
+
+        .saludo-texto h2 {
+            font-size: 28px;
+            font-weight: 800;
+            color: #ffffff;
+            margin: 0 0 6px 0;
+            text-shadow: 0 2px 20px rgba(0, 0, 0, 0.15);
+            letter-spacing: -0.3px;
+        }
+
+        .saludo-texto h2 .nombre-asistente {
+            color: #ffd700;
+            background: linear-gradient(135deg, #ffd700, #ffb800);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            padding: 0 4px;
+            text-shadow: 0 0 40px rgba(255, 215, 0, 0.25);
+            position: relative;
+        }
+
+        .saludo-texto h2 .nombre-asistente::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, #ffd700, #ff6b6b, #6bcb77, #4d96ff, #ffd700);
+            background-size: 200% 100%;
+            border-radius: 2px;
+            animation: rainbowLine 4s linear infinite;
+        }
+
+        @keyframes rainbowLine {
+            0% { background-position: 0% 0%; }
+            100% { background-position: 200% 0%; }
+        }
+
+        .saludo-descripcion {
+            font-size: 16px;
+            color: rgba(255, 255, 255, 0.92);
+            margin: 4px 0 6px 0;
+            line-height: 1.6;
+            font-weight: 400;
+        }
+
+        .saludo-descripcion strong {
+            color: #ffd700;
+            font-weight: 700;
+            text-shadow: 0 0 20px rgba(255, 215, 0, 0.15);
+        }
+
+        .saludo-invitacion {
+            font-size: 15px;
+            color: #ffffff;
+            margin: 8px 0 0 0;
+            background: rgba(255, 255, 255, 0.10);
+            padding: 10px 22px;
+            border-radius: 50px;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            font-weight: 600;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+            cursor: default;
+        }
+
+        .saludo-invitacion:hover {
+            background: rgba(255, 255, 255, 0.18);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        .saludo-invitacion i {
+            animation: pulseArrow 1.5s ease-in-out infinite;
+            color: #ffd700;
+        }
+
+        @keyframes pulseArrow {
+            0%, 100% { transform: translateX(0); }
+            50% { transform: translateX(5px); }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .saludo-bienvenida {
+                padding: 22px 20px;
+            }
+            .saludo-contenido {
+                flex-direction: column;
+                text-align: center;
+                gap: 12px;
+            }
+            .saludo-icono {
+                font-size: 48px;
+                padding: 12px;
+            }
+            .saludo-texto h2 {
+                font-size: 22px;
+            }
+            .saludo-texto h2 .nombre-asistente {
+                font-size: 22px;
+            }
+            .saludo-descripcion {
+                font-size: 14px;
+            }
+            .saludo-invitacion {
+                font-size: 13px;
+                padding: 8px 18px;
+                width: 100%;
+                justify-content: center;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .saludo-bienvenida {
+                padding: 16px 14px;
+                border-radius: 12px;
+            }
+            .saludo-icono {
+                font-size: 38px;
+                padding: 10px;
+            }
+            .saludo-texto h2 {
+                font-size: 18px;
+            }
+            .saludo-texto h2 .nombre-asistente {
+                font-size: 18px;
+            }
+            .saludo-descripcion {
+                font-size: 13px;
+            }
+            .saludo-invitacion {
+                font-size: 12px;
+                padding: 6px 14px;
+            }
+        }
     </style>
 
 </head>
@@ -213,7 +440,28 @@
 
 
         <div class="card-body p-4">
+            <!-- =================================================
+                 SALUDO DE BIENVENIDA
+            ================================================== -->
 
+            <div class="saludo-bienvenida" id="saludoBienvenida">
+                <div class="saludo-contenido">
+                    <div class="saludo-icono">👋</div>
+                    <div class="saludo-texto">
+                        <h2>¡Hola! Soy  PyPlan👋 <span class="nombre-asistente">Asistente de Planillas</span></h2>
+                        <p class="saludo-descripcion">
+                            Te ayudaré a generar tus <strong>scripts</strong> y <strong>planillas masivas</strong> de manera rápida y sencilla.
+                        </p>
+                        <p class="saludo-invitacion">
+                            🚀 ¡Comencemos! Carga tu archivo Excel para iniciar el proceso.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- =================================================
+                 ZONA DE CARGA
+            ================================================== -->
 
             <!-- =================================================
                  ZONA DE CARGA
@@ -836,6 +1084,11 @@ async function cargarExcel(archivo) {
         totalDisponible.textContent =
             datosExcel.total;
 
+ // ⭐ LLAMAR A LA FUNCIÓN PARA GUARDAR DATOS DE EMPRESA
+        const datosEmpresa = guardarDatosEmpresaDesdeExcel(datos);
+        if (datosEmpresa.nit || datosEmpresa.razonSocial) {
+            console.log('📌 Datos de empresa extraídos del Excel:', datosEmpresa);
+        }
 
         /* ====================================================
            CARGAR TABLA
@@ -1334,6 +1587,66 @@ function escapeHtml(valor) {
         .replace(/"/g, "&quot;")
         .replace(/'/g, "&#039;");
 
+}
+/* ============================================================
+   GUARDAR NIT Y RAZÓN SOCIAL DEL EXCEL
+============================================================ */
+
+function guardarDatosEmpresaDesdeExcel(data) {
+    let nit = '';
+    let razonSocial = '';
+    
+    // Buscar en los trabajadores
+    if (data.trabajadores && data.trabajadores.length > 0) {
+        for (let i = 0; i < data.trabajadores.length; i++) {
+            const t = data.trabajadores[i];
+            if (t.nit && t.nit !== '' && t.nit !== null) {
+                nit = t.nit;
+            }
+            if (t.razon_social && t.razon_social !== '' && t.razon_social !== null) {
+                razonSocial = t.razon_social;
+            }
+            if (nit && razonSocial) break;
+        }
+    }
+    
+    // Si no encontramos, buscar en filas_excel
+    if ((!nit || !razonSocial) && data.filas_excel && data.filas_excel.length > 0) {
+        for (let i = 0; i < data.filas_excel.length; i++) {
+            const fila = data.filas_excel[i];
+            for (const [key, value] of Object.entries(fila)) {
+                const keyUpper = key.toUpperCase();
+                if (keyUpper.includes('NIT') && value && value !== '') {
+                    nit = value;
+                }
+                if ((keyUpper.includes('RAZON SOCIAL') || keyUpper.includes('RAZÓN SOCIAL') || keyUpper.includes('EMPRESA')) && value && value !== '') {
+                    razonSocial = value;
+                }
+            }
+            if (nit && razonSocial) break;
+        }
+    }
+    
+    // Enviar al backend
+    if (nit || razonSocial) {
+        fetch('/api/guardar_datos_empresa', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                nit: nit,
+                razon_social: razonSocial
+            })
+        })
+        .then(response => response.json())
+        .then(result => {
+            if (result.success) {
+                console.log('✅ Datos de empresa guardados:', { nit, razonSocial });
+            }
+        })
+        .catch(error => console.warn('⚠️ Error al guardar datos de empresa:', error));
+    }
+    
+    return { nit, razonSocial };
 }
 
 
