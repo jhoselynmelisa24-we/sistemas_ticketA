@@ -155,7 +155,28 @@ def obtener_empresa_por_id(id_empresa):
             'estado': fila[3]
         }
     return None
+def buscar_usuario_por_login(login):
+    """
+    Busca un usuario en mteps_d_tickets.dtck_usuarios por login.
+    El login coincide con el NIT de la empresa.
+    """
+    consulta = """
+        SELECT id_usuario, login, id_empleador
+        FROM mteps_d_tickets.dtck_usuarios
+        WHERE login = %s
+          AND estado = true
+        LIMIT 1;
+    """
+    success, mensaje, resultado = ejecutar_consulta(consulta, (str(login),))
 
+    if success and resultado and resultado['filas']:
+        fila = resultado['filas'][0]
+        return {
+            'id_usuario': fila[0],
+            'login': fila[1],
+            'id_empleador': fila[2],
+        }
+    return None
 def cerrar_conexion(conn):
     """Cierra la conexión a la base de datos"""
     if conn:

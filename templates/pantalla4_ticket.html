@@ -4,531 +4,98 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Paso 4 - Configurar Ticket</title>
+    <!-- 📅 Flatpickr - Calendario moderno -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/themes/material_blue.css">
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+<script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/es.js"></script>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: #f0f2f5;
-            padding: 20px;
-        }
-        
-        .container {
-            max-width: 950px;
-            margin: 0 auto;
-            background: white;
-            border-radius: 12px;
-            padding: 30px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-        }
-        
-        .header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 25px;
-            padding-bottom: 15px;
-            border-bottom: 2px solid #e9ecef;
-        }
-        
-        .header h1 {
-            color: #1a3c6e;
-            font-size: 24px;
-        }
-        
-        .step-badge {
-            background: #1a3c6e;
-            color: white;
-            padding: 8px 16px;
-            border-radius: 20px;
-            font-size: 14px;
-        }
-        
-        .form-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
-        }
-        
-        .form-group {
-            margin-bottom: 15px;
-        }
-        
-        .form-group.full-width {
-            grid-column: 1 / -1;
-        }
-        
-        .form-group label {
-            display: block;
-            font-weight: 600;
-            color: #333;
-            margin-bottom: 5px;
-            font-size: 14px;
-        }
-        
-        .form-group label .required {
-            color: #dc3545;
-            margin-left: 3px;
-        }
-        
-        .form-group input,
-        .form-group select {
-            width: 100%;
-            padding: 10px 12px;
-            border: 1px solid #ced4da;
-            border-radius: 6px;
-            font-size: 14px;
-            transition: border-color 0.3s;
-        }
-        
-        .form-group input:focus,
-        .form-group select:focus {
-            outline: none;
-            border-color: #1a3c6e;
-            box-shadow: 0 0 0 3px rgba(26, 60, 110, 0.1);
-        }
-        
-        .form-group input.error {
-            border-color: #dc3545;
-        }
-        
-        .form-group input:disabled {
-            background: #e9ecef;
-            cursor: not-allowed;
-        }
-        
-        .error-message {
-            color: #dc3545;
-            font-size: 12px;
-            margin-top: 4px;
-            display: none;
-        }
-        
-        .error-message.show {
-            display: block;
-        }
-        
-        .info-box {
-            background: #e7f3ff;
-            border-left: 4px solid #1a3c6e;
-            padding: 15px 20px;
-            border-radius: 6px;
-            margin-bottom: 20px;
-        }
-        
-        .info-box h4 {
-            color: #1a3c6e;
-            margin-bottom: 8px;
-        }
-        
-        .info-box p {
-            color: #333;
-            font-size: 14px;
-            margin: 4px 0;
-        }
-        
-        .info-box .highlight {
-            background: #fff3cd;
-            padding: 2px 8px;
-            border-radius: 4px;
-            font-weight: 600;
-        }
-        
-        .buttons {
-            display: flex;
-            gap: 12px;
-            margin-top: 30px;
-            flex-wrap: wrap;
-        }
-        
-        .btn {
-            padding: 12px 28px;
-            border: none;
-            border-radius: 6px;
-            font-size: 15px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-        }
-        
-        .btn-primary {
-            background: #1a3c6e;
-            color: white;
-        }
-        
-        .btn-primary:hover {
-            background: #0f2a4e;
-            transform: translateY(-1px);
-            box-shadow: 0 4px 12px rgba(26, 60, 110, 0.3);
-        }
-        
-        .btn-primary:disabled {
-            background: #6c757d;
-            cursor: not-allowed;
-            transform: none;
-            box-shadow: none;
-        }
-        
-        .btn-success {
-            background: #28a745;
-            color: white;
-        }
-        
-        .btn-success:hover {
-            background: #1e7e34;
-            transform: translateY(-1px);
-            box-shadow: 0 4px 12px rgba(40, 167, 69, 0.3);
-        }
-        
-        .btn-info {
-            background: #17a2b8;
-            color: white;
-        }
-        
-        .btn-info:hover {
-            background: #117a8b;
-            transform: translateY(-1px);
-            box-shadow: 0 4px 12px rgba(23, 162, 184, 0.3);
-        }
-        
-        .btn-warning {
-            background: #ffc107;
-            color: #212529;
-        }
-        
-        .btn-warning:hover {
-            background: #e0a800;
-            transform: translateY(-1px);
-            box-shadow: 0 4px 12px rgba(255, 193, 7, 0.3);
-        }
-        
-        .btn-secondary {
-            background: #6c757d;
-            color: white;
-        }
-        
-        .btn-secondary:hover {
-            background: #5a6268;
-            transform: translateY(-1px);
-        }
-        
-        .btn-outline-secondary {
-            background: transparent;
-            color: #6c757d;
-            border: 2px solid #6c757d;
-        }
-        
-        .btn-outline-secondary:hover {
-            background: #6c757d;
-            color: white;
-            transform: translateY(-1px);
-        }
-        
-        .btn-outline-primary {
-            background: transparent;
-            color: #1a3c6e;
-            border: 2px solid #1a3c6e;
-        }
-        
-        .btn-outline-primary:hover {
-            background: #1a3c6e;
-            color: white;
-            transform: translateY(-1px);
-        }
-        
-        .btn:disabled {
-            opacity: 0.6;
-            cursor: not-allowed;
-            transform: none !important;
-            box-shadow: none !important;
-        }
-        
-        .alert {
-            padding: 15px 20px;
-            border-radius: 6px;
-            margin-bottom: 20px;
-            display: none;
-        }
-        
-        .alert.show {
-            display: block;
-        }
-        
-        .alert-success {
-            background: #d4edda;
-            color: #155724;
-            border: 1px solid #c3e6cb;
-        }
-        
-        .alert-danger {
-            background: #f8d7da;
-            color: #721c24;
-            border: 1px solid #f5c6cb;
-        }
-        
-        .alert-info {
-            background: #d1ecf1;
-            color: #0c5460;
-            border: 1px solid #bee5eb;
-        }
-        
-        .alert-warning {
-            background: #fff3cd;
-            color: #856404;
-            border: 1px solid #ffeeba;
-        }
-        
-        .script-container {
-            margin-top: 25px;
-            border: 1px solid #dee2e6;
-            border-radius: 6px;
-            overflow: hidden;
-            display: none;
-        }
-        
-        .script-container.show {
-            display: block;
-        }
-        
-        .script-header {
-            background: #f8f9fa;
-            padding: 12px 20px;
-            border-bottom: 1px solid #dee2e6;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        
-        .script-header h3 {
-            font-size: 16px;
-            color: #333;
-            margin: 0;
-        }
-        
-        .script-body {
-            background: #1e1e1e;
-            padding: 20px;
-            max-height: 400px;
-            overflow-y: auto;
-        }
-        
-        .script-body pre {
-            color: #d4d4d4;
-            font-family: 'Courier New', monospace;
-            font-size: 13px;
-            line-height: 1.6;
-            margin: 0;
-            white-space: pre-wrap;
-            word-wrap: break-word;
-        }
-        
-        .script-body pre .sql-keyword {
-            color: #569cd6;
-        }
-        
-        .script-body pre .sql-string {
-            color: #ce9178;
-        }
-        
-        .script-body pre .sql-comment {
-            color: #6a9955;
-        }
-        
-        .script-body pre .sql-number {
-            color: #b5cea8;
-        }
-        
-        .loading {
-            display: inline-block;
-            width: 16px;
-            height: 16px;
-            border: 2px solid #f3f3f3;
-            border-top: 2px solid #1a3c6e;
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-        }
-        
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-        
-        .status-badge {
-            display: inline-block;
-            padding: 4px 12px;
-            border-radius: 12px;
-            font-size: 12px;
-            font-weight: 600;
-        }
-        
-        .status-badge.success {
-            background: #d4edda;
-            color: #155724;
-        }
-        
-        .status-badge.error {
-            background: #f8d7da;
-            color: #721c24;
-        }
-        
-        .status-badge.info {
-            background: #d1ecf1;
-            color: #0c5460;
-        }
-        
-        .help-text {
-            display: block;
-            color: #6c757d;
-            font-size: 12px;
-            margin-top: 4px;
-        }
-        
-        .navigation-buttons {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-top: 30px;
-            padding-top: 20px;
-            border-top: 2px solid #e9ecef;
-            flex-wrap: wrap;
-            gap: 10px;
-        }
-        
-        .navigation-buttons .left-buttons {
-            display: flex;
-            gap: 10px;
-        }
-        
-        .navigation-buttons .right-buttons {
-            display: flex;
-            gap: 10px;
-        }
-        
-        /* Estilos para resultados */
-        .list-group-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 12px 20px;
-            border-bottom: 1px solid #e9ecef;
-            background: white;
-            cursor: pointer;
-            transition: background 0.2s;
-            width: 100%;
-            text-align: left;
-            border: none;
-        }
-        
-        .list-group-item:hover {
-            background: #f0f4ff;
-        }
-        
-        .list-group-item .badge {
-            background: #1a3c6e;
-            color: white;
-            padding: 4px 12px;
-            border-radius: 12px;
-            font-size: 12px;
-        }
-        
-        .list-group-item .badge:hover {
-            background: #0f2a4e;
-        }
-        
-        .list-group-item .text-muted {
-            color: #6c757d;
-            font-size: 13px;
-        }
-        
-        .list-group-item .text-primary {
-            color: #1a3c6e;
-            font-weight: bold;
-        }
-        
-        .text-center {
-            text-align: center;
-        }
-        
-        .py-4 {
-            padding: 20px 0;
-        }
-        
-        /* Card styles */
-        .card {
-            border: 1px solid #dee2e6;
-            border-radius: 10px;
-            overflow: hidden;
-        }
-        
-        .card-header {
-            background: #f8f9fa;
-            padding: 12px 20px;
-            border-bottom: 1px solid #dee2e6;
-        }
-        
-        .card-body {
-            padding: 20px;
-        }
-        
-        .card-body.p-0 {
-            padding: 0;
-        }
-        
-        .input-group {
-            display: flex;
-            gap: 10px;
-            align-items: center;
-        }
-        
-        .input-group .form-control {
-            flex: 1;
-        }
-        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #f0f2f5; padding: 20px; }
+        .container { max-width: 950px; margin: 0 auto; background: white; border-radius: 12px; padding: 30px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; padding-bottom: 15px; border-bottom: 2px solid #e9ecef; }
+        .header h1 { color: #1a3c6e; font-size: 24px; }
+        .step-badge { background: #1a3c6e; color: white; padding: 8px 16px; border-radius: 20px; font-size: 14px; }
+        .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        .form-group { margin-bottom: 15px; }
+        .form-group.full-width { grid-column: 1 / -1; }
+        .form-group label { display: block; font-weight: 600; color: #333; margin-bottom: 5px; font-size: 14px; }
+        .form-group label .required { color: #dc3545; margin-left: 3px; }
+        .form-group input, .form-group select { width: 100%; padding: 10px 12px; border: 1px solid #ced4da; border-radius: 6px; font-size: 14px; transition: border-color 0.3s; }
+        .form-group input:focus, .form-group select:focus { outline: none; border-color: #1a3c6e; box-shadow: 0 0 0 3px rgba(26, 60, 110, 0.1); }
+        .form-group input.error { border-color: #dc3545; }
+        .form-group input:disabled { background: #e9ecef; cursor: not-allowed; }
+        .error-message { color: #dc3545; font-size: 12px; margin-top: 4px; display: none; }
+        .error-message.show { display: block; }
+        .info-box { background: #e7f3ff; border-left: 4px solid #1a3c6e; padding: 15px 20px; border-radius: 6px; margin-bottom: 20px; }
+        .info-box h4 { color: #1a3c6e; margin-bottom: 8px; }
+        .info-box p { color: #333; font-size: 14px; margin: 4px 0; }
+        .info-box .highlight { background: #fff3cd; padding: 2px 8px; border-radius: 4px; font-weight: 600; }
+        .buttons { display: flex; gap: 12px; margin-top: 30px; flex-wrap: wrap; }
+        .btn { padding: 12px 28px; border: none; border-radius: 6px; font-size: 15px; font-weight: 600; cursor: pointer; transition: all 0.3s; display: inline-flex; align-items: center; gap: 8px; }
+        .btn-primary { background: #1a3c6e; color: white; }
+        .btn-primary:hover { background: #0f2a4e; transform: translateY(-1px); box-shadow: 0 4px 12px rgba(26, 60, 110, 0.3); }
+        .btn-primary:disabled { background: #6c757d; cursor: not-allowed; transform: none; box-shadow: none; }
+        .btn-success { background: #28a745; color: white; }
+        .btn-success:hover { background: #1e7e34; transform: translateY(-1px); box-shadow: 0 4px 12px rgba(40, 167, 69, 0.3); }
+        .btn-info { background: #17a2b8; color: white; }
+        .btn-info:hover { background: #117a8b; transform: translateY(-1px); }
+        .btn-warning { background: #ffc107; color: #212529; }
+        .btn-warning:hover { background: #e0a800; transform: translateY(-1px); }
+        .btn-secondary { background: #6c757d; color: white; }
+        .btn-secondary:hover { background: #5a6268; transform: translateY(-1px); }
+        .btn-outline-secondary { background: transparent; color: #6c757d; border: 2px solid #6c757d; }
+        .btn-outline-secondary:hover { background: #6c757d; color: white; }
+        .btn-outline-primary { background: transparent; color: #1a3c6e; border: 2px solid #1a3c6e; }
+        .btn-outline-primary:hover { background: #1a3c6e; color: white; }
+        .btn:disabled { opacity: 0.6; cursor: not-allowed; transform: none !important; }
+        .alert { padding: 15px 20px; border-radius: 6px; margin-bottom: 20px; display: none; }
+        .alert.show { display: block; }
+        .alert-success { background: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
+        .alert-danger { background: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; }
+        .alert-info { background: #d1ecf1; color: #0c5460; border: 1px solid #bee5eb; }
+        .alert-warning { background: #fff3cd; color: #856404; border: 1px solid #ffeeba; }
+        .script-container { margin-top: 25px; border: 1px solid #dee2e6; border-radius: 6px; overflow: hidden; display: none; }
+        .script-container.show { display: block; }
+        .script-header { background: #f8f9fa; padding: 12px 20px; border-bottom: 1px solid #dee2e6; display: flex; justify-content: space-between; align-items: center; }
+        .script-header h3 { font-size: 16px; color: #333; margin: 0; }
+        .script-body { background: #1e1e1e; padding: 20px; max-height: 400px; overflow-y: auto; }
+        .script-body pre { color: #d4d4d4; font-family: 'Courier New', monospace; font-size: 13px; line-height: 1.6; margin: 0; white-space: pre-wrap; word-wrap: break-word; }
+        .script-body pre .sql-keyword { color: #569cd6; }
+        .script-body pre .sql-string { color: #ce9178; }
+        .script-body pre .sql-comment { color: #6a9955; }
+        .script-body pre .sql-number { color: #b5cea8; }
+        .loading { display: inline-block; width: 16px; height: 16px; border: 2px solid #f3f3f3; border-top: 2px solid #1a3c6e; border-radius: 50%; animation: spin 1s linear infinite; }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        .status-badge { display: inline-block; padding: 4px 12px; border-radius: 12px; font-size: 12px; font-weight: 600; }
+        .status-badge.success { background: #d4edda; color: #155724; }
+        .status-badge.error { background: #f8d7da; color: #721c24; }
+        .status-badge.info { background: #d1ecf1; color: #0c5460; }
+        .help-text { display: block; color: #6c757d; font-size: 12px; margin-top: 4px; }
+        .navigation-buttons { display: flex; justify-content: space-between; align-items: center; margin-top: 30px; padding-top: 20px; border-top: 2px solid #e9ecef; flex-wrap: wrap; gap: 10px; }
+        .navigation-buttons .left-buttons, .navigation-buttons .right-buttons { display: flex; gap: 10px; }
+        .list-group-item { display: flex; justify-content: space-between; align-items: center; padding: 12px 20px; border-bottom: 1px solid #e9ecef; background: white; cursor: pointer; transition: background 0.2s; width: 100%; text-align: left; border: none; }
+        .list-group-item:hover { background: #f0f4ff; }
+        .list-group-item .badge { background: #1a3c6e; color: white; padding: 4px 12px; border-radius: 12px; font-size: 12px; }
+        .list-group-item .text-muted { color: #6c757d; font-size: 13px; }
+        .list-group-item .text-primary { color: #1a3c6e; font-weight: bold; }
+        .text-center { text-align: center; }
+        .py-4 { padding: 20px 0; }
+        .card { border: 1px solid #dee2e6; border-radius: 10px; overflow: hidden; }
+        .card-header { background: #f8f9fa; padding: 12px 20px; border-bottom: 1px solid #dee2e6; }
+        .card-body { padding: 20px; }
+        .card-body.p-0 { padding: 0; }
+        .input-group { display: flex; gap: 10px; align-items: center; }
+        .input-group .form-control { flex: 1; }
         @media (max-width: 768px) {
-            .form-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .buttons {
-                flex-direction: column;
-            }
-            
-            .btn {
-                width: 100%;
-                justify-content: center;
-            }
-            
-            .navigation-buttons {
-                flex-direction: column;
-                align-items: stretch;
-            }
-            
-            .navigation-buttons .left-buttons,
-            .navigation-buttons .right-buttons {
-                flex-direction: column;
-                width: 100%;
-            }
-            
-            .navigation-buttons .left-buttons .btn,
-            .navigation-buttons .right-buttons .btn {
-                width: 100%;
-                justify-content: center;
-            }
-            
-            .input-group {
-                flex-direction: column;
-            }
-            
-            .input-group .btn {
-                width: 100%;
-            }
+            .form-grid { grid-template-columns: 1fr; }
+            .buttons { flex-direction: column; }
+            .btn { width: 100%; justify-content: center; }
+            .navigation-buttons { flex-direction: column; align-items: stretch; }
+            .navigation-buttons .left-buttons, .navigation-buttons .right-buttons { flex-direction: column; width: 100%; }
+            .navigation-buttons .left-buttons .btn, .navigation-buttons .right-buttons .btn { width: 100%; justify-content: center; }
+            .input-group { flex-direction: column; }
+            .input-group .btn { width: 100%; }
         }
     </style>
 </head>
@@ -562,78 +129,53 @@
             <div class="form-grid">
                 <!-- CÓDIGO -->
                 <div class="form-group">
-                    <label>
-                        Código <span class="required">*</span>
-                    </label>
-                    <input 
-                        type="text" 
-                        id="codigo" 
-                        placeholder="Ej: RF-2026-001"
-                        required
-                    >
-                    <div class="error-message" id="codigoError">
-                        El código es obligatorio
-                    </div>
+                    <label>Código <span class="required">*</span></label>
+                    <input type="text" id="codigo" placeholder="Ej: RF-2026-001" required>
+                    <div class="error-message" id="codigoError">El código es obligatorio</div>
                 </div>
 
                 <!-- FECHA -->
-                <div class="form-group">
-                    <label>
-                        Fecha <span class="required">*</span>
-                    </label>
-                    <input 
-                        type="text" 
-                        id="fecha" 
-                        placeholder="DD/MM/YYYY"
-                        value="28/08/2026"
-                        required
-                    >
-                    <span class="help-text">📅 Formato: Día/Mes/Año (ej: 28/08/2026)</span>
-                    <div class="error-message" id="fechaError">
-                        La fecha es obligatoria (formato DD/MM/YYYY)
-                    </div>
-                </div>
-
+           <!-- FECHA CON CALENDARIO -->
+<div class="form-group">
+    <label>Fecha <span class="required">*</span></label>
+    <div class="input-fecha-wrapper" style="position: relative;">
+        <input 
+            type="text" 
+            id="fecha" 
+            placeholder="Selecciona una fecha..." 
+            required
+            style="padding-right: 40px; cursor: pointer;"
+            readonly
+        >
+        <span 
+            class="icono-calendario"
+            style="position: absolute; right: 12px; top: 50%; transform: translateY(-50%); font-size: 18px; pointer-events: none; color: #1a3c6e;"
+        >📅</span>
+    </div>
+    <span class="help-text">📅 Haz clic para seleccionar la fecha</span>
+    <div class="error-message" id="fechaError">La fecha es obligatoria</div>
+</div>
                 <!-- HORA INICIO -->
                 <div class="form-group">
-                    <label>
-                        Hora Inicio <span class="required">*</span>
-                    </label>
-                    <input 
-                        type="time" 
-                        id="hora_inicio" 
-                        value="08:30"
-                        step="60"
-                        required
-                    >
-                    <span class="help-text">⏰ El sistema calculará automáticamente las horas de cada trabajador (3 min atención + 1 min extra)</span>
-                    <div class="error-message" id="horaInicioError">
-                        La hora de inicio es obligatoria
-                    </div>
+                    <label>Hora Inicio <span class="required">*</span></label>
+                    <input type="time" id="hora_inicio" value="08:30" step="60" required>
+                    <span class="help-text">⏰ El sistema calculará automáticamente las horas (3 min atención + 1 min extra)</span>
+                    <div class="error-message" id="horaInicioError">La hora de inicio es obligatoria</div>
                 </div>
 
-                <!-- =================================================
-                     BUSCADOR INTELIGENTE DE EMPRESAS
-                ================================================== -->
+                <!-- BUSCADOR DE EMPRESAS -->
                 <div class="form-group full-width">
                     <div class="card" style="border: 1px solid #e0e7ff; border-radius: 10px; background: #f8faff;">
                         <div class="card-body" style="padding: 20px;">
-                            <h5 style="color: #1a3c6e; margin-bottom: 10px;">
-                                🏢 Buscar empresa (por nombre o NIT)
-                            </h5>
+                            <h5 style="color: #1a3c6e; margin-bottom: 10px;">🏢 Buscar empresa (por nombre o NIT)</h5>
                             <p class="text-muted" style="font-size: 14px; margin-bottom: 15px;">
                                 Escribe el nombre de la empresa o el NIT para buscarla automáticamente
                             </p>
-                            
                             <div class="input-group">
-                                <input 
-                                    type="text" 
-                                    id="buscar_empresa"
-                                    class="form-control" 
+                                <input type="text" id="buscar_empresa" class="form-control"
                                     placeholder="Escribe nombre o NIT (mínimo 3 caracteres)..."
                                     autocomplete="off"
-                                    style="font-size: 15px; padding: 12px 15px;"
-                                >
+                                    style="font-size: 15px; padding: 12px 15px;">
                                 <button class="btn btn-primary" type="button" id="btnBuscarEmpresa" style="padding: 12px 25px;">
                                     🔍 Buscar
                                 </button>
@@ -653,157 +195,105 @@
                             <span id="totalResultados" class="badge" style="background: #1a3c6e; color: white; margin-left: 8px;">0</span>
                         </div>
                         <div class="card-body p-0" style="max-height: 250px; overflow-y: auto;">
-                            <div id="listaEmpresas">
-                                <!-- Los resultados se cargarán aquí -->
-                            </div>
+                            <div id="listaEmpresas"></div>
                         </div>
                     </div>
                 </div>
 
-                <!-- =================================================
-                     ID_EMPRESA - VISIBLE (SE CARGA AUTOMÁTICAMENTE)
-                ================================================== -->
+                <!-- ID_EMPRESA -->
                 <div class="form-group">
                     <label>
-                        ID_EMPRESA 
-                        <span style="font-weight: normal; font-size: 12px; color: #28a745;">
-                            ✅ (se carga automáticamente)
-                        </span>
+                        ID_EMPRESA
+                        <span style="font-weight: normal; font-size: 12px; color: #28a745;">✅ (se carga automáticamente)</span>
                     </label>
-                    <input 
-                        type="text" 
-                        id="id_empresa_display" 
-                        readonly
+                    <input type="text" id="id_empresa_display" readonly
                         placeholder="Seleccione una empresa para cargar el ID"
-                        style="background: #e9ecef; font-weight: bold; color: #1a3c6e;"
-                    >
-                    <!-- Campo oculto para el backend -->
+                        style="background: #e9ecef; font-weight: bold; color: #1a3c6e;">
                     <input type="hidden" id="id_empresa">
-                    <span class="help-text">📌 ID de la empresa obtenido de la base de datos de empresas</span>
+                    <span class="help-text">📌 ID de la empresa obtenido de la base de datos</span>
                 </div>
 
                 <!-- RAZÓN SOCIAL -->
                 <div class="form-group">
-                    <label>
-                        Razón Social <span class="required">*</span>
-                    </label>
-                    <input 
-                        type="text" 
-                        id="razon_social"
-                        placeholder="Nombre de la empresa"
-                        required
-                    >
-                    <div class="error-message" id="razonSocialError">
-                        La razón social es obligatoria
-                    </div>
+                    <label>Razón Social <span class="required">*</span></label>
+                    <input type="text" id="razon_social" placeholder="Nombre de la empresa" required>
+                    <div class="error-message" id="razonSocialError">La razón social es obligatoria</div>
                 </div>
 
                 <!-- NIT -->
                 <div class="form-group">
-                    <label>
-                        NIT <span class="required">*</span>
-                    </label>
-                    <input 
-                        type="text" 
-                        id="nit"
-                        placeholder="Ej: 123456789"
-                        required
-                    >
-                    <div class="error-message" id="nitError">
-                        El NIT es obligatorio
-                    </div>
+                    <label>NIT <span class="required">*</span></label>
+                    <input type="text" id="nit" placeholder="Ej: 123456789" required>
+                    <div class="error-message" id="nitError">El NIT es obligatorio</div>
                 </div>
 
                 <!-- TIPO TRÁMITE -->
                 <div class="form-group">
-                    <label>
-                        Tipo Trámite <span class="required">*</span>
-                    </label>
+                    <label>Tipo Trámite <span class="required">*</span></label>
                     <select id="tipo_tramite" required>
                         <option value="">Seleccionar...</option>
                         {% for key, value in tipos_tramite.items() %}
                         <option value="{{ key }}">{{ value }}</option>
                         {% endfor %}
                     </select>
-                    <div class="error-message" id="tipoTramiteError">
-                        Debe seleccionar un tipo de trámite
-                    </div>
+                    <div class="error-message" id="tipoTramiteError">Debe seleccionar un tipo de trámite</div>
                 </div>
 
                 <!-- DEPARTAMENTO -->
                 <div class="form-group">
-                    <label>
-                        Departamento <span class="required">*</span>
-                    </label>
+                    <label>Departamento <span class="required">*</span></label>
                     <select id="departamento" required>
                         <option value="">Seleccionar...</option>
                         {% for key, value in departamentos.items() %}
                         <option value="{{ key }}">{{ value }}</option>
                         {% endfor %}
                     </select>
-                    <div class="error-message" id="departamentoError">
-                        Debe seleccionar un departamento
-                    </div>
+                    <div class="error-message" id="departamentoError">Debe seleccionar un departamento</div>
+                </div>
+
+                <!-- FUNCIONARIO ASIGNADO -->
+                <div class="form-group full-width">
+                    <label>👤 Funcionario que Atiende <span class="required">*</span></label>
+                    <select id="funcionario" required>
+                        <option value="">Seleccione tipo trámite y departamento primero...</option>
+                    </select>
+                    <span class="help-text">Se carga automáticamente según el tipo de trámite y departamento</span>
+                    <div class="error-message" id="funcionarioError">Debe seleccionar un funcionario</div>
+                </div>
+
+                <!-- ID_FUNCIONARIO (SOLO LECTURA) -->
+                <div class="form-group">
+                    <label>🆔 ID del Funcionario que Atiende</label>
+                    <input type="number" id="id_funcionario_display" readonly
+                        placeholder="Se carga al seleccionar funcionario"
+                        style="background: #e9ecef; font-weight: bold; color: #1a3c6e;">
+                    <span class="help-text">ID del funcionario que atenderá el trámite (para el script de atención)</span>
                 </div>
 
                 <!-- USUARIO CREACIÓN -->
                 <div class="form-group">
-                    <label>
-                        Usuario Creación <span class="required">*</span>
-                    </label>
-                    <input 
-                        type="number" 
-                        id="usuario_creacion" 
-                        placeholder="Ej: 1155"
-                        value="1155"
-                        required
-                    >
-                    <span class="help-text">ID del usuario que crea el ticket (número entero)</span>
-                    <div class="error-message" id="usuarioCreacionError">
-                        El usuario de creación es obligatorio (número entero)
-                    </div>
+                    <label>Usuario Creación <span class="required">*</span></label>
+                    <input type="number" id="usuario_creacion" placeholder="Ej: 1155" value="1155" required>
+                    <span class="help-text">ID del usuario del SISTEMA que registra (no es el funcionario)</span>
+                    <div class="error-message" id="usuarioCreacionError">El usuario de creación es obligatorio</div>
                 </div>
 
                 <!-- CANTIDAD TRABAJADORES -->
-                <div class="form-group">
-                    <label>
-                        Cantidad de Trabajadores <span class="required">*</span>
-                    </label>
-                    <input 
-                        type="number" 
-                        id="cantidad" 
-                        placeholder="Ej: 5"
-                        min="1"
-                        required
-                    >
+                <div class="form-group full-width">
+                    <label>Cantidad de Trabajadores <span class="required">*</span></label>
+                    <input type="number" id="cantidad" placeholder="Ej: 5" min="1" required>
                     <span class="help-text">⚠️ Debe ser igual o menor a los trabajadores disponibles</span>
-                    <div class="error-message" id="cantidadError">
-                        La cantidad es obligatoria y debe ser mayor a 0
-                    </div>
+                    <div class="error-message" id="cantidadError">La cantidad es obligatoria y debe ser mayor a 0</div>
                 </div>
             </div>
 
             <!-- BOTONES DE ACCIÓN -->
             <div class="buttons">
-                <button type="submit" class="btn btn-primary" id="btnGenerarTicket">
-                    🎫 Generar Ticket
-                </button>
-                
-                <button type="button" class="btn btn-info" id="btnPrevisualizar">
-                    👁️ Previsualizar Script
-                </button>
-                
-                <button type="button" class="btn btn-success" id="btnGuardarAvance">
-                    💾 Guardar Avance
-                </button>
-                
-                <button type="button" class="btn btn-warning" id="btnCargarEstado">
-                    📊 Cargar Estado
-                </button>
-                
-                <button type="button" class="btn btn-secondary" id="btnLimpiar">
-                    🗑️ Limpiar
-                </button>
+                <button type="submit" class="btn btn-primary" id="btnGenerarTicket">🎫 Generar Ticket</button>
+                <button type="button" class="btn btn-info" id="btnPrevisualizar">👁️ Previsualizar Script</button>
+                <button type="button" class="btn btn-success" id="btnGuardarAvance">💾 Guardar Avance</button>
+                <button type="button" class="btn btn-warning" id="btnCargarEstado">📊 Cargar Estado</button>
+                <button type="button" class="btn btn-secondary" id="btnLimpiar">🗑️ Limpiar</button>
             </div>
         </form>
 
@@ -821,14 +311,10 @@
         <!-- BOTONES DE NAVEGACIÓN -->
         <div class="navigation-buttons">
             <div class="left-buttons">
-                <button type="button" class="btn btn-outline-secondary" id="btnVolver">
-                    ⬅️ Volver
-                </button>
+                <button type="button" class="btn btn-outline-secondary" id="btnVolver">⬅️ Volver</button>
             </div>
             <div class="right-buttons">
-                <button type="button" class="btn btn-outline-primary" id="btnSiguiente">
-                    Siguiente ➡️
-                </button>
+                <button type="button" class="btn btn-outline-primary" id="btnSiguiente">Siguiente ➡️</button>
             </div>
         </div>
     </div>
@@ -837,21 +323,18 @@
         // ============================================================
         // VARIABLES GLOBALES
         // ============================================================
-        
         let datosTicket = null;
         let ticketGenerado = false;
 
         // ============================================================
         // DOM ELEMENTOS
         // ============================================================
-        
         const form = document.getElementById('ticketForm');
         const alertContainer = document.getElementById('alertContainer');
         const alertMessage = document.getElementById('alertMessage');
         const resultadoTicket = document.getElementById('resultadoTicket');
         const scriptOutput = document.getElementById('scriptOutput');
         const ticketStatus = document.getElementById('ticketStatus');
-        
         const btnGenerarTicket = document.getElementById('btnGenerarTicket');
         const btnPrevisualizar = document.getElementById('btnPrevisualizar');
         const btnGuardarAvance = document.getElementById('btnGuardarAvance');
@@ -859,8 +342,6 @@
         const btnLimpiar = document.getElementById('btnLimpiar');
         const btnVolver = document.getElementById('btnVolver');
         const btnSiguiente = document.getElementById('btnSiguiente');
-
-        // Elementos del buscador
         const buscarInput = document.getElementById('buscar_empresa');
         const btnBuscar = document.getElementById('btnBuscarEmpresa');
         const resultadosDiv = document.getElementById('resultadosEmpresa');
@@ -868,9 +349,8 @@
         const totalResultados = document.getElementById('totalResultados');
 
         // ============================================================
-        // FUNCIONES DE UTILIDAD
+        // UTILIDADES
         // ============================================================
-        
         function mostrarAlerta(mensaje, tipo = 'info') {
             alertMessage.textContent = mensaje;
             alertMessage.className = `alert alert-${tipo} show`;
@@ -886,10 +366,7 @@
             const campo = document.getElementById(campoId);
             const error = document.getElementById(campoId + 'Error');
             if (campo) campo.classList.add('error');
-            if (error) {
-                error.textContent = mensaje;
-                error.classList.add('show');
-            }
+            if (error) { error.textContent = mensaje; error.classList.add('show'); }
         }
 
         function ocultarError(campoId) {
@@ -900,7 +377,7 @@
         }
 
         function limpiarErrores() {
-            ['codigo', 'fecha', 'hora_inicio', 'razon_social', 'nit', 'tipo_tramite', 'departamento', 'usuario_creacion', 'cantidad']
+            ['codigo', 'fecha', 'hora_inicio', 'razon_social', 'nit', 'tipo_tramite', 'departamento', 'funcionario', 'usuario_creacion', 'cantidad']
                 .forEach(id => ocultarError(id));
         }
 
@@ -910,15 +387,10 @@
                 btn.innerHTML = '<span class="loading"></span> Procesando...';
             } else {
                 btn.disabled = false;
-                if (btn.id === 'btnGenerarTicket') {
-                    btn.innerHTML = '🎫 Generar Ticket';
-                } else if (btn.id === 'btnPrevisualizar') {
-                    btn.innerHTML = '👁️ Previsualizar Script';
-                } else if (btn.id === 'btnGuardarAvance') {
-                    btn.innerHTML = '💾 Guardar Avance';
-                } else if (btn.id === 'btnCargarEstado') {
-                    btn.innerHTML = '📊 Cargar Estado';
-                }
+                if (btn.id === 'btnGenerarTicket') btn.innerHTML = '🎫 Generar Ticket';
+                else if (btn.id === 'btnPrevisualizar') btn.innerHTML = '👁️ Previsualizar Script';
+                else if (btn.id === 'btnGuardarAvance') btn.innerHTML = '💾 Guardar Avance';
+                else if (btn.id === 'btnCargarEstado') btn.innerHTML = '📊 Cargar Estado';
             }
         }
 
@@ -926,16 +398,15 @@
             let highlighted = script
                 .replace(/--(.*)/g, '<span class="sql-comment">--$1</span>')
                 .replace(/'([^']*)'/g, '<span class="sql-string">\'$1\'</span>')
-                .replace(/\b(INSERT|INTO|VALUES|SELECT|FROM|WHERE|UPDATE|DELETE|CREATE|TABLE|DROP|ALTER|ADD|COLUMN|NOT|NULL|DEFAULT|PRIMARY|KEY|FOREIGN|REFERENCES|UNIQUE|CHECK|INDEX|VIEW|PROCEDURE|FUNCTION|TRIGGER|DATABASE|SCHEMA|USE|SHOW|DESCRIBE|EXPLAIN|ANALYZE|OPTIMIZE|GRANT|REVOKE|COMMIT|ROLLBACK|SAVEPOINT|TRANSACTION|LOCK|UNLOCK|SET|now)\b/gi, 
-                '<span class="sql-keyword">$1</span>')
+                .replace(/\b(INSERT|INTO|VALUES|SELECT|FROM|WHERE|UPDATE|DELETE|CREATE|TABLE|DROP|ALTER|ADD|COLUMN|NOT|NULL|DEFAULT|PRIMARY|KEY|FOREIGN|REFERENCES|UNIQUE|CHECK|INDEX|VIEW|PROCEDURE|FUNCTION|TRIGGER|DATABASE|SCHEMA|USE|SHOW|DESCRIBE|EXPLAIN|ANALYZE|OPTIMIZE|GRANT|REVOKE|COMMIT|ROLLBACK|SAVEPOINT|TRANSACTION|LOCK|UNLOCK|SET|now)\b/gi,
+                    '<span class="sql-keyword">$1</span>')
                 .replace(/\b(\d+)\b/g, '<span class="sql-number">$1</span>');
-            
+
             scriptOutput.innerHTML = highlighted;
             resultadoTicket.classList.add('show');
             ticketStatus.textContent = `✅ ID: ${idTicket} - ${cantidad} trabajadores - Usuario: ${usuario} - ${horaInicio} → ${horaFin}`;
             ticketStatus.className = 'status-badge success';
             ticketGenerado = true;
-            
             resultadoTicket.scrollIntoView({ behavior: 'smooth', block: 'start' });
         }
 
@@ -947,10 +418,6 @@
             ticketGenerado = false;
         }
 
-        // ============================================================
-        // FUNCIÓN: OBTENER DATOS DEL FORMULARIO
-        // ============================================================
-        
         function obtenerDatosFormulario() {
             return {
                 codigo: document.getElementById('codigo').value.trim(),
@@ -966,41 +433,61 @@
         }
 
         // ============================================================
-        // FUNCIÓN: VALIDAR FORMULARIO
+        // FUNCIONARIOS - CARGAR SEGÚN DEPARTAMENTO Y TIPO DE TRÁMITE
         // ============================================================
-        
+        async function cargarFuncionarios() {
+            const tipoTramite = document.getElementById('tipo_tramite').value;
+            const departamento = document.getElementById('departamento').value;
+            const selectFuncionario = document.getElementById('funcionario');
+
+            if (!selectFuncionario) return;
+
+            if (!tipoTramite || !departamento) {
+                selectFuncionario.innerHTML = '<option value="">Seleccione tipo trámite y departamento primero...</option>';
+                return;
+            }
+
+            try {
+                const url = `/api/usuarios_filtrados?id_departamento=${departamento}&id_tipo_tramite=${tipoTramite}`;
+                const response = await fetch(url);
+                const data = await response.json();
+
+                if (!data.success || !data.usuarios || data.usuarios.length === 0) {
+                    selectFuncionario.innerHTML = '<option value="">⚠️ No hay funcionarios disponibles</option>';
+                    return;
+                }
+
+                let html = '<option value="">Seleccionar funcionario...</option>';
+                data.usuarios.forEach(u => {
+                    html += `<option value="${u.id}">${u.nombre} - CI: ${u.ci}</option>`;
+                });
+                selectFuncionario.innerHTML = html;
+
+                console.log(`✅ ${data.usuarios.length} funcionarios cargados`);
+            } catch (error) {
+                console.error('Error al cargar funcionarios:', error);
+                selectFuncionario.innerHTML = '<option value="">❌ Error al cargar funcionarios</option>';
+            }
+        }
+
+        // ============================================================
+        // VALIDAR FORMULARIO
+        // ============================================================
         function validarFormulario(datos) {
             let valido = true;
             limpiarErrores();
 
-            if (!datos.codigo) {
-                mostrarError('codigo', 'El código es obligatorio');
-                valido = false;
-            }
-            if (!datos.fecha) {
-                mostrarError('fecha', 'La fecha es obligatoria');
-                valido = false;
-            }
-            if (!datos.hora_inicio) {
-                mostrarError('hora_inicio', 'La hora de inicio es obligatoria');
-                valido = false;
-            }
-            if (!datos.razon_social) {
-                mostrarError('razon_social', 'La razón social es obligatoria');
-                valido = false;
-            }
-            if (!datos.nit) {
-                mostrarError('nit', 'El NIT es obligatorio');
-                valido = false;
-            }
-            if (!datos.tipo_tramite) {
-                mostrarError('tipo_tramite', 'Debe seleccionar un tipo de trámite');
-                valido = false;
-            }
-            if (!datos.departamento) {
-                mostrarError('departamento', 'Debe seleccionar un departamento');
-                valido = false;
-            }
+            if (!datos.codigo) { mostrarError('codigo', 'El código es obligatorio'); valido = false; }
+            if (!datos.fecha) { mostrarError('fecha', 'La fecha es obligatoria'); valido = false; }
+            if (!datos.hora_inicio) { mostrarError('hora_inicio', 'La hora de inicio es obligatoria'); valido = false; }
+            if (!datos.razon_social) { mostrarError('razon_social', 'La razón social es obligatoria'); valido = false; }
+            if (!datos.nit) { mostrarError('nit', 'El NIT es obligatorio'); valido = false; }
+            if (!datos.tipo_tramite) { mostrarError('tipo_tramite', 'Debe seleccionar un tipo de trámite'); valido = false; }
+            if (!datos.departamento) { mostrarError('departamento', 'Debe seleccionar un departamento'); valido = false; }
+
+            const idFunc = document.getElementById('funcionario').value;
+            if (!idFunc) { mostrarError('funcionario', 'Debe seleccionar un funcionario'); valido = false; }
+
             if (!datos.usuario_creacion) {
                 mostrarError('usuario_creacion', 'El usuario de creación es obligatorio');
                 valido = false;
@@ -1011,23 +498,20 @@
                     valido = false;
                 }
             }
+
             const cantidad = parseInt(datos.cantidad_trabajadores);
             if (!datos.cantidad_trabajadores || isNaN(cantidad) || cantidad <= 0) {
                 mostrarError('cantidad', 'La cantidad debe ser un número mayor a 0');
                 valido = false;
             }
 
-            if (!valido) {
-                mostrarAlerta('❌ Por favor, complete todos los campos obligatorios', 'danger');
-            }
-
+            if (!valido) mostrarAlerta('❌ Por favor, complete todos los campos obligatorios', 'danger');
             return valido;
         }
 
         // ============================================================
-        // FUNCIÓN: CARGAR ESTADO GUARDADO
+        // CARGAR ESTADO GUARDADO
         // ============================================================
-        
         async function cargarEstado() {
             try {
                 setLoading(btnCargarEstado, true);
@@ -1038,52 +522,67 @@
 
                 if (data.success) {
                     if (data.planilla_id) {
-                        if (data.codigo_ticket) {
-                            document.getElementById('codigo').value = data.codigo_ticket;
-                        }
-                        if (data.fecha) {
-                            const fechaParts = data.fecha.split('-');
-                            if (fechaParts.length === 3) {
-                                document.getElementById('fecha').value = `${fechaParts[2]}/${fechaParts[1]}/${fechaParts[0]}`;
-                            } else {
-                                document.getElementById('fecha').value = data.fecha;
-                            }
-                        }
-                        if (data.hora_inicio) {
-                            document.getElementById('hora_inicio').value = data.hora_inicio.substring(0, 5);
-                        }
-                        if (data.razon_social) {
-                            document.getElementById('razon_social').value = data.razon_social;
-                        }
-                        if (data.nit) {
-                            document.getElementById('nit').value = data.nit;
-                        }
-                        if (data.tipo_tramite) {
-                            document.getElementById('tipo_tramite').value = data.tipo_tramite;
-                        }
-                        if (data.departamento) {
-                            document.getElementById('departamento').value = data.departamento;
-                        }
-                        if (data.usuario_creacion) {
-                            document.getElementById('usuario_creacion').value = data.usuario_creacion;
-                        }
-                        if (data.cantidad_procesar) {
-                            document.getElementById('cantidad').value = data.cantidad_procesar;
-                        }
-                        // ⭐ CARGAR ID_EMPRESA
+                        if (data.codigo_ticket) document.getElementById('codigo').value = data.codigo_ticket;
+                     if (data.fecha) {
+    const fechaParts = data.fecha.split('-');
+    let fechaFormateada = data.fecha;
+    if (fechaParts.length === 3) {
+        fechaFormateada = `${fechaParts[2]}/${fechaParts[1]}/${fechaParts[0]}`;
+    }
+    
+    // Actualizar el input de Flatpickr
+    const inputFecha = document.getElementById('fecha');
+    if (inputFecha) {
+        // Si Flatpickr está activo, usar su API para actualizar
+        if (inputFecha._flatpickr) {
+            inputFecha._flatpickr.setDate(fechaFormateada, false);
+        } else {
+            inputFecha.value = fechaFormateada;
+        }
+    }
+}
+                        
+                        if (data.hora_inicio) document.getElementById('hora_inicio').value = data.hora_inicio.substring(0, 5);
+                        if (data.razon_social) document.getElementById('razon_social').value = data.razon_social;
+                        if (data.nit) document.getElementById('nit').value = data.nit;
+                        if (data.tipo_tramite) document.getElementById('tipo_tramite').value = data.tipo_tramite;
+                        if (data.departamento) document.getElementById('departamento').value = data.departamento;
+                        if (data.cantidad_procesar) document.getElementById('cantidad').value = data.cantidad_procesar;
                         if (data.id_empresa) {
                             document.getElementById('id_empresa').value = data.id_empresa;
                             document.getElementById('id_empresa_display').value = data.id_empresa;
                         }
+                        if (data.usuario_creacion) document.getElementById('usuario_creacion').value = data.usuario_creacion;
+
+                        // ⭐ Mostrar ID del funcionario guardado
+                        if (data.id_funcionario) {
+                            document.getElementById('id_funcionario_display').value = data.id_funcionario;
+                        }
+
+                        // Cargar funcionarios y restaurar el guardado
+                        if (data.tipo_tramite && data.departamento) {
+                            await cargarFuncionarios();
+                            if (data.id_funcionario) {
+                                const selectFunc = document.getElementById('funcionario');
+                                if (selectFunc) selectFunc.value = data.id_funcionario;
+                            }
+                        }
 
                         mostrarAlerta(`✅ Estado cargado - ${data.total} trabajadores, ${data.cantidad_procesar} en proceso`, 'success');
-                        
+
                         if (data.id_ticket && data.procesados && data.procesados.length > 0) {
                             try {
                                 const scriptResponse = await fetch('/api/previsualizacion_completa');
                                 const scriptData = await scriptResponse.json();
                                 if (scriptData.success && scriptData.script_completo) {
-                                    mostrarScript(scriptData.script_completo, data.id_ticket, scriptData.total, data.usuario_creacion || 1155, data.hora_inicio, data.hora_fin);
+                                    mostrarScript(
+                                        scriptData.script_completo,
+                                        data.id_ticket,
+                                        scriptData.total,
+                                        data.usuario_creacion || '-',
+                                        data.hora_inicio,
+                                        data.hora_fin
+                                    );
                                 }
                             } catch (e) {
                                 console.log('No se pudo cargar el script automáticamente');
@@ -1103,15 +602,12 @@
         }
 
         // ============================================================
-        // FUNCIÓN: GENERAR TICKET
+        // GENERAR TICKET
         // ============================================================
-
         async function generarTicket() {
             const datos = obtenerDatosFormulario();
-            
-            if (!validarFormulario(datos)) {
-                return;
-            }
+
+            if (!validarFormulario(datos)) return;
 
             try {
                 setLoading(btnGenerarTicket, true);
@@ -1128,9 +624,7 @@
 
                 const response = await fetch('/api/generar_ticket', {
                     method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
+                    headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
                         codigo: datos.codigo,
                         fecha: fechaBackend,
@@ -1162,9 +656,8 @@
         }
 
         // ============================================================
-        // FUNCIÓN: PREVISUALIZAR SCRIPT
+        // PREVISUALIZAR SCRIPT
         // ============================================================
-        
         async function previsualizarScript() {
             try {
                 setLoading(btnPrevisualizar, true);
@@ -1187,7 +680,7 @@
                 const data = await response.json();
 
                 if (data.success && data.script_completo) {
-                    const usuario = estadoData.usuario_creacion || 1155;
+                    const usuario = estadoData.usuario_creacion || '-';
                     mostrarAlerta(`✅ Script previsualizado - ${data.total} trabajadores`, 'success');
                     mostrarScript(data.script_completo, estadoData.id_ticket, data.total, usuario, estadoData.hora_inicio, estadoData.hora_fin);
                 } else {
@@ -1201,32 +694,16 @@
         }
 
         // ============================================================
-        // FUNCIÓN: GUARDAR AVANCE
+        // GUARDAR AVANCE
         // ============================================================
-        
         async function guardarAvance() {
             try {
                 setLoading(btnGuardarAvance, true);
                 ocultarAlerta();
 
-                const usuario = document.getElementById('usuario_creacion').value.trim();
-                if (usuario) {
-                    await fetch('/api/guardar_usuario_creacion', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify({
-                            usuario_creacion: parseInt(usuario)
-                        })
-                    });
-                }
-
                 const response = await fetch('/api/guardar_avance', {
                     method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    }
+                    headers: { 'Content-Type': 'application/json' }
                 });
 
                 const data = await response.json();
@@ -1244,94 +721,71 @@
         }
 
         // ============================================================
-        // ⭐ FUNCIÓN: GUARDAR ID_EMPRESA EN LA PLANILLA
+        // GUARDAR ID_EMPRESA
         // ============================================================
-
-        function guardarIdEmpresa(id_empresa) {
+        function guardarIdEmpresa(id_empresa, nit, razon_social, id_usuario) {
             fetch('/api/guardar_id_empresa', {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ id_empresa: id_empresa })
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    id_empresa: id_empresa,
+                    nit: nit || '',
+                    razon_social: razon_social || '',
+                    id_usuario: id_usuario || null
+                })
             })
             .then(response => response.json())
             .then(data => {
-                if (data.success) {
-                    console.log('✅ ID_EMPRESA guardado en planilla:', id_empresa);
-                } else {
-                    console.error('❌ Error al guardar ID_EMPRESA:', data.error);
-                }
+                if (data.success) console.log('✅ Empresa guardada:', data);
+                else console.error('❌ Error al guardar empresa:', data.error);
             })
             .catch(error => console.error('❌ Error:', error));
         }
 
         // ============================================================
-        // ⭐ BUSCADOR INTELIGENTE DE EMPRESAS (CORREGIDO)
+        // BUSCAR EMPRESAS
         // ============================================================
-
-        // BUSCAR MIENTRAS ESCRIBE (después de 3 caracteres)
         if (buscarInput) {
             buscarInput.addEventListener('input', function() {
                 const termino = this.value.trim();
-                if (termino.length >= 3) {
-                    buscarEmpresas(termino);
-                } else if (termino.length === 0) {
-                    resultadosDiv.style.display = 'none';
-                }
+                if (termino.length >= 3) buscarEmpresas(termino);
+                else if (termino.length === 0) resultadosDiv.style.display = 'none';
             });
 
             buscarInput.addEventListener('keypress', function(e) {
                 if (e.key === 'Enter') {
                     e.preventDefault();
                     const termino = this.value.trim();
-                    if (termino.length >= 3) {
-                        buscarEmpresas(termino);
-                    }
+                    if (termino.length >= 3) buscarEmpresas(termino);
                 }
             });
         }
 
-        // BUSCAR CON EL BOTÓN
         if (btnBuscar) {
             btnBuscar.addEventListener('click', function() {
                 const termino = buscarInput.value.trim();
-                if (termino.length >= 3) {
-                    buscarEmpresas(termino);
-                } else {
-                    mostrarAlerta('⚠️ Escribe al menos 3 caracteres para buscar', 'warning');
-                }
+                if (termino.length >= 3) buscarEmpresas(termino);
+                else mostrarAlerta('⚠️ Escribe al menos 3 caracteres para buscar', 'warning');
             });
         }
-
-        // ============================================================
-        // FUNCIÓN: BUSCAR EMPRESAS EN EL BACKEND
-        // ============================================================
 
         async function buscarEmpresas(termino) {
             try {
                 const response = await fetch(`/api/empresa/buscar?termino=${encodeURIComponent(termino)}`);
                 const data = await response.json();
-                
-                if (data.success) {
-                    mostrarResultados(data.empresas);
-                } else {
-                    mostrarAlerta('❌ ' + data.error, 'danger');
-                }
+
+                if (data.success) mostrarResultados(data.empresas);
+                else mostrarAlerta('❌ ' + data.error, 'danger');
             } catch (error) {
                 console.error('Error:', error);
                 mostrarAlerta('❌ Error de conexión: ' + error.message, 'danger');
             }
         }
 
-        // ============================================================
-        // ⭐ FUNCIÓN: MOSTRAR RESULTADOS (CORREGIDO - usa id_empresa)
-        // ============================================================
-
         function mostrarResultados(empresas) {
             resultadosDiv.style.display = 'block';
             totalResultados.textContent = empresas.length;
-            
+
             if (empresas.length === 0) {
                 listaEmpresas.innerHTML = `
                     <div class="list-group-item text-center text-muted py-4">
@@ -1340,66 +794,61 @@
                 `;
                 return;
             }
-            
+
             let html = '';
             empresas.forEach(empresa => {
-                const razonSocial = empresa.razon_social.replace(/'/g, "\\'");
+                const razonSocial = String(empresa.razon_social || '').replace(/'/g, "\\'");
+                const nitSeguro = String(empresa.nit || '').replace(/'/g, "\\'");
+                const idEmpresa = empresa.id_empresa || 0;
+                const idUsuario = empresa.id_usuario || 0;
                 html += `
-                    <button 
-                        class="list-group-item"
-                        onclick="seleccionarEmpresa(${empresa.id_empresa}, '${razonSocial}', '${empresa.nit}')"
-                        style="border: none; border-bottom: 1px solid #e9ecef; padding: 12px 20px; text-align: left; width: 100%; cursor: pointer; background: white;"
-                    >
+                    <button class="list-group-item"
+                        onclick="seleccionarEmpresa(${idEmpresa}, '${razonSocial}', '${nitSeguro}', ${idUsuario})"
+                        style="border: none; border-bottom: 1px solid #e9ecef; padding: 12px 20px; text-align: left; width: 100%; cursor: pointer; background: white;">
                         <div>
-                            <strong>🏢 ${empresa.razon_social}</strong>
-                            <br>
-                            <small class="text-muted">NIT: ${empresa.nit}</small>
-                            <br>
-                            <small class="text-primary" style="font-weight: bold;">ID_EMPRESA: ${empresa.id_empresa}</small>
+                            <strong>🏢 ${empresa.razon_social}</strong><br>
+                            <small class="text-muted">NIT: ${empresa.nit}</small><br>
+                            <small class="text-primary" style="font-weight: bold;">ID_EMPRESA: ${empresa.id_empresa ?? '-'}</small><br>
+                            <small style="color: #28a745; font-weight: bold;">Usuario: ${empresa.id_usuario ?? '-'}</small>
                         </div>
                         <span class="badge" style="background: #1a3c6e; color: white; padding: 4px 12px; border-radius: 12px;">Seleccionar</span>
                     </button>
                 `;
             });
-            
             listaEmpresas.innerHTML = html;
         }
 
         // ============================================================
-        // ⭐ FUNCIÓN: SELECCIONAR EMPRESA (CORREGIDO - usa id_empresa)
+        // SELECCIONAR EMPRESA
         // ============================================================
-
-        function seleccionarEmpresa(id_empresa, razonSocial, nit) {
-            // Llenar campos visibles
+        function seleccionarEmpresa(id_empresa, razonSocial, nit, id_usuario) {
             document.getElementById('razon_social').value = razonSocial;
             document.getElementById('nit').value = nit;
-            
-            // ⭐ GUARDAR ID_EMPRESA (CORRECTO)
-            document.getElementById('id_empresa').value = id_empresa;
-            document.getElementById('id_empresa_display').value = id_empresa;
-            
-            // Ocultar resultados
+            document.getElementById('id_empresa').value = id_empresa || '';
+            document.getElementById('id_empresa_display').value = id_empresa || '';
+
+            // ⭐ Cargar el USUARIO DEL SISTEMA (no el funcionario)
+            if (id_usuario) document.getElementById('usuario_creacion').value = id_usuario;
+
             resultadosDiv.style.display = 'none';
             document.getElementById('buscar_empresa').value = razonSocial;
-            
-            // ⭐ GUARDAR EN LA PLANILLA
-            guardarIdEmpresa(id_empresa);
-            
-            mostrarAlerta(`✅ Empresa seleccionada: ${razonSocial} (ID: ${id_empresa})`, 'success');
+
+            guardarIdEmpresa(id_empresa, nit, razonSocial, id_usuario);
+
+            mostrarAlerta(
+                `✅ ${razonSocial} | ID_EMPRESA: ${id_empresa || '-'} | Usuario: ${id_usuario || '-'}`,
+                'success'
+            );
         }
 
         // ============================================================
         // NAVEGACIÓN
         // ============================================================
-        
-        function irA(pagina) {
-            window.location.href = pagina;
-        }
+        function irA(pagina) { window.location.href = pagina; }
 
         // ============================================================
         // EVENTOS
         // ============================================================
-        
         form.addEventListener('submit', function(e) {
             e.preventDefault();
             generarTicket();
@@ -1409,6 +858,39 @@
         btnGuardarAvance.addEventListener('click', guardarAvance);
         btnCargarEstado.addEventListener('click', cargarEstado);
 
+        // Eventos de funcionario
+        document.getElementById('tipo_tramite').addEventListener('change', cargarFuncionarios);
+        document.getElementById('departamento').addEventListener('change', cargarFuncionarios);
+
+        document.getElementById('funcionario').addEventListener('change', async function() {
+            const idFuncionario = this.value;
+            if (!idFuncionario) {
+                document.getElementById('id_funcionario_display').value = '';
+                return;
+            }
+
+            // ⭐ Mostrar el ID del funcionario en su campo propio
+            document.getElementById('id_funcionario_display').value = idFuncionario;
+
+            try {
+                const response = await fetch('/api/guardar_funcionario', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ id_funcionario: parseInt(idFuncionario) })
+                });
+                const data = await response.json();
+
+                if (data.success) {
+                    console.log('✅ Funcionario guardado:', data.id_funcionario);
+                    mostrarAlerta(`✅ Funcionario guardado (ID: ${data.id_funcionario})`, 'success');
+                } else {
+                    mostrarAlerta('❌ ' + data.error, 'danger');
+                }
+            } catch (error) {
+                mostrarAlerta('❌ Error al guardar funcionario: ' + error.message, 'danger');
+            }
+        });
+
         btnLimpiar.addEventListener('click', function() {
             form.reset();
             limpiarErrores();
@@ -1416,15 +898,14 @@
             limpiarResultado();
             document.getElementById('hora_inicio').value = '08:30';
             document.getElementById('usuario_creacion').value = '1155';
+            document.getElementById('id_funcionario_display').value = '';
             document.getElementById('id_empresa_display').value = '';
             document.getElementById('id_empresa').value = '';
+            document.getElementById('funcionario').innerHTML = '<option value="">Seleccione tipo trámite y departamento primero...</option>';
             mostrarAlerta('🧹 Formulario limpiado', 'info');
         });
 
-        // BOTONES DE NAVEGACIÓN
-        btnVolver.addEventListener('click', function() {
-            irA('/continuar');
-        });
+        btnVolver.addEventListener('click', function() { irA('/continuar'); });
 
         btnSiguiente.addEventListener('click', function() {
             if (!ticketGenerado) {
@@ -1439,38 +920,85 @@
             element.addEventListener('blur', function() {
                 const id = this.id;
                 const value = this.value.trim();
-                
-                if (this.hasAttribute('required') && !value) {
-                    mostrarError(id, 'Este campo es obligatorio');
-                } else {
-                    ocultarError(id);
-                }
+                if (this.hasAttribute('required') && !value) mostrarError(id, 'Este campo es obligatorio');
+                else ocultarError(id);
             });
 
             element.addEventListener('input', function() {
                 const id = this.id;
-                if (this.value.trim()) {
-                    ocultarError(id);
-                }
+                if (this.value.trim()) ocultarError(id);
             });
         });
 
         // ============================================================
         // INICIALIZACIÓN
         // ============================================================
+    // ============================================================
+// 📅 INICIALIZACIÓN DEL CALENDARIO FLATPICKR
+// ============================================================
+
+if (typeof flatpickr !== 'undefined') {
+    
+    // Configurar idioma español
+    if (typeof flatpickr.l10ns !== 'undefined' && flatpickr.l10ns.es) {
+        flatpickr.localize(flatpickr.l10ns.es);
+    }
+    
+    // Fecha de hoy
+    const hoy = new Date();
+    
+    // Inicializar el calendario
+    flatpickr("#fecha", {
+        dateFormat: "d/m/Y",         // Formato mostrado: 28/08/2026
+        altInput: true,
+        altFormat: "d/m/Y",
+        defaultDate: hoy,             // Fecha por defecto: hoy
+        locale: "es",                 // Idioma español
+        allowInput: false,            // Solo seleccionar, no escribir
+        clickOpens: true,             // Abrir al hacer clic
+        animate: true,                // Animación
+        // maxDate: "today",          // Descomentar para bloquear fechas futuras
         
-        const hoy = new Date();
-        const dia = String(hoy.getDate()).padStart(2, '0');
-        const mes = String(hoy.getMonth() + 1).padStart(2, '0');
-        const anio = hoy.getFullYear();
-        document.getElementById('fecha').value = `${dia}/${mes}/${anio}`;
+        onChange: function(selectedDates, dateStr, instance) {
+            console.log('📅 Fecha seleccionada:', dateStr);
+            
+            // Limpiar error
+            const errorEl = document.getElementById('fechaError');
+            if (errorEl) errorEl.classList.remove('show');
+            
+            const inputFecha = document.getElementById('fecha');
+            if (inputFecha) inputFecha.classList.remove('error');
+        }
+    });
+    
+    console.log('✅ Calendario Flatpickr inicializado');
+    
+} else {
+    // Fallback: asignar fecha de hoy manualmente si Flatpickr no carga
+    console.warn('⚠️ Flatpickr no disponible. Asignando fecha manual.');
+    
+    const hoy = new Date();
+    const dia = String(hoy.getDate()).padStart(2, '0');
+    const mes = String(hoy.getMonth() + 1).padStart(2, '0');
+    const anio = hoy.getFullYear();
+    
+    const inputFecha = document.getElementById('fecha');
+    if (inputFecha) {
+        inputFecha.value = `${dia}/${mes}/${anio}`;
+        inputFecha.removeAttribute('readonly');
+    }
+}
 
-        document.addEventListener('DOMContentLoaded', function() {
-            setTimeout(cargarEstado, 500);
-        });
+// ============================================================
+// INICIALIZACIÓN GENERAL
+// ============================================================
 
-        console.log('✅ Pantalla 4 - Configurar Ticket cargada correctamente');
-        console.log('✅ ID_EMPRESA se carga automáticamente desde la otra BD');
+document.addEventListener('DOMContentLoaded', function() {
+    setTimeout(cargarEstado, 500);
+});
+
+console.log('✅ Pantalla 4 - Configurar Ticket cargada correctamente');
+
     </script>
 </body>
 </html>

@@ -5,653 +5,106 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Paso 6 - Registrar ID_PERSONA, Empresa y Funcionario</title>
     <style>
-        /* ============================================================
-           ESTILOS COMPLETOS PARA PANTALLA 6
-           ============================================================ */
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: #f0f2f5;
-            padding: 20px;
-        }
-
-        .container {
-            max-width: 1600px !important;
-            margin: 0 auto;
-            background: white;
-            border-radius: 12px;
-            padding: 30px 50px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-        }
-
-        .header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 25px;
-            padding-bottom: 15px;
-            border-bottom: 2px solid #e9ecef;
-        }
-
-        .header h1 {
-            color: #1a3c6e;
-            font-size: 24px;
-        }
-
-        .step-badge {
-            background: #1a3c6e;
-            color: white;
-            padding: 8px 16px;
-            border-radius: 20px;
-            font-size: 14px;
-        }
-
-        .info-box {
-            background: #e7f3ff;
-            border-left: 6px solid #1a3c6e;
-            padding: 20px 25px;
-            border-radius: 10px;
-            margin-bottom: 25px;
-        }
-
-        .info-box h4 {
-            color: #1a3c6e;
-            margin-bottom: 10px;
-            font-size: 18px;
-        }
-
-        .info-box p {
-            color: #333;
-            font-size: 15px;
-            margin: 6px 0;
-        }
-
-        .info-box .highlight {
-            background: #fff3cd;
-            padding: 3px 10px;
-            border-radius: 4px;
-            font-weight: 700;
-        }
-
-        .info-box code {
-            background: #1e1e1e;
-            color: #ce9178;
-            padding: 3px 10px;
-            border-radius: 4px;
-            font-family: 'Consolas', monospace;
-            font-size: 14px;
-        }
-
-        .filtro-info {
-            background: #fff3cd;
-            padding: 10px 15px;
-            border-radius: 6px;
-            margin-bottom: 15px;
-            display: none;
-            gap: 15px;
-            flex-wrap: wrap;
-            font-size: 14px;
-            font-weight: 600;
-            color: #856404;
-            border: 1px solid #ffeeba;
-        }
-
-        .filtro-info.show {
-            display: flex;
-        }
-
-        .filtro-info .badge {
-            background: #1a3c6e;
-            color: white;
-            padding: 4px 12px;
-            border-radius: 12px;
-            font-size: 12px;
-        }
-
-        .form-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
-        }
-
-        .form-group {
-            margin-bottom: 15px;
-        }
-
-        .form-group.full-width {
-            grid-column: 1 / -1;
-        }
-
-        .form-group label {
-            display: block;
-            font-weight: 600;
-            color: #333;
-            margin-bottom: 5px;
-            font-size: 14px;
-        }
-
-        .form-group label .required {
-            color: #dc3545;
-            margin-left: 3px;
-        }
-
-        .form-group input,
-        .form-group select {
-            width: 100%;
-            padding: 10px 12px;
-            border: 1px solid #ced4da;
-            border-radius: 6px;
-            font-size: 14px;
-            transition: border-color 0.3s;
-        }
-
-        .form-group input:focus,
-        .form-group select:focus {
-            outline: none;
-            border-color: #1a3c6e;
-            box-shadow: 0 0 0 3px rgba(26, 60, 110, 0.1);
-        }
-
-        .form-group input.error,
-        .form-group select.error {
-            border-color: #dc3545;
-        }
-
-        .error-message {
-            color: #dc3545;
-            font-size: 12px;
-            margin-top: 4px;
-            display: none;
-        }
-
-        .error-message.show {
-            display: block;
-        }
-
-        .help-text {
-            display: block;
-            color: #6c757d;
-            font-size: 12px;
-            margin-top: 4px;
-        }
-
-        .buttons {
-            display: flex;
-            gap: 12px;
-            margin-top: 20px;
-            flex-wrap: wrap;
-        }
-
-        .btn {
-            padding: 12px 28px;
-            border: none;
-            border-radius: 6px;
-            font-size: 15px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .btn-success {
-            background: #28a745;
-            color: white;
-        }
-
-        .btn-success:hover {
-            background: #1e7e34;
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(40, 167, 69, 0.4);
-        }
-
-        .btn-success:disabled {
-            background: #6c757d;
-            cursor: not-allowed;
-            transform: none;
-            box-shadow: none;
-        }
-
-        .btn-info {
-            background: #17a2b8;
-            color: white;
-        }
-
-        .btn-info:hover {
-            background: #117a8b;
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(23, 162, 184, 0.4);
-        }
-
-        .btn-secondary {
-            background: #6c757d;
-            color: white;
-        }
-
-        .btn-secondary:hover {
-            background: #5a6268;
-            transform: translateY(-2px);
-        }
-
-        .btn-outline-secondary {
-            background: transparent;
-            color: #6c757d;
-            border: 2px solid #6c757d;
-        }
-
-        .btn-outline-secondary:hover {
-            background: #6c757d;
-            color: white;
-            transform: translateY(-2px);
-        }
-
-        .btn-outline-primary {
-            background: transparent;
-            color: #1a3c6e;
-            border: 2px solid #1a3c6e;
-        }
-
-        .btn-outline-primary:hover {
-            background: #1a3c6e;
-            color: white;
-            transform: translateY(-2px);
-        }
-
-        .btn:disabled {
-            opacity: 0.6;
-            cursor: not-allowed;
-            transform: none !important;
-            box-shadow: none !important;
-        }
-
-        .alert {
-            padding: 15px 20px;
-            border-radius: 6px;
-            margin-bottom: 20px;
-            display: none;
-        }
-
-        .alert.show {
-            display: block;
-        }
-
-        .alert-success {
-            background: #d4edda;
-            color: #155724;
-            border: 1px solid #c3e6cb;
-        }
-
-        .alert-danger {
-            background: #f8d7da;
-            color: #721c24;
-            border: 1px solid #f5c6cb;
-        }
-
-        .alert-info {
-            background: #d1ecf1;
-            color: #0c5460;
-            border: 1px solid #bee5eb;
-        }
-
-        .alert-warning {
-            background: #fff3cd;
-            color: #856404;
-            border: 1px solid #ffeeba;
-        }
-
-        /* ============================================================
-           TABLA DE TRABAJADORES - CON SCROLL HORIZONTAL
-           ============================================================ */
-        .table-container {
-            margin-top: 25px;
-            overflow-x: auto;
-            border: 1px solid #dee2e6;
-            border-radius: 10px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-        }
-
-        .table-container table {
-            width: 100%;
-            border-collapse: collapse;
-            font-size: 14px;
-            min-width: 700px;
-        }
-
-        .table-container thead {
-            background: #1a3c6e;
-            color: white;
-        }
-
-        .table-container th {
-            padding: 12px 18px;
-            text-align: left;
-            font-weight: 700;
-            font-size: 13px;
-            letter-spacing: 0.5px;
-            white-space: nowrap;
-        }
-
-        .table-container td {
-            padding: 10px 18px;
-            border-bottom: 1px solid #e9ecef;
-            font-size: 13px;
-        }
-
-        .table-container tr:hover {
-            background: #f8f9fa;
-        }
-
-        .table-container .assigned {
-            color: #28a745;
-            font-weight: 700;
-        }
-
-        .table-container .pending {
-            color: #dc3545;
-            font-weight: 700;
-        }
-
-        .table-container .id-cell {
-            font-weight: 600;
-            color: #1a3c6e;
-        }
-
-        /* ============================================================
-           SCROLL HINT
-           ============================================================ */
-        .scroll-hint {
-            background: #f8f9fa;
-            color: #6c757d;
-            padding: 8px 20px;
-            text-align: center;
-            font-size: 13px;
-            border-bottom: 1px solid #dee2e6;
-            display: none;
-            font-family: 'Consolas', monospace;
-        }
-
-        .scroll-hint.show {
-            display: block;
-        }
-
-        .scroll-hint .arrow {
-            color: #ffc107;
-            font-size: 16px;
-            font-weight: 700;
-        }
-
-        /* ============================================================
-           CONTENEDOR DEL SCRIPT - CON SCROLL HORIZONTAL
-           ============================================================ */
-        .script-container {
-            margin-top: 25px;
-            border: 1px solid #2d2d2d;
-            border-radius: 10px;
-            overflow: hidden;
-            display: none;
-            width: 100%;
-            box-shadow: 0 8px 30px rgba(0,0,0,0.15);
-            background: #1a1a1a;
-        }
-
-        .script-container.show {
-            display: block;
-        }
-
-        .script-header {
-            background: #1e3a5f;
-            padding: 18px 30px;
-            border-bottom: 3px solid #ffc107;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 12px;
-        }
-
-        .script-header h3 {
-            font-size: 18px;
-            color: #ffffff;
-            margin: 0;
-            font-weight: 700;
-            letter-spacing: 0.5px;
-        }
-
-        .script-header .header-info {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            flex-wrap: wrap;
-        }
-
-        .script-body {
-            background: #0d0d0d;
-            padding: 25px 30px;
-            max-height: 700px;
-            min-height: 200px;
-            overflow-y: auto;
-            overflow-x: auto;
-            width: 100%;
-        }
-
-        .script-body pre {
-            color: #d4d4d4;
-            font-family: 'Consolas', 'Courier New', monospace;
-            font-size: 14px;
-            line-height: 2.0;
-            margin: 0;
-            white-space: pre;
-            width: auto;
-            min-width: 100%;
-            padding: 5px 0;
-            display: block;
-        }
-
-        .script-body pre .sql-keyword {
-            color: #569cd6;
-            font-weight: 700;
-        }
-
-        .script-body pre .sql-string {
-            color: #ce9178;
-        }
-
-        .script-body pre .sql-comment {
-            color: #6a9955;
-            font-style: italic;
-        }
-
-        .script-body pre .sql-number {
-            color: #b5cea8;
-        }
-
-        .script-body pre .sql-function {
-            color: #dcdcaa;
-            font-weight: 600;
-        }
-
-        .script-body::-webkit-scrollbar {
-            width: 12px;
-            height: 12px;
-        }
-
-        .script-body::-webkit-scrollbar-track {
-            background: #1a1a1a;
-            border-radius: 6px;
-        }
-
-        .script-body::-webkit-scrollbar-thumb {
-            background: #1e3a5f;
-            border-radius: 6px;
-            border: 2px solid #0d0d0d;
-        }
-
-        .script-body::-webkit-scrollbar-thumb:hover {
-            background: #2a5a8f;
-        }
-
-        .script-body {
-            scrollbar-width: thin;
-            scrollbar-color: #1e3a5f #1a1a1a;
-        }
-
-        .btn-copy {
-            background: #28a745;
-            color: white;
-            border: none;
-            padding: 10px 24px;
-            border-radius: 8px;
-            font-size: 14px;
-            font-weight: 700;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
-        }
-
-        .btn-copy:hover {
-            background: #1e7e34;
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(40, 167, 69, 0.4);
-        }
-
-        .btn-copy.copied {
-            background: #17a2b8;
-        }
-
-        .line-counter {
-            color: #adb5bd;
-            font-size: 14px;
-            padding: 6px 18px;
-            background: #2d2d2d;
-            border-radius: 20px;
-            font-family: 'Consolas', monospace;
-            border: 1px solid #444;
-            font-weight: 600;
-        }
-
-        .status-badge {
-            display: inline-block;
-            padding: 6px 20px;
-            border-radius: 20px;
-            font-size: 14px;
-            font-weight: 700;
-            letter-spacing: 0.3px;
-        }
-
-        .status-badge.success {
-            background: #28a745;
-            color: white;
-        }
-
-        .status-badge.info {
-            background: #17a2b8;
-            color: white;
-        }
-
-        .status-badge.warning {
-            background: #ffc107;
-            color: #212529;
-        }
-
-        .summary-box {
-            background: #f8f9fa;
-            border-radius: 10px;
-            padding: 20px 30px;
-            margin-top: 20px;
-            display: none;
-            border: 1px solid #e9ecef;
-        }
-
-        .summary-box.show {
-            display: block;
-        }
-
-        .summary-box .item {
-            display: flex;
-            justify-content: space-between;
-            padding: 8px 0;
-            border-bottom: 1px solid #e9ecef;
-        }
-
-        .summary-box .item:last-child {
-            border-bottom: none;
-        }
-
-        .summary-box .label {
-            font-weight: 700;
-            color: #333;
-            font-size: 15px;
-        }
-
-        .summary-box .value {
-            color: #1a3c6e;
-            font-weight: 700;
-            font-size: 15px;
-        }
-
-        .navigation-buttons {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-top: 30px;
-            padding-top: 20px;
-            border-top: 2px solid #e9ecef;
-            flex-wrap: wrap;
-            gap: 10px;
-        }
-
-        .navigation-buttons .left-buttons {
-            display: flex;
-            gap: 10px;
-        }
-
-        .navigation-buttons .right-buttons {
-            display: flex;
-            gap: 10px;
-        }
-
-        .loading {
-            display: inline-block;
-            width: 16px;
-            height: 16px;
-            border: 2px solid #f3f3f3;
-            border-top: 2px solid #1a3c6e;
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-        }
-
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #f0f2f5; padding: 20px; }
+        .container { max-width: 1600px !important; margin: 0 auto; background: white; border-radius: 12px; padding: 30px 50px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; padding-bottom: 15px; border-bottom: 2px solid #e9ecef; }
+        .header h1 { color: #1a3c6e; font-size: 24px; }
+        .step-badge { background: #1a3c6e; color: white; padding: 8px 16px; border-radius: 20px; font-size: 14px; }
+        .info-box { background: #e7f3ff; border-left: 6px solid #1a3c6e; padding: 20px 25px; border-radius: 10px; margin-bottom: 25px; }
+        .info-box h4 { color: #1a3c6e; margin-bottom: 10px; font-size: 18px; }
+        .info-box p { color: #333; font-size: 15px; margin: 6px 0; }
+        .info-box .highlight { background: #fff3cd; padding: 3px 10px; border-radius: 4px; font-weight: 700; }
+        .info-box code { background: #1e1e1e; color: #ce9178; padding: 3px 10px; border-radius: 4px; font-family: 'Consolas', monospace; font-size: 14px; }
+        .filtro-info { background: #fff3cd; padding: 10px 15px; border-radius: 6px; margin-bottom: 15px; display: none; gap: 15px; flex-wrap: wrap; font-size: 14px; font-weight: 600; color: #856404; border: 1px solid #ffeeba; }
+        .filtro-info.show { display: flex; }
+        .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        .form-group { margin-bottom: 15px; }
+        .form-group.full-width { grid-column: 1 / -1; }
+        .form-group label { display: block; font-weight: 600; color: #333; margin-bottom: 5px; font-size: 14px; }
+        .form-group label .required { color: #dc3545; margin-left: 3px; }
+        .form-group input, .form-group select, .form-group textarea { width: 100%; padding: 10px 12px; border: 1px solid #ced4da; border-radius: 6px; font-size: 14px; transition: border-color 0.3s; }
+        .form-group textarea { font-family: 'Consolas', monospace; resize: vertical; min-height: 120px; }
+        .form-group input:focus, .form-group select:focus, .form-group textarea:focus { outline: none; border-color: #1a3c6e; box-shadow: 0 0 0 3px rgba(26, 60, 110, 0.1); }
+        .form-group input.error, .form-group select.error, .form-group textarea.error { border-color: #dc3545; }
+        .form-group input[readonly] { background: #e9ecef; font-weight: bold; color: #1a3c6e; cursor: not-allowed; }
+        .error-message { color: #dc3545; font-size: 12px; margin-top: 4px; display: none; }
+        .error-message.show { display: block; }
+        .help-text { display: block; color: #6c757d; font-size: 12px; margin-top: 4px; }
+        .buttons { display: flex; gap: 12px; margin-top: 20px; flex-wrap: wrap; }
+        .btn { padding: 12px 28px; border: none; border-radius: 6px; font-size: 15px; font-weight: 600; cursor: pointer; transition: all 0.3s; display: inline-flex; align-items: center; gap: 8px; }
+        .btn-success { background: #28a745; color: white; }
+        .btn-success:hover { background: #1e7e34; transform: translateY(-2px); box-shadow: 0 6px 20px rgba(40, 167, 69, 0.4); }
+        .btn-success:disabled { background: #6c757d; cursor: not-allowed; transform: none; box-shadow: none; }
+        .btn-info { background: #17a2b8; color: white; }
+        .btn-info:hover { background: #117a8b; transform: translateY(-2px); box-shadow: 0 6px 20px rgba(23, 162, 184, 0.4); }
+        .btn-secondary { background: #6c757d; color: white; }
+        .btn-secondary:hover { background: #5a6268; transform: translateY(-2px); }
+        .btn-outline-secondary { background: transparent; color: #6c757d; border: 2px solid #6c757d; }
+        .btn-outline-secondary:hover { background: #6c757d; color: white; transform: translateY(-2px); }
+        .btn-outline-primary { background: transparent; color: #1a3c6e; border: 2px solid #1a3c6e; }
+        .btn-outline-primary:hover { background: #1a3c6e; color: white; transform: translateY(-2px); }
+        .btn:disabled { opacity: 0.6; cursor: not-allowed; transform: none !important; box-shadow: none !important; }
+        .alert { padding: 15px 20px; border-radius: 6px; margin-bottom: 20px; display: none; }
+        .alert.show { display: block; }
+        .alert-success { background: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
+        .alert-danger { background: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; }
+        .alert-info { background: #d1ecf1; color: #0c5460; border: 1px solid #bee5eb; }
+        .alert-warning { background: #fff3cd; color: #856404; border: 1px solid #ffeeba; }
+        .table-container { margin-top: 25px; overflow-x: auto; border: 1px solid #dee2e6; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
+        .table-container table { width: 100%; border-collapse: collapse; font-size: 14px; min-width: 700px; }
+        .table-container thead { background: #1a3c6e; color: white; }
+        .table-container th { padding: 12px 18px; text-align: left; font-weight: 700; font-size: 13px; letter-spacing: 0.5px; white-space: nowrap; }
+        .table-container td { padding: 10px 18px; border-bottom: 1px solid #e9ecef; font-size: 13px; }
+        .table-container tr:hover { background: #f8f9fa; }
+        .table-container .assigned { color: #28a745; font-weight: 700; }
+        .table-container .pending { color: #dc3545; font-weight: 700; }
+        .table-container .id-cell { font-weight: 600; color: #1a3c6e; }
+        .scroll-hint { background: #f8f9fa; color: #6c757d; padding: 8px 20px; text-align: center; font-size: 13px; border-bottom: 1px solid #dee2e6; display: none; font-family: 'Consolas', monospace; }
+        .scroll-hint.show { display: block; }
+        .scroll-hint .arrow { color: #ffc107; font-size: 16px; font-weight: 700; }
+        .script-container { margin-top: 25px; border: 1px solid #2d2d2d; border-radius: 10px; overflow: hidden; display: none; width: 100%; box-shadow: 0 8px 30px rgba(0,0,0,0.15); background: #1a1a1a; }
+        .script-container.show { display: block; }
+        .script-header { background: #1e3a5f; padding: 18px 30px; border-bottom: 3px solid #ffc107; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; }
+        .script-header h3 { font-size: 18px; color: #ffffff; margin: 0; font-weight: 700; letter-spacing: 0.5px; }
+        .script-header .header-info { display: flex; align-items: center; gap: 15px; flex-wrap: wrap; }
+        .script-body { background: #0d0d0d; padding: 25px 30px; max-height: 700px; min-height: 200px; overflow-y: auto; overflow-x: auto; width: 100%; }
+        .script-body pre { color: #d4d4d4; font-family: 'Consolas', 'Courier New', monospace; font-size: 14px; line-height: 2.0; margin: 0; white-space: pre; width: auto; min-width: 100%; padding: 5px 0; display: block; }
+        .script-body pre .sql-keyword { color: #569cd6; font-weight: 700; }
+        .script-body pre .sql-string { color: #ce9178; }
+        .script-body pre .sql-comment { color: #6a9955; font-style: italic; }
+        .script-body pre .sql-number { color: #b5cea8; }
+        .script-body pre .sql-function { color: #dcdcaa; font-weight: 600; }
+        .script-body::-webkit-scrollbar { width: 12px; height: 12px; }
+        .script-body::-webkit-scrollbar-track { background: #1a1a1a; border-radius: 6px; }
+        .script-body::-webkit-scrollbar-thumb { background: #1e3a5f; border-radius: 6px; border: 2px solid #0d0d0d; }
+        .script-body::-webkit-scrollbar-thumb:hover { background: #2a5a8f; }
+        .btn-copy { background: #28a745; color: white; border: none; padding: 10px 24px; border-radius: 8px; font-size: 14px; font-weight: 700; cursor: pointer; transition: all 0.3s ease; display: inline-flex; align-items: center; gap: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.2); }
+        .btn-copy:hover { background: #1e7e34; transform: translateY(-2px); box-shadow: 0 6px 20px rgba(40, 167, 69, 0.4); }
+        .btn-copy.copied { background: #17a2b8; }
+        .line-counter { color: #adb5bd; font-size: 14px; padding: 6px 18px; background: #2d2d2d; border-radius: 20px; font-family: 'Consolas', monospace; border: 1px solid #444; font-weight: 600; }
+        .status-badge { display: inline-block; padding: 6px 20px; border-radius: 20px; font-size: 14px; font-weight: 700; letter-spacing: 0.3px; }
+        .status-badge.success { background: #28a745; color: white; }
+        .status-badge.info { background: #17a2b8; color: white; }
+        .status-badge.warning { background: #ffc107; color: #212529; }
+        .summary-box { background: #f8f9fa; border-radius: 10px; padding: 20px 30px; margin-top: 20px; display: none; border: 1px solid #e9ecef; }
+        .summary-box.show { display: block; }
+        .summary-box .item { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid #e9ecef; }
+        .summary-box .item:last-child { border-bottom: none; }
+        .summary-box .label { font-weight: 700; color: #333; font-size: 15px; }
+        .summary-box .value { color: #1a3c6e; font-weight: 700; font-size: 15px; }
+        .navigation-buttons { display: flex; justify-content: space-between; align-items: center; margin-top: 30px; padding-top: 20px; border-top: 2px solid #e9ecef; flex-wrap: wrap; gap: 10px; }
+        .navigation-buttons .left-buttons, .navigation-buttons .right-buttons { display: flex; gap: 10px; }
+        .loading { display: inline-block; width: 16px; height: 16px; border: 2px solid #f3f3f3; border-top: 2px solid #1a3c6e; border-radius: 50%; animation: spin 1s linear infinite; }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
         @media (max-width: 768px) {
             .container { padding: 15px; }
             .form-grid { grid-template-columns: 1fr; }
             .buttons { flex-direction: column; }
             .btn { width: 100%; justify-content: center; }
             .navigation-buttons { flex-direction: column; align-items: stretch; }
-            .navigation-buttons .left-buttons,
-            .navigation-buttons .right-buttons { flex-direction: column; width: 100%; }
-            .navigation-buttons .left-buttons .btn,
-            .navigation-buttons .right-buttons .btn { width: 100%; justify-content: center; }
-            .table-container table { font-size: 12px; min-width: 600px; }
-            .table-container th,
-            .table-container td { padding: 6px 10px; font-size: 11px; }
-            .script-body { max-height: 400px; padding: 15px; }
-            .script-body pre { font-size: 12px; line-height: 1.8; }
-            .form-group textarea { max-width: 100%; min-height: 100px; }
-            .filtro-info { flex-direction: column; gap: 5px; }
+            .navigation-buttons .left-buttons, .navigation-buttons .right-buttons { flex-direction: column; width: 100%; }
+            .navigation-buttons .left-buttons .btn, .navigation-buttons .right-buttons .btn { width: 100%; justify-content: center; }
         }
     </style>
 </head>
@@ -683,7 +136,7 @@
             </p>
         </div>
 
-        <!-- FILTRO INFO (se muestra cuando se carga el estado) -->
+        <!-- FILTRO INFO -->
         <div id="filtroInfo" class="filtro-info">
             <span id="filtroDepartamento">📍 Departamento: <strong>Cargando...</strong></span>
             <span id="filtroTipoTramite">📋 Tipo Trámite: <strong>Cargando...</strong></span>
@@ -703,11 +156,11 @@
                 ></textarea>
                 <span class="help-text">📌 Copia y pega los ID_PERSONA (uno por línea) que te devolvió el sistema externo</span>
                 <div class="error-message" id="listaIdError">
-                    Debe ingresar al menos un ID_PERSONA válido (números mayores a 0)
+                    Debe ingresar al menos un ID_PERSONA válido
                 </div>
             </div>
 
-            <!-- ⭐ ID_EMPRESA -->
+            <!-- ID_EMPRESA -->
             <div class="form-group">
                 <label>
                     ID_EMPRESA <span class="required">*</span>
@@ -721,21 +174,26 @@
                 >
                 <span class="help-text">📌 ID de la empresa para el trámite</span>
                 <div class="error-message" id="idEmpresaError">
-                    Debe ingresar un ID_EMPRESA válido (número mayor a 0)
+                    Debe ingresar un ID_EMPRESA válido
                 </div>
             </div>
 
-            <!-- ⭐ FUNCIONARIO QUE ATIENDE -->
+            <!-- FUNCIONARIO QUE ATIENDE (SOLO VISUALIZACIÓN) -->
             <div class="form-group">
                 <label>
-                    Funcionario que atiende <span class="required">*</span>
+                    👤 Funcionario que atiende
                 </label>
-                <select id="id_funcionario" required disabled>
-                    <option value="">Cargando funcionarios...</option>
-                </select>
-                <span class="help-text">👤 El funcionario que atenderá los trámites (según departamento y tipo de trámite seleccionados en Paso 4)</span>
+                <input 
+                    type="text" 
+                    id="funcionario_display" 
+                    readonly
+                    placeholder="Se carga desde el Paso 4"
+                    style="background: #e9ecef; font-weight: bold; color: #1a3c6e;"
+                >
+                <input type="hidden" id="id_funcionario">
+                <span class="help-text">👤 Funcionario asignado en el Paso 4 (solo visualización)</span>
                 <div class="error-message" id="funcionarioError">
-                    Debe seleccionar un funcionario
+                    No hay funcionario asignado en el Paso 4
                 </div>
             </div>
         </div>
@@ -745,17 +203,15 @@
             <button type="button" class="btn btn-success" id="btnRegistrar">
                 ✅ Asignar ID_PERSONA y Generar Script
             </button>
-            
             <button type="button" class="btn btn-info" id="btnCargarEstado">
                 📊 Cargar Estado
             </button>
-            
             <button type="button" class="btn btn-secondary" id="btnLimpiar">
                 🗑️ Limpiar
             </button>
         </div>
 
-        <!-- ⭐ TABLA DE TRABAJADORES - CON SCROLL HORIZONTAL -->
+        <!-- TABLA DE TRABAJADORES -->
         <div class="scroll-hint" id="scrollHintTabla">
             ⬅️ Usa las flechas <span class="arrow">←</span> y <span class="arrow">→</span> para desplazarte horizontalmente ➡️
         </div>
@@ -845,79 +301,20 @@
 
     <script>
         // ============================================================
-        // CATÁLOGO DE USUARIOS (Mismo que en el backend)
-        // ============================================================
-        
-        const USUARIOS = {
-            1233: {
-                nombre: "Igor Nataniel Bernal Flores",
-                ci: "5725232",
-                tipo_tramite: [173, 174],
-                departamento: 2  // COCHABAMBA
-            },
-            1130: {
-                nombre: "Cristina Silvia Orellana Cardozo",
-                ci: "5291854",
-                tipo_tramite: [173, 174],
-                departamento: 2  // COCHABAMBA
-            },
-            289: {
-                nombre: "Cesar Dereck Vasquez Gutierrez",
-                ci: "5362946",
-                tipo_tramite: [174],
-                departamento: 1  // LA PAZ
-            },
-            270: {
-                nombre: "Teufilo Avendaño Tejerina",
-                ci: "6318790",
-                tipo_tramite: [173],
-                departamento: 1  // LA PAZ
-            },
-            1133: {
-                nombre: "Katia Aguilar Orellana",
-                ci: "5869915",
-                tipo_tramite: [173],
-                departamento: 1  // LA PAZ
-            },
-            1102: {
-                nombre: "Patricia Ivana Guachalla Morales",
-                ci: "14021936",
-                tipo_tramite: [174],
-                departamento: 3  // SANTA CRUZ
-            },
-            244: {
-                nombre: "Charlie Giovani Huarca Huayhua",
-                ci: "8365847",
-                tipo_tramite: [173],
-                departamento: 3  // SANTA CRUZ
-            },
-            253: {
-                nombre: "Ruth Remy Quisbert Soria",
-                ci: "2398637",
-                tipo_tramite: [174],
-                departamento: 3  // SANTA CRUZ
-            }
-        };
-
-        // ============================================================
         // VARIABLES GLOBALES
         // ============================================================
-        
         let scriptGenerado = false;
         let scriptActual = '';
         let trabajadoresData = [];
-        let funcionariosCargados = false;
 
         // ============================================================
         // DOM ELEMENTOS
         // ============================================================
-        
         const alertContainer = document.getElementById('alertContainer');
         const alertMessage = document.getElementById('alertMessage');
         const tablaTrabajadores = document.getElementById('tablaTrabajadores');
         const listaIdInput = document.getElementById('lista_id_persona');
         const idEmpresaInput = document.getElementById('id_empresa');
-        const funcionarioSelect = document.getElementById('id_funcionario');
         const btnRegistrar = document.getElementById('btnRegistrar');
         const btnCargarEstado = document.getElementById('btnCargarEstado');
         const btnLimpiar = document.getElementById('btnLimpiar');
@@ -941,75 +338,8 @@
         const filtroTipoTramite = document.getElementById('filtroTipoTramite');
 
         // ============================================================
-        // FUNCIÓN: CARGAR FUNCIONARIOS FILTRADOS
+        // UTILIDADES
         // ============================================================
-        
-        function cargarFuncionarios() {
-            funcionarioSelect.innerHTML = '<option value="">Cargando funcionarios...</option>';
-            funcionarioSelect.disabled = true;
-            
-            // Obtener departamento y tipo de trámite del estado
-            fetch('/api/estado')
-                .then(response => response.json())
-                .then(data => {
-                    if (data.success && data.planilla_id) {
-                        const idDepartamento = data.departamento;
-                        const idTipoTramite = data.tipo_tramite;
-                        const deptoNombre = data.departamento_nombre || 'Desconocido';
-                        const tipoNombre = data.tipo_tramite_nombre || 'Desconocido';
-                        
-                        if (!idDepartamento || !idTipoTramite) {
-                            funcionarioSelect.innerHTML = '<option value="">⚠️ Complete el Paso 4 primero</option>';
-                            funcionarioSelect.disabled = true;
-                            return;
-                        }
-                        
-                        // Mostrar filtros
-                        filtroInfo.classList.add('show');
-                        filtroDepartamento.innerHTML = `📍 Departamento: <strong>${deptoNombre}</strong>`;
-                        filtroTipoTramite.innerHTML = `📋 Tipo Trámite: <strong>${tipoNombre}</strong>`;
-                        
-                        // Cargar funcionarios filtrados
-                        fetch(`/api/usuarios_filtrados?id_departamento=${idDepartamento}&id_tipo_tramite=${idTipoTramite}`)
-                            .then(response => response.json())
-                            .then(data => {
-                                funcionarioSelect.innerHTML = '<option value="">Seleccionar funcionario...</option>';
-                                
-                                if (data.success && data.usuarios.length > 0) {
-                                    data.usuarios.forEach(u => {
-                                        const tipo = u.tipo_tramite.join(', ');
-                                        funcionarioSelect.innerHTML += `
-                                            <option value="${u.id}">
-                                                ${u.nombre} (CI: ${u.ci}) - Tipo: ${tipo}
-                                            </option>
-                                        `;
-                                    });
-                                    funcionarioSelect.disabled = false;
-                                    funcionariosCargados = true;
-                                } else {
-                                    funcionarioSelect.innerHTML = '<option value="">No hay funcionarios disponibles</option>';
-                                    funcionarioSelect.disabled = true;
-                                }
-                            })
-                            .catch(() => {
-                                funcionarioSelect.innerHTML = '<option value="">Error al cargar funcionarios</option>';
-                                funcionarioSelect.disabled = true;
-                            });
-                    } else {
-                        funcionarioSelect.innerHTML = '<option value="">⚠️ No hay planilla cargada</option>';
-                        funcionarioSelect.disabled = true;
-                    }
-                })
-                .catch(() => {
-                    funcionarioSelect.innerHTML = '<option value="">Error al obtener estado</option>';
-                    funcionarioSelect.disabled = true;
-                });
-        }
-
-        // ============================================================
-        // FUNCIONES DE UTILIDAD
-        // ============================================================
-        
         function mostrarAlerta(mensaje, tipo = 'info') {
             alertMessage.textContent = mensaje;
             alertMessage.className = `alert alert-${tipo} show`;
@@ -1023,31 +353,21 @@
 
         function mostrarError(campoId, mensaje) {
             const error = document.getElementById(campoId + 'Error');
-            if (error) {
-                error.textContent = mensaje;
-                error.classList.add('show');
-            }
+            if (error) { error.textContent = mensaje; error.classList.add('show'); }
             const input = document.getElementById(campoId);
-            if (input) {
-                input.classList.add('error');
-            }
+            if (input) input.classList.add('error');
         }
 
         function ocultarError(campoId) {
             const error = document.getElementById(campoId + 'Error');
-            if (error) {
-                error.classList.remove('show');
-            }
+            if (error) error.classList.remove('show');
             const input = document.getElementById(campoId);
-            if (input) {
-                input.classList.remove('error');
-            }
+            if (input) input.classList.remove('error');
         }
 
         function limpiarErrores() {
             ocultarError('lista_id_persona');
             ocultarError('id_empresa');
-            ocultarError('funcionario');
         }
 
         function setLoading(btn, loading) {
@@ -1056,29 +376,22 @@
                 btn.innerHTML = '<span class="loading"></span> Procesando...';
             } else {
                 btn.disabled = false;
-                if (btn.id === 'btnRegistrar') {
-                    btn.innerHTML = '✅ Asignar ID_PERSONA y Generar Script';
-                } else if (btn.id === 'btnCargarEstado') {
-                    btn.innerHTML = '📊 Cargar Estado';
-                }
+                if (btn.id === 'btnRegistrar') btn.innerHTML = '✅ Asignar ID_PERSONA y Generar Script';
+                else if (btn.id === 'btnCargarEstado') btn.innerHTML = '📊 Cargar Estado';
             }
         }
 
         function mostrarScrollHintTabla() {
             if (scrollHintTabla) {
                 scrollHintTabla.classList.add('show');
-                setTimeout(() => {
-                    scrollHintTabla.classList.remove('show');
-                }, 6000);
+                setTimeout(() => scrollHintTabla.classList.remove('show'), 6000);
             }
         }
 
         function mostrarScrollHintScript() {
             if (scrollHintScript) {
                 scrollHintScript.classList.add('show');
-                setTimeout(() => {
-                    scrollHintScript.classList.remove('show');
-                }, 6000);
+                setTimeout(() => scrollHintScript.classList.remove('show'), 6000);
             }
         }
 
@@ -1090,34 +403,28 @@
                 scriptStatus.className = 'status-badge warning';
                 return;
             }
-            
             try {
                 let highlighted = script
                     .replace(/--(.*)/g, '<span class="sql-comment">--$1</span>')
                     .replace(/'([^']*)'/g, '<span class="sql-string">\'$1\'</span>')
-                    .replace(/\b(INSERT|INTO|VALUES|SELECT|FROM|WHERE|UPDATE|DELETE|CREATE|TABLE|DROP|ALTER|ADD|COLUMN|NOT|NULL|DEFAULT|PRIMARY|KEY|FOREIGN|REFERENCES|UNIQUE|CHECK|INDEX|VIEW|PROCEDURE|FUNCTION|TRIGGER|DATABASE|SCHEMA|USE|SHOW|DESCRIBE|EXPLAIN|ANALYZE|OPTIMIZE|GRANT|REVOKE|COMMIT|ROLLBACK|SAVEPOINT|TRANSACTION|LOCK|UNLOCK|SET|now)\b/gi, 
+                    .replace(/\b(INSERT|INTO|VALUES|SELECT|FROM|WHERE|UPDATE|DELETE|CREATE|TABLE|DROP|ALTER|ADD|COLUMN|NOT|NULL|DEFAULT|PRIMARY|KEY|FOREIGN|REFERENCES|UNIQUE|CHECK|INDEX|VIEW|PROCEDURE|FUNCTION|TRIGGER|DATABASE|SCHEMA|USE|SHOW|DESCRIBE|EXPLAIN|ANALYZE|OPTIMIZE|GRANT|REVOKE|COMMIT|ROLLBACK|SAVEPOINT|TRANSACTION|LOCK|UNLOCK|SET|now)\b/gi,
                     '<span class="sql-keyword">$1</span>')
                     .replace(/\b(\d+)\b/g, '<span class="sql-number">$1</span>')
                     .replace(/mteps_tramites\.f_secuencial\([^)]*\)/g, '<span class="sql-function">$&</span>');
-                
                 scriptOutput.innerHTML = highlighted;
                 scriptActual = script;
                 scriptContainer.classList.add('show');
-                scriptStatus.textContent = `✅ ${total} trabajadores - Ticket: ${ticket} - Empresa: ${idEmpresa} - Funcionario: ${funcionarioNombre}`;
+                scriptStatus.textContent = `✅ ${total} trabajadores - Ticket: ${ticket} - Empresa: ${idEmpresa} - Func: ${funcionarioNombre}`;
                 scriptStatus.className = 'status-badge success';
-                
                 const lineas = script.split('\n').filter(line => line.trim() !== '').length;
                 lineCounter.textContent = `📄 ${lineas} líneas`;
-                
                 scriptGenerado = true;
                 scriptContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
                 setTimeout(mostrarScrollHintScript, 1000);
             } catch (error) {
-                console.error('Error al mostrar script:', error);
-                scriptOutput.innerHTML = `<span class="sql-comment">-- Error al mostrar el script: ${error.message}</span>`;
+                console.error('Error:', error);
+                scriptOutput.innerHTML = `<span class="sql-comment">-- Error: ${error.message}</span>`;
                 scriptContainer.classList.add('show');
-                scriptStatus.textContent = `⚠️ Error al mostrar script`;
-                scriptStatus.className = 'status-badge warning';
             }
         }
 
@@ -1133,21 +440,75 @@
         }
 
         // ============================================================
-        // FUNCIÓN: ACTUALIZAR TABLA
+        // CARGAR FUNCIONARIO DEL PASO 4 (SOLO VISUALIZACIÓN)
         // ============================================================
-        
+        async function cargarFuncionarioVisualizacion() {
+            try {
+                const response = await fetch('/api/estado');
+                const data = await response.json();
+
+                if (!data.success || !data.planilla_id) {
+                    document.getElementById('funcionario_display').value = '⚠️ No hay planilla';
+                    return;
+                }
+
+                // Mostrar filtros (Departamento y Tipo Trámite)
+                if (data.departamento && data.tipo_tramite) {
+                    filtroInfo.classList.add('show');
+                    filtroDepartamento.innerHTML = `📍 Departamento: <strong>${data.departamento_nombre || 'N/A'}</strong>`;
+                    filtroTipoTramite.innerHTML = `📋 Tipo Trámite: <strong>${data.tipo_tramite_nombre || 'N/A'}</strong>`;
+                }
+
+                // Si NO hay funcionario guardado
+                if (!data.id_funcionario) {
+                    document.getElementById('funcionario_display').value = '⚠️ No asignado en el Paso 4';
+                    document.getElementById('funcionario_display').style.color = '#dc3545';
+                    document.getElementById('funcionarioNombre').textContent = '⚠️ No asignado';
+                    return;
+                }
+
+                // Guardar el id en el campo hidden
+                document.getElementById('id_funcionario').value = data.id_funcionario;
+
+                // Buscar nombre
+                let nombreFuncionario = `ID: ${data.id_funcionario}`;
+
+                if (data.departamento && data.tipo_tramite) {
+                    const res = await fetch(`/api/usuarios_filtrados?id_departamento=${data.departamento}&id_tipo_tramite=${data.tipo_tramite}`);
+                    const resData = await res.json();
+                    if (resData.success) {
+                        const func = resData.usuarios.find(u => u.id === data.id_funcionario);
+                        if (func) {
+                            nombreFuncionario = `${func.nombre} - CI: ${func.ci} (ID_USUARIO: ${func.id})`;
+                        }
+                    }
+                }
+
+                document.getElementById('funcionario_display').value = nombreFuncionario;
+                document.getElementById('funcionario_display').style.color = '#1a3c6e';
+                document.getElementById('funcionarioNombre').textContent = data.id_funcionario;
+
+            } catch (error) {
+                console.error('Error:', error);
+                document.getElementById('funcionario_display').value = '❌ Error al cargar';
+            }
+        }
+
+        // ============================================================
+        // ACTUALIZAR TABLA
+        // ============================================================
         function actualizarTabla(data) {
             const trabajadores = data.trabajadores || [];
             const desde = data.desde || 1;
             const hasta = data.hasta || 0;
-            
+
             const bloque = trabajadores.filter(t => {
                 const nro = parseInt(t.nro);
                 return nro >= desde && nro <= hasta;
             });
-            
+
             trabajadoresData = bloque;
-            
+
             if (bloque.length === 0) {
                 tablaTrabajadores.innerHTML = `
                     <tr>
@@ -1158,66 +519,43 @@
                 `;
                 return;
             }
-            
+
             let html = '';
             let asignados = 0;
             let ids = [];
-            
+
             bloque.forEach(t => {
                 const idPersona = t.id_persona;
                 const tieneId = idPersona && idPersona !== null && idPersona !== 'null' && idPersona !== '';
-                
+
                 if (tieneId) {
                     asignados++;
                     ids.push(parseInt(idPersona));
                 }
-                
+
                 html += `
                     <tr>
                         <td>${t.nro}</td>
                         <td>${t.nombre || 'Sin nombre'}</td>
                         <td>${t.ci || '-'}</td>
-                        <td class="${tieneId ? 'id-cell' : 'pending'}">
-                            ${tieneId ? idPersona : '⏳ Pendiente'}
-                        </td>
-                        <td>
-                            <span class="${tieneId ? 'assigned' : 'pending'}">
-                                ${tieneId ? '✅ Asignado' : '⏳ Pendiente'}
-                            </span>
-                        </td>
+                        <td class="${tieneId ? 'id-cell' : 'pending'}">${tieneId ? idPersona : '⏳ Pendiente'}</td>
+                        <td><span class="${tieneId ? 'assigned' : 'pending'}">${tieneId ? '✅ Asignado' : '⏳ Pendiente'}</span></td>
                     </tr>
                 `;
             });
-            
+
             tablaTrabajadores.innerHTML = html;
-            
-            // Mostrar hint de scroll después de cargar la tabla
             setTimeout(mostrarScrollHintTabla, 500);
-            
+
             summaryBox.classList.add('show');
             totalTrabajadores.textContent = bloque.length;
             registradosSpan.textContent = asignados;
             idTicket.textContent = data.id_ticket || '-';
-            
-            // Mostrar ID_EMPRESA guardado
+
             const idEmpresaGuardado = data.id_empresa || '-';
             idEmpresaSpan.textContent = idEmpresaGuardado;
-            if (idEmpresaGuardado !== '-') {
-                idEmpresaInput.value = idEmpresaGuardado;
-            }
-            
-            // Mostrar funcionario guardado
-            if (data.id_funcionario) {
-                const funcionarioId = data.id_funcionario;
-                const option = funcionarioSelect.querySelector(`option[value="${funcionarioId}"]`);
-                if (option) {
-                    funcionarioNombreSpan.textContent = option.textContent.split('(')[0].trim();
-                } else {
-                    funcionarioNombreSpan.textContent = `ID: ${funcionarioId}`;
-                }
-                funcionarioSelect.value = funcionarioId;
-            }
-            
+            if (idEmpresaGuardado !== '-') idEmpresaInput.value = idEmpresaGuardado;
+
             if (ids.length > 0) {
                 const minId = Math.min(...ids);
                 const maxId = Math.max(...ids);
@@ -1228,9 +566,8 @@
         }
 
         // ============================================================
-        // FUNCIÓN: CARGAR ESTADO
+        // CARGAR ESTADO
         // ============================================================
-        
         async function cargarEstado() {
             try {
                 setLoading(btnCargarEstado, true);
@@ -1241,167 +578,147 @@
 
                 if (data.success && data.planilla_id) {
                     actualizarTabla(data);
+                    await cargarFuncionarioVisualizacion();
                     mostrarAlerta(`✅ Estado cargado - ${data.total} trabajadores`, 'success');
-                    
-                    // Cargar funcionarios después de cargar el estado
-                    cargarFuncionarios();
                 } else {
-                    mostrarAlerta('⚠️ No hay una planilla cargada. Primero cargue un Excel.', 'warning');
+                    mostrarAlerta('⚠️ No hay una planilla cargada.', 'warning');
                 }
             } catch (error) {
-                mostrarAlerta('❌ Error de conexión: ' + error.message, 'danger');
+                mostrarAlerta('❌ Error: ' + error.message, 'danger');
             } finally {
                 setLoading(btnCargarEstado, false);
             }
         }
 
         // ============================================================
-        // FUNCIÓN: ASIGNAR ID_PERSONA Y GENERAR SCRIPT
+        // ASIGNAR ID_PERSONA Y GENERAR SCRIPT
         // ============================================================
-        
-        async function asignarIdPersona() {
-            const listaIds = listaIdInput.value.trim();
-            const idEmpresa = idEmpresaInput.value.trim();
-            const idFuncionario = funcionarioSelect.value;
-            
-            limpiarErrores();
-            
-            let valido = true;
+      async function asignarIdPersona() {
+    const listaIds = listaIdInput.value.trim();
+    const idEmpresa = idEmpresaInput.value.trim();
+    const idFuncionario = document.getElementById('id_funcionario').value;
 
-            if (!listaIds) {
-                mostrarError('lista_id_persona', 'Debe copiar y pegar la lista de ID_PERSONA');
-                valido = false;
-            }
+    limpiarErrores();
 
-            if (!idEmpresa) {
-                mostrarError('id_empresa', 'Debe ingresar el ID_EMPRESA');
-                valido = false;
-            } else {
-                const id = parseInt(idEmpresa);
-                if (isNaN(id) || id <= 0) {
-                    mostrarError('id_empresa', 'El ID_EMPRESA debe ser un número mayor a 0');
-                    valido = false;
-                }
-            }
+    let valido = true;
 
-            if (!idFuncionario) {
-                mostrarError('funcionario', 'Debe seleccionar un funcionario que atienda el trámite');
-                valido = false;
-            }
+    if (!listaIds) {
+        mostrarError('lista_id_persona', 'Debe copiar y pegar la lista de ID_PERSONA');
+        valido = false;
+    }
 
-            if (!valido) {
-                mostrarAlerta('❌ Por favor, complete todos los campos correctamente', 'danger');
-                return;
-            }
+    if (!idEmpresa) {
+        mostrarError('id_empresa', 'Debe ingresar el ID_EMPRESA');
+        valido = false;
+    } else {
+        const id = parseInt(idEmpresa);
+        if (isNaN(id) || id <= 0) {
+            mostrarError('id_empresa', 'El ID_EMPRESA debe ser mayor a 0');
+            valido = false;
+        }
+    }
 
-            const idEmpresaNum = parseInt(idEmpresa);
-            const idFuncionarioNum = parseInt(idFuncionario);
-            
-            // Obtener nombre del funcionario
-            let funcionarioNombre = '';
-            const option = funcionarioSelect.querySelector(`option[value="${idFuncionarioNum}"]`);
-            if (option) {
-                funcionarioNombre = option.textContent.split('(')[0].trim();
-            }
-            
-            try {
-                setLoading(btnRegistrar, true);
-                ocultarAlerta();
-                limpiarResultado();
+    if (!idFuncionario) {
+        mostrarAlerta('❌ No hay funcionario asignado. Vuelva al Paso 4 y seleccione uno.', 'danger');
+        return;
+    }
 
-                // 1. Guardar ID_EMPRESA en la planilla
-                const responseEmpresa = await fetch('/api/guardar_id_empresa', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        id_empresa: idEmpresaNum
-                    })
-                });
+    if (!valido) {
+        mostrarAlerta('❌ Complete todos los campos correctamente', 'danger');
+        return;
+    }
 
-                const dataEmpresa = await responseEmpresa.json();
-                if (!dataEmpresa.success) {
-                    mostrarAlerta('❌ ' + dataEmpresa.error, 'danger');
-                    return;
-                }
+    const idEmpresaNum = parseInt(idEmpresa);
 
-                // 2. Guardar FUNCIONARIO en la planilla
-                const responseFuncionario = await fetch('/api/guardar_funcionario', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        id_funcionario: idFuncionarioNum
-                    })
-                });
+    try {
+        setLoading(btnRegistrar, true);
+        ocultarAlerta();
+        limpiarResultado();
 
-                const dataFuncionario = await responseFuncionario.json();
-                if (!dataFuncionario.success) {
-                    mostrarAlerta('❌ ' + dataFuncionario.error, 'danger');
-                    return;
-                }
+        // 1. Guardar ID_EMPRESA
+        const responseEmpresa = await fetch('/api/guardar_id_empresa', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ id_empresa: idEmpresaNum })
+        });
 
-                // 3. Enviar la lista de ID_PERSONA al backend
-                const response = await fetch('/api/asignar_id_persona_lista', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        lista_ids: listaIds
-                    })
-                });
-
-                const data = await response.json();
-
-                if (data.success) {
-                    mostrarAlerta(`✅ ${data.mensaje} - Rango: ${data.rango}`, 'success');
-                    
-                    // Actualizar tabla
-                    const estadoResponse = await fetch('/api/estado');
-                    const estadoData = await estadoResponse.json();
-                    if (estadoData.success) {
-                        actualizarTabla(estadoData);
-                    }
-                    
-                    // Mostrar script
-                    const scriptMostrar = data.script || data.script_completo || '';
-                    if (scriptMostrar) {
-                        mostrarScript(scriptMostrar, data.total, estadoData.id_ticket, data.rango, idEmpresaNum, funcionarioNombre);
-                    } else {
-                        mostrarAlerta('⚠️ El script se generó pero no se pudo mostrar', 'warning');
-                        scriptOutput.innerHTML = '<span class="sql-comment">-- El script se generó correctamente pero no se recibió el contenido</span>';
-                        scriptContainer.classList.add('show');
-                        scriptStatus.textContent = `⚠️ ${data.total} trabajadores - Script no disponible`;
-                        scriptStatus.className = 'status-badge warning';
-                    }
-                } else {
-                    mostrarAlerta('❌ ' + data.error, 'danger');
-                }
-            } catch (error) {
-                mostrarAlerta('❌ Error de conexión: ' + error.message, 'danger');
-            } finally {
-                setLoading(btnRegistrar, false);
-            }
+        const dataEmpresa = await responseEmpresa.json();
+        if (!dataEmpresa.success) {
+            mostrarAlerta('❌ ' + dataEmpresa.error, 'danger');
+            return;
         }
 
+        // 2. Asignar lista de ID_PERSONA
+        const response = await fetch('/api/asignar_id_persona_lista', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ lista_ids: listaIds })
+        });
+
+        const data = await response.json();
+
+        if (!data.success) {
+            mostrarAlerta('❌ ' + data.error, 'danger');
+            return;
+        }
+
+        mostrarAlerta(`✅ ${data.mensaje}`, 'success');
+
+        // 3. Actualizar tabla
+        const estadoResponse = await fetch('/api/estado');
+        const estadoData = await estadoResponse.json();
+        if (estadoData.success) {
+            actualizarTabla(estadoData);
+        }
+
+        // 4. ⭐ GENERAR SOLO EL SCRIPT DE TRÁMITES ⭐
+        const tramitesResponse = await fetch('/api/generar_tramites', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' }
+        });
+
+        const tramitesData = await tramitesResponse.json();
+
+        if (tramitesData.success) {
+            // Calcular rango de IDs pegados
+            const idsArray = listaIds.split(/[\s,;]+/).filter(x => x.trim() !== '').map(Number);
+            const rango = idsArray.length > 0 
+                ? `${Math.min(...idsArray)} - ${Math.max(...idsArray)}` 
+                : '-';
+            
+            // Mostrar SOLO el script de trámites
+            mostrarScript(
+                tramitesData.script,
+                tramitesData.total,
+                estadoData.id_ticket,
+                rango,
+                idEmpresaNum,
+                idFuncionario
+            );
+        } else {
+            mostrarAlerta('❌ Error al generar script de trámites: ' + tramitesData.error, 'danger');
+        }
+
+    } catch (error) {
+        mostrarAlerta('❌ Error: ' + error.message, 'danger');
+    } finally {
+        setLoading(btnRegistrar, false);
+    }
+}
+
         // ============================================================
-        // FUNCIÓN: COPIAR SCRIPT
+        // COPIAR SCRIPT
         // ============================================================
-        
         document.getElementById('btnCopiarScript').addEventListener('click', function() {
             if (!scriptGenerado || !scriptActual) {
-                mostrarAlerta('⚠️ Primero asigne los ID_PERSONA y genere el script', 'warning');
+                mostrarAlerta('⚠️ Primero asigne los ID_PERSONA', 'warning');
                 return;
             }
-            
             navigator.clipboard.writeText(scriptActual).then(() => {
                 const btn = document.getElementById('btnCopiarScript');
                 btn.textContent = '✅ ¡Copiado!';
                 btn.classList.add('copied');
-                mostrarAlerta('✅ Script copiado al portapapeles', 'success');
+                mostrarAlerta('✅ Script copiado', 'success');
                 setTimeout(() => {
                     btn.textContent = '📋 Copiar';
                     btn.classList.remove('copied');
@@ -1415,44 +732,33 @@
                 textarea.select();
                 document.execCommand('copy');
                 document.body.removeChild(textarea);
-                mostrarAlerta('✅ Script copiado al portapapeles', 'success');
+                mostrarAlerta('✅ Script copiado', 'success');
             });
         });
 
         // ============================================================
         // NAVEGACIÓN
         // ============================================================
-        
-        function irA(pagina) {
-            window.location.href = pagina;
-        }
+        function irA(pagina) { window.location.href = pagina; }
 
-        // ============================================================
-        // EVENTOS
-        // ============================================================
-        
         btnRegistrar.addEventListener('click', asignarIdPersona);
         btnCargarEstado.addEventListener('click', cargarEstado);
-        
+
         btnLimpiar.addEventListener('click', function() {
             listaIdInput.value = '';
             idEmpresaInput.value = '';
             limpiarErrores();
             ocultarAlerta();
             limpiarResultado();
-            funcionarioSelect.value = '';
-            funcionarioNombreSpan.textContent = '-';
             idEmpresaSpan.textContent = '-';
             mostrarAlerta('🧹 Formulario limpiado', 'info');
         });
-        
-        btnVolver.addEventListener('click', function() {
-            irA('/persona');
-        });
-        
+
+        btnVolver.addEventListener('click', () => irA('/persona'));
+
         btnSiguiente.addEventListener('click', function() {
             if (!scriptGenerado) {
-                mostrarAlerta('⚠️ Debe asignar los ID_PERSONA y generar el script antes de continuar', 'warning');
+                mostrarAlerta('⚠️ Debe asignar los ID_PERSONA antes de continuar', 'warning');
                 return;
             }
             irA('/idtramite');
@@ -1475,12 +781,11 @@
         // ============================================================
         // INICIALIZACIÓN
         // ============================================================
-        
         document.addEventListener('DOMContentLoaded', function() {
             setTimeout(cargarEstado, 500);
         });
 
-        console.log('✅ Paso 6 - Registrar ID_PERSONA, Empresa y Funcionario cargado correctamente');
+        console.log('✅ Paso 6 - Registrar ID_PERSONA cargado correctamente');
     </script>
 </body>
 </html>

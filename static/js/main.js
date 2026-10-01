@@ -1260,16 +1260,13 @@ function continuarPaso1() {
     }
 
 
-    /*
-     * Calcular rango actual.
-     */
+    /* ========================================================
+       RANGO ACTUAL
+       ======================================================== */
 
-    desdeTrabajador =
-        1;
+    desdeTrabajador = 1;
 
-
-    hastaTrabajador =
-        cantidadProcesar;
+    hastaTrabajador = cantidadProcesar;
 
 
     mostrarLoading(
@@ -1288,25 +1285,18 @@ function continuarPaso1() {
             method: 'POST',
 
             headers: {
-                'Content-Type':
-                    'application/json'
+                'Content-Type': 'application/json'
             },
 
             body: JSON.stringify({
-
-                cantidad_procesar:
-                    cantidadProcesar
-
+                cantidad_procesar: cantidadProcesar
             })
-
         }
     )
 
     .then(async function (response) {
 
-        const data =
-            await response.json();
-
+        const data = await response.json();
 
         if (!response.ok) {
 
@@ -1314,60 +1304,43 @@ function continuarPaso1() {
                 data.error ||
                 'No se pudo guardar la cantidad.'
             );
-
         }
-
 
         return data;
 
     })
 
+    .then(function (data) {
 
-        /*
-         * IMPORTANTE:
-         *
-         * Flask devuelve el rango real.
-         */
+        /* ====================================================
+           ACTUALIZAR RANGO CON LO QUE DEVUELVE FLASK
+           ==================================================== */
 
         desdeTrabajador =
-            Number(
-                data.desde
-            ) || 1;
-
+            Number(data.desde) || 1;
 
         hastaTrabajador =
-            Number(
-                data.hasta
-            ) || cantidadProcesar;
-
+            Number(data.hasta) || cantidadProcesar;
 
         cantidadProcesar =
-            Number(
-                data.cantidad_procesar
-            ) || cantidadProcesar;
+            Number(data.cantidad_procesar) || cantidadProcesar;
 
 
-        /*
-         * Guardar correlativo si el backend
-         * lo devuelve.
-         */
+        if (data.correlativo_planilla) {
 
-        if (
-            data.correlativo_planilla
-        ) {
-
-            correlativoPlanilla =
-                data.correlativo_planilla;
+            correlativoPlanilla = data.correlativo_planilla;
 
         }
 
 
-        /*
-         * Ahora sí pasamos al Paso 2.
-         */
+        ocultarLoading();
 
-        window.location.href =
-            '/tipo';
+
+        /* ====================================================
+           IR AL PASO 2
+           ==================================================== */
+
+        window.location.href = '/tipo';
 
     })
 
@@ -1375,11 +1348,7 @@ function continuarPaso1() {
 
         ocultarLoading();
 
-
-        console.error(
-            error
-        );
-
+        console.error(error);
 
         mostrarNotificacion(
             '❌ ' + error.message,
@@ -1389,7 +1358,6 @@ function continuarPaso1() {
     });
 
 }
-
 
 /* ============================================================
    CONTINUAR CON OTRA PARTE DE LA PLANILLA

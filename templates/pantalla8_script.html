@@ -5,18 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Paso 8 - Script Final</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background: #f0f2f5;
             padding: 20px;
         }
-        
+
         .container {
             max-width: 1100px;
             margin: 0 auto;
@@ -25,7 +21,7 @@
             padding: 30px;
             box-shadow: 0 2px 10px rgba(0,0,0,0.1);
         }
-        
+
         .header {
             display: flex;
             justify-content: space-between;
@@ -34,12 +30,9 @@
             padding-bottom: 15px;
             border-bottom: 2px solid #e9ecef;
         }
-        
-        .header h1 {
-            color: #1a3c6e;
-            font-size: 24px;
-        }
-        
+
+        .header h1 { color: #1a3c6e; font-size: 24px; }
+
         .step-badge {
             background: #1a3c6e;
             color: white;
@@ -47,29 +40,22 @@
             border-radius: 20px;
             font-size: 14px;
         }
-        
+
         .alert {
             padding: 25px 30px;
             border-radius: 10px;
             margin-bottom: 20px;
         }
-        
+
         .alert-success {
             background: #d4edda;
             color: #155724;
             border: 2px solid #28a745;
         }
-        
-        .alert-success h3 {
-            font-size: 24px;
-            margin-bottom: 10px;
-        }
-        
-        .alert-success p {
-            font-size: 15px;
-            margin: 5px 0;
-        }
-        
+
+        .alert-success h3 { font-size: 24px; margin-bottom: 10px; }
+        .alert-success p { font-size: 15px; margin: 5px 0; }
+
         .resumen-final {
             background: white;
             border-radius: 8px;
@@ -77,42 +63,35 @@
             margin: 15px 0;
             box-shadow: 0 1px 5px rgba(0,0,0,0.05);
         }
-        
+
         .resumen-final p {
             margin: 8px 0;
             font-size: 16px;
             padding: 6px 0;
             border-bottom: 1px solid #f0f0f0;
         }
-        
-        .resumen-final p:last-child {
-            border-bottom: none;
-        }
-        
+
+        .resumen-final p:last-child { border-bottom: none; }
+
         .resumen-final strong {
             color: #1a3c6e;
             min-width: 200px;
             display: inline-block;
         }
-        
+
         .resumen-final .valor {
             color: #28a745;
             font-weight: bold;
             font-size: 17px;
         }
-        
-        .resumen-final .valor-pendiente {
-            color: #ffc107;
-            font-weight: bold;
-        }
-        
+
         .acciones-finales {
             display: flex;
             gap: 15px;
             margin-top: 20px;
             flex-wrap: wrap;
         }
-        
+
         .acciones-finales .btn {
             padding: 12px 30px;
             font-size: 16px;
@@ -129,58 +108,23 @@
             justify-content: center;
             text-decoration: none;
         }
-        
-        .btn-success {
-            background: #28a745;
-            color: white;
-        }
-        
-        .btn-success:hover {
-            background: #1e7e34;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 15px rgba(40, 167, 69, 0.3);
-        }
-        
-        .btn-primary {
-            background: #1a3c6e;
-            color: white;
-        }
-        
-        .btn-primary:hover {
-            background: #0f2a4e;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 15px rgba(26, 60, 110, 0.3);
-        }
-        
-        .btn-warning {
-            background: #ffc107;
-            color: #212529;
-        }
-        
-        .btn-warning:hover {
-            background: #e0a800;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 15px rgba(255, 193, 7, 0.3);
-        }
-        
-        .btn-secondary {
-            background: #6c757d;
-            color: white;
-        }
-        
-        .btn-secondary:hover {
-            background: #5a6268;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 15px rgba(108, 117, 125, 0.3);
-        }
-        
+
+        .btn-success { background: #28a745; color: white; }
+        .btn-success:hover { background: #1e7e34; transform: translateY(-2px); box-shadow: 0 4px 15px rgba(40, 167, 69, 0.3); }
+
+        .btn-primary { background: #1a3c6e; color: white; }
+        .btn-primary:hover { background: #0f2a4e; transform: translateY(-2px); box-shadow: 0 4px 15px rgba(26, 60, 110, 0.3); }
+
+        .btn-warning { background: #ffc107; color: #212529; }
+        .btn-warning:hover { background: #e0a800; transform: translateY(-2px); box-shadow: 0 4px 15px rgba(255, 193, 7, 0.3); }
+
         .btn:disabled {
             opacity: 0.6;
             cursor: not-allowed;
             transform: none !important;
             box-shadow: none !important;
         }
-        
+
         .loading {
             display: inline-block;
             width: 18px;
@@ -190,12 +134,169 @@
             border-radius: 50%;
             animation: spin 1s linear infinite;
         }
-        
+
         @keyframes spin {
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
         }
-        
+
+        /* ============================================================ */
+        /* VISTA PREVIA - PLANILLA COMPLETA                              */
+        /* ============================================================ */
+
+        .vista-preview-container {
+            margin-top: 25px;
+            background: white;
+            border: 2px solid #1a3c6e;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(26, 60, 110, 0.1);
+        }
+
+        .vista-preview-header {
+            background: #1a3c6e;
+            color: white;
+            padding: 15px 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .vista-preview-header h3 {
+            font-size: 18px;
+            margin: 0;
+            font-weight: 700;
+        }
+
+        .vista-preview-info .badge {
+            padding: 6px 15px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 700;
+        }
+
+        .badge-info {
+            background: #17a2b8;
+            color: white;
+        }
+
+        .vista-preview-empresa {
+            background: #e7f3ff;
+            padding: 18px 25px;
+            border-bottom: 2px solid #1a3c6e;
+        }
+
+        .vista-preview-empresa h4 {
+            color: #1a3c6e;
+            font-size: 18px;
+            margin: 0 0 10px 0;
+            font-weight: 800;
+            text-align: center;
+        }
+
+        .vista-preview-datos-empresa,
+        .vista-preview-datos-ticket {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin-top: 5px;
+            font-size: 13px;
+            color: #333;
+        }
+
+        .vista-preview-datos-empresa strong,
+        .vista-preview-datos-ticket strong {
+            color: #1a3c6e;
+        }
+
+        .vista-preview-tabla-wrapper {
+            overflow-x: auto;
+            max-height: 500px;
+            overflow-y: auto;
+            border-bottom: 2px solid #1a3c6e;
+        }
+
+        .vista-preview-tabla {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 12px;
+            min-width: 1400px;
+        }
+
+        .vista-preview-tabla thead {
+            background: #1a3c6e;
+            color: white;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+        .vista-preview-tabla thead th {
+            padding: 12px 10px;
+            text-align: left;
+            font-weight: 700;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            white-space: nowrap;
+            border-right: 1px solid #2a5a8f;
+        }
+
+        .vista-preview-tabla thead th:last-child { border-right: none; }
+
+        .vista-preview-tabla tbody tr {
+            border-bottom: 1px solid #e9ecef;
+            transition: background 0.2s;
+        }
+
+        .vista-preview-tabla tbody tr:hover { background: #f8f9fa; }
+        .vista-preview-tabla tbody tr:nth-child(even) { background: #fbfcfd; }
+
+        .vista-preview-tabla tbody td {
+            padding: 10px;
+            font-size: 12px;
+            color: #333;
+            vertical-align: top;
+            border-right: 1px solid #f0f0f0;
+        }
+
+        .vista-preview-tabla tbody td:last-child { border-right: none; }
+
+        .vista-preview-tabla .col-numero { font-weight: 700; color: #1a3c6e; text-align: center; }
+        .vista-preview-tabla .col-ci { font-weight: 600; color: #495057; }
+        .vista-preview-tabla .col-nombre { font-weight: 600; color: #212529; max-width: 250px; word-wrap: break-word; }
+        .vista-preview-tabla .col-id { font-weight: 700; color: #28a745; text-align: center; }
+        .vista-preview-tabla .col-cod { color: #17a2b8; font-weight: 600; text-align: center; }
+        .vista-preview-tabla .col-hora { font-family: 'Courier New', monospace; font-weight: 600; text-align: center; }
+        .vista-preview-tabla .col-estado { text-align: center; }
+
+        .estado-completo { color: #28a745; font-weight: 700; }
+        .estado-pendiente { color: #ffc107; font-weight: 700; }
+
+        .vista-preview-vacio {
+            text-align: center;
+            padding: 40px 20px;
+            color: #6c757d;
+            font-style: italic;
+        }
+
+        .vista-preview-footer {
+            background: #f8f9fa;
+            padding: 12px 25px;
+            text-align: center;
+            font-size: 13px;
+            color: #495057;
+            font-weight: 600;
+            border-top: 1px solid #dee2e6;
+        }
+
+        /* ============================================================ */
+        /* SCRIPT CONTAINER                                              */
+        /* ============================================================ */
+
         .script-container {
             margin-top: 25px;
             border: 1px solid #dee2e6;
@@ -203,11 +304,9 @@
             overflow: hidden;
             display: none;
         }
-        
-        .script-container.show {
-            display: block;
-        }
-        
+
+        .script-container.show { display: block; }
+
         .script-header {
             background: #f8f9fa;
             padding: 12px 20px;
@@ -218,13 +317,9 @@
             flex-wrap: wrap;
             gap: 10px;
         }
-        
-        .script-header h3 {
-            font-size: 16px;
-            color: #333;
-            margin: 0;
-        }
-        
+
+        .script-header h3 { font-size: 16px; color: #333; margin: 0; }
+
         .script-body {
             background: #1e1e1e;
             padding: 20px;
@@ -232,7 +327,7 @@
             overflow-y: auto;
             overflow-x: auto;
         }
-        
+
         .script-body pre {
             color: #d4d4d4;
             font-family: 'Courier New', monospace;
@@ -242,25 +337,12 @@
             white-space: pre-wrap;
             word-wrap: break-word;
         }
-        
-        .script-body pre .sql-keyword {
-            color: #569cd6;
-            font-weight: 600;
-        }
-        
-        .script-body pre .sql-string {
-            color: #ce9178;
-        }
-        
-        .script-body pre .sql-comment {
-            color: #6a9955;
-            font-style: italic;
-        }
-        
-        .script-body pre .sql-number {
-            color: #b5cea8;
-        }
-        
+
+        .script-body pre .sql-keyword { color: #569cd6; font-weight: 600; }
+        .script-body pre .sql-string { color: #ce9178; }
+        .script-body pre .sql-comment { color: #6a9955; font-style: italic; }
+        .script-body pre .sql-number { color: #b5cea8; }
+
         .btn-copy {
             background: #ffc107;
             color: #212529;
@@ -271,17 +353,10 @@
             cursor: pointer;
             transition: all 0.3s;
         }
-        
-        .btn-copy:hover {
-            background: #e0a800;
-            transform: translateY(-1px);
-        }
-        
-        .btn-copy.copied {
-            background: #28a745;
-            color: white;
-        }
-        
+
+        .btn-copy:hover { background: #e0a800; transform: translateY(-1px); }
+        .btn-copy.copied { background: #28a745; color: white; }
+
         .navigation-buttons {
             display: flex;
             justify-content: space-between;
@@ -292,7 +367,7 @@
             flex-wrap: wrap;
             gap: 10px;
         }
-        
+
         .btn-outline-secondary {
             background: transparent;
             color: #6c757d;
@@ -303,13 +378,9 @@
             cursor: pointer;
             transition: all 0.3s;
         }
-        
-        .btn-outline-secondary:hover {
-            background: #6c757d;
-            color: white;
-        }
-        
-        /* Alerta flotante */
+
+        .btn-outline-secondary:hover { background: #6c757d; color: white; }
+
         .alert-flotante {
             position: fixed;
             top: 20px;
@@ -323,78 +394,31 @@
             box-shadow: 0 4px 20px rgba(0,0,0,0.2);
             max-width: 400px;
         }
-        
-        .alert-flotante.success {
-            background: #28a745;
-            display: block;
-        }
-        
-        .alert-flotante.error {
-            background: #dc3545;
-            display: block;
-        }
-        
-        .alert-flotante.warning {
-            background: #ffc107;
-            color: #212529;
-            display: block;
-        }
-        
-        .alert-flotante.info {
-            background: #17a2b8;
-            display: block;
-        }
-        
+
+        .alert-flotante.success { background: #28a745; display: block; }
+        .alert-flotante.error { background: #dc3545; display: block; }
+        .alert-flotante.warning { background: #ffc107; color: #212529; display: block; }
+        .alert-flotante.info { background: #17a2b8; display: block; }
+
         .alert-flotante .cerrar {
             margin-left: 15px;
             cursor: pointer;
             font-weight: bold;
             font-size: 18px;
         }
-        
+
         @media (max-width: 768px) {
-            .container {
-                padding: 15px;
-            }
-            
-            .acciones-finales {
-                flex-direction: column;
-            }
-            
-            .acciones-finales .btn {
-                width: 100%;
-                min-width: unset;
-            }
-            
-            .navigation-buttons {
-                flex-direction: column;
-                align-items: stretch;
-            }
-            
+            .container { padding: 15px; }
+            .acciones-finales { flex-direction: column; }
+            .acciones-finales .btn { width: 100%; min-width: unset; }
+            .navigation-buttons { flex-direction: column; align-items: stretch; }
             .navigation-buttons .left-buttons,
-            .navigation-buttons .right-buttons {
-                flex-direction: column;
-                width: 100%;
-            }
-            
+            .navigation-buttons .right-buttons { flex-direction: column; width: 100%; }
             .navigation-buttons .left-buttons .btn,
-            .navigation-buttons .right-buttons .btn {
-                width: 100%;
-            }
-            
-            .resumen-final strong {
-                min-width: 140px;
-            }
-            
-            .script-body {
-                max-height: 300px;
-                padding: 15px;
-            }
-            
-            .script-body pre {
-                font-size: 11px;
-                line-height: 1.5;
-            }
+            .navigation-buttons .right-buttons .btn { width: 100%; }
+            .resumen-final strong { min-width: 140px; }
+            .script-body { max-height: 300px; padding: 15px; }
+            .script-body pre { font-size: 11px; line-height: 1.5; }
         }
     </style>
 </head>
@@ -417,7 +441,7 @@
             <div class="alert alert-success">
                 <h3>✅ ¡Proceso Finalizado con Éxito!</h3>
                 <p>La planilla ha sido generada correctamente.</p>
-                
+
                 <div class="resumen-final" id="resumenFinal">
                     <p><strong>📌 ID_TICKET:</strong> <span class="valor" id="idTicketFinal">-</span></p>
                     <p><strong>👥 Total trabajadores:</strong> <span class="valor" id="totalTrabajadoresFinal">-</span></p>
@@ -425,7 +449,7 @@
                     <p><strong>🆔 ID_TRAMITE asignados:</strong> <span class="valor" id="idTramiteFinal">-</span></p>
                     <p><strong>🏢 ID_EMPRESA:</strong> <span class="valor" id="idEmpresaFinal">-</span></p>
                 </div>
-                
+
                 <div class="acciones-finales">
                     <button class="btn btn-success" id="btnDescargarExcel" onclick="descargarExcel()">
                         📥 Descargar Planilla en Excel
@@ -440,7 +464,67 @@
             </div>
         </div>
 
-        <!-- SCRIPT GENERADO -->
+        <!-- ============================================================ -->
+        <!-- VISTA PREVIA DE LA PLANILLA                                  -->
+        <!-- ============================================================ -->
+        <div id="vistaPreviewContainer" class="vista-preview-container">
+            <div class="vista-preview-header">
+                <h3>📋 Vista Previa - Planilla Completa</h3>
+                <div class="vista-preview-info">
+                    <span class="badge badge-info" id="previewCantidad">0 trabajadores</span>
+                </div>
+            </div>
+
+            <div class="vista-preview-empresa" id="previewEmpresa">
+                <h4 id="previewRazonSocial">-</h4>
+                <div class="vista-preview-datos-empresa">
+                    <span><strong>NIT:</strong> <span id="previewNit">-</span></span>
+                    <span><strong>Departamento:</strong> <span id="previewDepartamento">-</span></span>
+                    <span><strong>Trámite:</strong> <span id="previewTipoTramite">-</span></span>
+                </div>
+                <div class="vista-preview-datos-ticket">
+                    <span><strong>Ticket:</strong> <span id="previewCodigoTicket">-</span></span>
+                    <span><strong>ID_TICKET:</strong> <span id="previewIdTicket">-</span></span>
+                    <span><strong>Fecha:</strong> <span id="previewFecha">-</span></span>
+                </div>
+            </div>
+
+            <div class="vista-preview-tabla-wrapper">
+                <table class="vista-preview-tabla">
+                    <thead>
+                        <tr>
+                            <th>N°</th>
+                            <th>C.I.</th>
+                            <th>Exp.</th>
+                            <th>Nombre Completo</th>
+                            <th>Relación</th>
+                            <th>Teléfono</th>
+                            <th>Dirección</th>
+                            <th>ID_PERSONA</th>
+                            <th>ID_TRAMITE</th>
+                            <th>H. Inicio</th>
+                            <th>H. Fin</th>
+                            <th>Estado</th>
+                        </tr>
+                    </thead>
+                    <tbody id="previewTablaBody">
+                        <tr>
+                            <td colspan="13" class="vista-preview-vacio">
+                                ⏳ Cargando datos...
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="vista-preview-footer">
+                <span id="previewFooterTexto">Mostrando 0 trabajadores</span>
+            </div>
+        </div>
+
+        <!-- ============================================================ -->
+        <!-- SCRIPT SQL GENERADO                                          -->
+        <!-- ============================================================ -->
         <div id="scriptContainer" class="script-container">
             <div class="script-header">
                 <h3>📝 Script SQL Generado</h3>
@@ -470,26 +554,26 @@
         // ============================================================
         // VARIABLES GLOBALES
         // ============================================================
-        
+
         let scriptActual = '';
         let datosPlanilla = {};
 
         // ============================================================
         // FUNCIÓN: ALERTA FLOTANTE
         // ============================================================
-        
+
         function mostrarAlerta(mensaje, tipo = 'info') {
             const alerta = document.getElementById('alertaFlotante');
             const mensajeEl = document.getElementById('alertaMensaje');
             alerta.className = `alert-flotante ${tipo}`;
             mensajeEl.textContent = mensaje;
             alerta.style.display = 'block';
-            
+
             setTimeout(() => {
                 alerta.style.display = 'none';
             }, 5000);
         }
-        
+
         function cerrarAlerta() {
             document.getElementById('alertaFlotante').style.display = 'none';
         }
@@ -497,29 +581,26 @@
         // ============================================================
         // FUNCIÓN: CARGAR DATOS FINALES
         // ============================================================
-        
+
         async function cargarDatosFinales() {
             try {
                 const response = await fetch('/api/estado');
                 const data = await response.json();
-                
+
                 if (data.success && data.planilla_id) {
                     datosPlanilla = data;
-                    
-                    // Mostrar resumen
+
                     document.getElementById('idTicketFinal').textContent = data.id_ticket || 'PENDIENTE';
                     document.getElementById('totalTrabajadoresFinal').textContent = data.total || 0;
                     document.getElementById('idEmpresaFinal').textContent = data.id_empresa || 'No asignado';
-                    
-                    // Contar ID_PERSONA e ID_TRAMITE asignados
+
                     const procesados = data.procesados || [];
                     const idPersonaCount = procesados.filter(t => t.id_persona).length;
                     const idTramiteCount = procesados.filter(t => t.id_tramite).length;
-                    
+
                     document.getElementById('idPersonaFinal').textContent = idPersonaCount;
                     document.getElementById('idTramiteFinal').textContent = idTramiteCount;
-                    
-                    // Cargar script
+
                     await cargarScript();
                 } else {
                     mostrarAlerta('⚠️ No se encontró una planilla activa', 'warning');
@@ -533,33 +614,28 @@
         // ============================================================
         // FUNCIÓN: CARGAR SCRIPT
         // ============================================================
-        
+
         async function cargarScript() {
             try {
                 const response = await fetch('/api/previsualizacion_completa');
                 const data = await response.json();
-                
+
                 if (data.success && data.script_completo) {
                     mostrarScript(data.script_completo);
                 } else {
-                    // Intentar generar el script final
                     const scriptResponse = await fetch('/api/generar_script_final', {
                         method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify({
-                            id_ticket: datosPlanilla.id_ticket
-                        })
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ id_ticket: datosPlanilla.id_ticket })
                     });
                     const scriptData = await scriptResponse.json();
-                    
+
                     if (scriptData.success && scriptData.script_completo) {
                         mostrarScript(scriptData.script_completo);
                     } else {
                         mostrarAlerta('⚠️ No se pudo generar el script automáticamente', 'warning');
-                        document.getElementById('scriptOutput').innerHTML = 
-                            '<span class="sql-comment">-- No se pudo generar el script automáticamente.\n-- Puedes generarlo manualmente en el Paso 8.</span>';
+                        document.getElementById('scriptOutput').innerHTML =
+                            '<span class="sql-comment">-- No se pudo generar el script automáticamente.</span>';
                     }
                 }
             } catch (error) {
@@ -571,28 +647,28 @@
         // ============================================================
         // FUNCIÓN: MOSTRAR SCRIPT
         // ============================================================
-        
+
         function mostrarScript(script) {
             if (!script || script.trim() === '') {
-                scriptOutput.innerHTML = '<span class="sql-comment">-- No se generó ningún script</span>';
-                scriptContainer.classList.add('show');
+                document.getElementById('scriptOutput').innerHTML = '<span class="sql-comment">-- No se generó ningún script</span>';
+                document.getElementById('scriptContainer').classList.add('show');
                 return;
             }
-            
+
             try {
                 let highlighted = script
                     .replace(/--(.*)/g, '<span class="sql-comment">--$1</span>')
                     .replace(/'([^']*)'/g, '<span class="sql-string">\'$1\'</span>')
-                    .replace(/\b(INSERT|INTO|VALUES|SELECT|FROM|WHERE|UPDATE|DELETE|CREATE|TABLE|DROP|ALTER|ADD|COLUMN|NOT|NULL|DEFAULT|PRIMARY|KEY|FOREIGN|REFERENCES|UNIQUE|CHECK|INDEX|VIEW|PROCEDURE|FUNCTION|TRIGGER|DATABASE|SCHEMA|USE|SHOW|DESCRIBE|EXPLAIN|ANALYZE|OPTIMIZE|GRANT|REVOKE|COMMIT|ROLLBACK|SAVEPOINT|TRANSACTION|LOCK|UNLOCK|SET|now)\b/gi, 
+                    .replace(/\b(INSERT|INTO|VALUES|SELECT|FROM|WHERE|UPDATE|DELETE|CREATE|TABLE|DROP|ALTER|ADD|COLUMN|NOT|NULL|DEFAULT|PRIMARY|KEY|FOREIGN|REFERENCES|UNIQUE|CHECK|INDEX|VIEW|PROCEDURE|FUNCTION|TRIGGER|DATABASE|SCHEMA|USE|SHOW|DESCRIBE|EXPLAIN|ANALYZE|OPTIMIZE|GRANT|REVOKE|COMMIT|ROLLBACK|SAVEPOINT|TRANSACTION|LOCK|UNLOCK|SET|now)\b/gi,
                     '<span class="sql-keyword">$1</span>')
                     .replace(/\b(\d+)\b/g, '<span class="sql-number">$1</span>');
-                
+
                 document.getElementById('scriptOutput').innerHTML = highlighted;
                 scriptActual = script;
                 document.getElementById('scriptContainer').classList.add('show');
             } catch (error) {
                 console.error('Error al mostrar script:', error);
-                document.getElementById('scriptOutput').innerHTML = 
+                document.getElementById('scriptOutput').innerHTML =
                     `<span class="sql-comment">-- Error al mostrar el script: ${error.message}</span>`;
                 document.getElementById('scriptContainer').classList.add('show');
             }
@@ -601,13 +677,13 @@
         // ============================================================
         // FUNCIÓN: COPIAR SCRIPT
         // ============================================================
-        
+
         function copiarScript() {
             if (!scriptActual) {
                 mostrarAlerta('⚠️ No hay script para copiar', 'warning');
                 return;
             }
-            
+
             navigator.clipboard.writeText(scriptActual).then(() => {
                 mostrarAlerta('✅ Script copiado al portapapeles', 'success');
                 const btn = document.getElementById('btnCopiarScriptHeader');
@@ -618,7 +694,6 @@
                     btn.classList.remove('copied');
                 }, 3000);
             }).catch(() => {
-                // Fallback
                 const textarea = document.createElement('textarea');
                 textarea.value = scriptActual;
                 textarea.style.position = 'fixed';
@@ -634,55 +709,228 @@
         // ============================================================
         // FUNCIÓN: DESCARGAR EXCEL
         // ============================================================
-        
+
         function descargarExcel() {
-            mostrarAlerta('📥 Función de descarga en desarrollo...', 'info');
+            const btn = document.getElementById('btnDescargarExcel');
+
+            if (btn) {
+                btn.disabled = true;
+                var textoOriginal = btn.innerHTML;
+                btn.innerHTML = '<span class="loading"></span> Generando Excel...';
+            }
+
+            mostrarAlerta('📥 Generando Excel...', 'info');
+
+            fetch('/api/descargar_excel')
+                .then(response => {
+                    if (!response.ok) {
+                        return response.text().then(text => {
+                            let mensaje = 'Error al generar Excel';
+                            try {
+                                const errJson = JSON.parse(text);
+                                mensaje = errJson.error || mensaje;
+                            } catch (e) {
+                                mensaje = 'Error ' + response.status + ': ' + text.substring(0, 150);
+                            }
+                            throw new Error(mensaje);
+                        });
+                    }
+                    return response.blob();
+                })
+                .then(blob => {
+                    if (blob.size === 0) {
+                        throw new Error('El archivo generado está vacío');
+                    }
+
+                    const fecha = new Date().toISOString().slice(0, 10);
+                    const nombreArchivo = `planilla_${fecha}.xlsx`;
+
+                    const url = window.URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = nombreArchivo;
+                    document.body.appendChild(a);
+                    a.click();
+                    document.body.removeChild(a);
+                    window.URL.revokeObjectURL(url);
+
+                    mostrarAlerta('✅ Excel descargado correctamente', 'success');
+                })
+                .catch(error => {
+                    console.error('❌ Error:', error);
+                    mostrarAlerta('❌ ' + error.message, 'error');
+                })
+                .finally(() => {
+                    if (btn) {
+                        btn.disabled = false;
+                        btn.innerHTML = textoOriginal || '📥 Descargar Planilla en Excel';
+                    }
+                });
         }
 
         // ============================================================
-        // ⭐ FUNCIÓN: VOLVER AL PASO 1 (NUEVA PLANILLA)
+        // FUNCIÓN: CARGAR VISTA PREVIA
         // ============================================================
-        
-        function volverAlPaso1() {
-            if (!confirm('¿Estás seguro de que quieres volver al inicio?\nSe perderá el progreso actual.')) {
-                return;
-            }
-            
-            const btn = document.getElementById('btnVolverInicio');
-            btn.disabled = true;
-            btn.innerHTML = '<span class="loading"></span> Cerrando sesión...';
-            
-            fetch('/api/cerrar_sesion', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
+
+        async function cargarVistaPrevia() {
+            try {
+                const response = await fetch('/api/estado');
+                const data = await response.json();
+
+                if (!data.success || !data.planilla_id) {
+                    document.getElementById('previewTablaBody').innerHTML = `
+                        <tr>
+                            <td colspan="13" class="vista-preview-vacio">
+                                ⚠️ No hay planilla cargada
+                            </td>
+                        </tr>
+                    `;
+                    return;
                 }
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    mostrarAlerta('✅ Sesión cerrada. Redirigiendo al inicio...', 'success');
-                    setTimeout(() => {
-                        window.location.href = '/';
-                    }, 1000);
+
+                document.getElementById('previewRazonSocial').textContent =
+                    data.razon_social || data.empresa || 'EMPRESA NO ESPECIFICADA';
+
+                document.getElementById('previewNit').textContent = data.nit || '-';
+                document.getElementById('previewDepartamento').textContent =
+                    data.departamento_nombre || '-';
+                document.getElementById('previewTipoTramite').textContent =
+                    data.tipo_tramite_nombre || '-';
+                document.getElementById('previewCodigoTicket').textContent =
+                    data.codigo_ticket || '-';
+                document.getElementById('previewIdTicket').textContent =
+                    data.id_ticket || 'PENDIENTE';
+                document.getElementById('previewFecha').textContent = data.fecha || '-';
+
+                const procesados = data.procesados || [];
+                document.getElementById('previewCantidad').textContent =
+                    `${procesados.length} trabajadores`;
+
+                if (procesados.length === 0) {
+                    document.getElementById('previewTablaBody').innerHTML = `
+                        <tr>
+                            <td colspan="13" class="vista-preview-vacio">
+                                ⚠️ No hay trabajadores en el bloque actual
+                            </td>
+                        </tr>
+                    `;
+                    document.getElementById('previewFooterTexto').textContent =
+                        'No hay trabajadores para mostrar';
+                    return;
+                }
+
+                let html = '';
+
+                procesados.forEach((t, index) => {
+                    const tieneTodo = t.id_persona && t.id_tramite && t.hora_inicio;
+                    const estadoClass = tieneTodo ? 'estado-completo' : 'estado-pendiente';
+                    const estadoTexto = tieneTodo ? '✅ Completo' : '⏳ Pendiente';
+
+                    html += `
+                        <tr>
+                            <td class="col-numero">${t.nro || index + 1}</td>
+                            <td class="col-ci">${escaparHTML(t.ci)}</td>
+                            <td>${escaparHTML(t.expedicion)}</td>
+                            <td class="col-nombre">${escaparHTML(t.nombre)}</td>
+                            <td>${escaparHTML(t.relacion || t.cargo)}</td>
+                            <td>${escaparHTML(t.telefono)}</td>
+                            <td>${escaparHTML(t.direccion)}</td>
+                            <td class="col-id">${t.id_persona || '-'}</td>
+                            <td class="col-id">${t.id_tramite || '-'}</td>
+                            <td class="col-hora">${escaparHTML(t.hora_inicio)}</td>
+                            <td class="col-hora">${escaparHTML(t.hora_fin)}</td>
+                            <td class="col-estado">
+                                <span class="${estadoClass}">${estadoTexto}</span>
+                            </td>
+                        </tr>
+                    `;
+                });
+
+                document.getElementById('previewTablaBody').innerHTML = html;
+
+                const total = data.total || 0;
+                const desde = data.desde || 1;
+                const hasta = data.hasta || 0;
+                const pendientes = total - hasta;
+
+                let footerTexto = `Mostrando ${procesados.length} trabajadores `;
+
+                if (hasta < total) {
+                    footerTexto += `(del ${desde} al ${hasta} de ${total}) - ${pendientes} pendientes`;
                 } else {
-                    mostrarAlerta('❌ Error al cerrar sesión: ' + data.error, 'error');
-                    btn.disabled = false;
-                    btn.innerHTML = '🔄 Volver al Paso 1 (Nueva Planilla)';
+                    footerTexto += `(del ${desde} al ${hasta} de ${total}) - Planilla completa`;
                 }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                mostrarAlerta('❌ Error de conexión: ' + error.message, 'error');
-                btn.disabled = false;
-                btn.innerHTML = '🔄 Volver al Paso 1 (Nueva Planilla)';
-            });
+
+                document.getElementById('previewFooterTexto').textContent = footerTexto;
+
+            } catch (error) {
+                console.error('Error al cargar vista previa:', error);
+                document.getElementById('previewTablaBody').innerHTML = `
+                    <tr>
+                        <td colspan="13" class="vista-preview-vacio">
+                            ❌ Error al cargar los datos: ${error.message}
+                        </td>
+                    </tr>
+                `;
+            }
         }
+
+        // ============================================================
+        // FUNCIÓN: ESCAPAR HTML
+        // ============================================================
+
+        function escaparHTML(valor) {
+            if (valor === null || valor === undefined || valor === '') {
+                return '-';
+            }
+            const div = document.createElement('div');
+            div.textContent = String(valor);
+            return div.innerHTML;
+        }
+
+        // ============================================================
+        // FUNCIÓN: VOLVER AL PASO 1 (NUEVA PLANILLA)
+        // ============================================================
+function volverAlPaso1() {
+    console.log('🔵 Botón "Volver al Paso 1" presionado');
+
+    if (!confirm('¿Estás seguro de que quieres volver al inicio?\nSe perderá el progreso actual.')) {
+        console.log('❌ Cancelado por el usuario');
+        return;
+    }
+
+    console.log('✅ Confirmado, cerrando sesión...');
+
+    const btn = document.getElementById('btnVolverInicio');
+    if (btn) {
+        btn.disabled = true;
+        btn.innerHTML = '<span class="loading"></span> Cerrando sesión...';
+    }
+
+    fetch('/api/cerrar_sesion', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' }
+    })
+    .then(response => {
+        console.log('📥 Respuesta del servidor:', response.status);
+        return response.json();
+    })
+    .then(data => {
+        console.log('📦 Datos recibidos:', data);
+        // Forzar recarga completa
+        window.location.replace(window.location.origin + '/');
+    })
+    .catch(error => {
+        console.error('❌ Error:', error);
+        // Forzar recarga incluso si hay error
+        window.location.replace(window.location.origin + '/');
+    });
+}
 
         // ============================================================
         // FUNCIÓN: VOLVER (Paso 7)
         // ============================================================
-        
+
         function volver() {
             window.location.href = '/idtramite';
         }
@@ -690,7 +938,7 @@
         // ============================================================
         // FUNCIÓN: FINALIZAR (deshabilitado)
         // ============================================================
-        
+
         function finalizar() {
             mostrarAlerta('⚠️ El proceso ya está finalizado. Usa "Volver al Paso 1" para iniciar una nueva planilla.', 'warning');
         }
@@ -698,9 +946,10 @@
         // ============================================================
         // INICIALIZACIÓN
         // ============================================================
-        
+
         document.addEventListener('DOMContentLoaded', function() {
             cargarDatosFinales();
+            cargarVistaPrevia();
             console.log('✅ Pantalla 8 - Script Final cargada correctamente');
         });
     </script>
